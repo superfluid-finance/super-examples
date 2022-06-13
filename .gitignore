@@ -1,0 +1,21 @@
+# OSX
+.DS_Store
+
+# env
+.env
+
+# node
+node_modules
+package-lock.json
+yarn-error.log
+
+# editooors
+.idea
+.vscode
+
+# tsc / hardhat / foundry
+cache
+out
+data
+build
+dist

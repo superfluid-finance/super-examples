@@ -1,0 +1,29 @@
+name: New Example
+description: Request a new example project
+title: "[NEW EXAMPLE]: "
+labels: ["feature", "example"]
+body:
+  - type: textarea
+    id: project-description
+    attributes:
+      label: Description
+      description: What would you like to see built?
+      value: Simple, a cross-chain, real-time, liquidity position derivatives protocol.
+    validations:
+      required: true
+  - type: checkboxes
+    id: project-components
+    attributes:
+      label: Components
+      description: What components are required for this project?
+      options:
+        - label: Smart Contracts
+        - label: Backend Infrastructure
+        - label: Frontend Web Interface
+  - type: input
+    id: project-components-extended
+    attributes:
+      label: Components (other)
+      description: Are there any other components not listed here that may be required?
+    validations:
+      required: false
