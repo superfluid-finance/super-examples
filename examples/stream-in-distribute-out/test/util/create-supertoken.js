@@ -6,10 +6,7 @@ const createSuperToken = async (underlyingAddress, name, symbol, sf, deployer) =
         .connect(deployer)
         .getSuperTokenFactory();
 
-    const superTokenFactory = new ethers.Contract(
-        superTokenFactoryAddress,
-        ISuperTokenFactory.abi
-    );
+    const superTokenFactory = new ethers.Contract(superTokenFactoryAddress, ISuperTokenFactory.abi);
 
     const tx = await superTokenFactory
         .connect(deployer)
@@ -22,9 +19,9 @@ const createSuperToken = async (underlyingAddress, name, symbol, sf, deployer) =
 
     const result = await tx.wait();
 
-    const address = result.events.find((e) => e.event === "SuperTokenCreated").args[0];
+    const address = result.events.find(e => e.event === "SuperTokenCreated").args[0];
 
     return new ethers.Contract(address, ISuperToken.abi, deployer);
-}
+};
 
 module.exports = createSuperToken;

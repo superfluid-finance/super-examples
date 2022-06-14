@@ -3,7 +3,6 @@
 This example project focuses the use case of streaming into a super app contract
 in exchange for shares of an index.
 
-
 ## Installation
 
 In this directory, run the following depending on your node package manager.
@@ -15,7 +14,6 @@ yarn
 # npm
 npm i
 ```
-
 
 ## Stream In Distribute Out
 
@@ -41,9 +39,9 @@ distributed to the streamers after its completion.
 
 Examples of what can be done before distribution is the following.
 
-- Swap `_inToken` for `_outToken` on an exchage and return the amount swapped
-- Execute a flash loan and return the flash fee
-- Deposit liquidity into a single-asset pool and return the amount of LP tokens
+-   Swap `_inToken` for `_outToken` on an exchage and return the amount swapped
+-   Execute a flash loan and return the flash fee
+-   Deposit liquidity into a single-asset pool and return the amount of LP tokens
 
 ## Stream Swap Distribute
 
@@ -59,14 +57,14 @@ address, the "in token", and the "out token". Second is to override the
 In this contract, we do a few things inside of the `_beforeDistribution`
 function.
 
-- Downgrade "in token" to its underlying ERC20 token
-- Swaps the full balance of the underlying ERC20 of the "in token" for the
-underlying ERC20 of the "out token"
-- Upgrades the full balance of the underlying ERC20 of the "out token"
-- Returns the full upgraded amount of the "out token" to be distributed.
+-   Downgrade "in token" to its underlying ERC20 token
+-   Swaps the full balance of the underlying ERC20 of the "in token" for the
+    underlying ERC20 of the "out token"
+-   Upgrades the full balance of the underlying ERC20 of the "out token"
+-   Returns the full upgraded amount of the "out token" to be distributed.
 
-__NOTICE__: This is __not__ yet suitable for production. The function call
+**NOTICE**: This is **not** yet suitable for production. The function call
 `swapExactTokensForTokens` to the Uniswap V2 router specifies a `0` minimum
 output, opening the swap to front running and sandwich attacks. This contract
-is for demonstration purposes __only__, and developers should be mindful when
+is for demonstration purposes **only**, and developers should be mindful when
 creating a contract that interacts with exchanges.

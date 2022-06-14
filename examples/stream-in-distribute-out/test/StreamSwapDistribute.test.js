@@ -41,16 +41,13 @@ before(async function () {
         resolverAddress,
         dataMode: "WEB3_ONLY",
         protocolReleaseVersion: "test",
-        networkName: "custom",
+        networkName: "custom"
     });
 });
 
 beforeEach(async function () {
     // deploy tokens
-    const ERC20MockFactory = await ethers.getContractFactory(
-        "ERC20Mock",
-        admin
-    );
+    const ERC20MockFactory = await ethers.getContractFactory("ERC20Mock", admin);
 
     inUnderlyingToken = await ERC20MockFactory.deploy("In Token", "ITn");
     outUnderlyingToken = await ERC20MockFactory.deploy("Out Token", "OTn");
@@ -79,17 +76,11 @@ beforeEach(async function () {
     await inUnderlyingToken.connect(bob).approve(inToken.address, ten);
     await inToken.connect(bob).upgrade(ten);
 
-    const routerFactory = await ethers.getContractFactory(
-        "UniswapRouterMock",
-        admin
-    );
+    const routerFactory = await ethers.getContractFactory("UniswapRouterMock", admin);
 
     routerMock = await routerFactory.deploy();
 
-    const appFactory = await ethers.getContractFactory(
-        "StreamSwapDistribute",
-        admin
-    );
+    const appFactory = await ethers.getContractFactory("StreamSwapDistribute", admin);
 
     streamSwapDistributeApp = await appFactory.deploy(
         sf.settings.config.hostAddress,
@@ -108,7 +99,7 @@ describe("Streaming Operations", async function () {
                 superToken: inToken.address,
                 flowRate,
                 receiver: streamSwapDistributeApp.address,
-                overrides,
+                overrides
             })
             .exec(alice);
 
@@ -118,7 +109,7 @@ describe("Streaming Operations", async function () {
                     superToken: inToken.address,
                     sender: alice.address,
                     receiver: streamSwapDistributeApp.address,
-                    providerOrSigner: admin,
+                    providerOrSigner: admin
                 })
             ).flowRate,
             flowRate
@@ -131,7 +122,7 @@ describe("Streaming Operations", async function () {
                     superToken: outToken.address,
                     publisher: streamSwapDistributeApp.address,
                     subscriber: alice.address,
-                    providerOrSigner: admin.provider,
+                    providerOrSigner: admin.provider
                 })
             ).units,
             flowRate
@@ -144,7 +135,7 @@ describe("Streaming Operations", async function () {
                 superToken: inToken.address,
                 flowRate,
                 receiver: streamSwapDistributeApp.address,
-                overrides,
+                overrides
             })
             .exec(alice);
 
@@ -153,7 +144,7 @@ describe("Streaming Operations", async function () {
                 superToken: inToken.address,
                 flowRate: updatedFlowRate,
                 receiver: streamSwapDistributeApp.address,
-                overrides,
+                overrides
             })
             .exec(alice);
 
@@ -163,7 +154,7 @@ describe("Streaming Operations", async function () {
                     superToken: inToken.address,
                     sender: alice.address,
                     receiver: streamSwapDistributeApp.address,
-                    providerOrSigner: admin,
+                    providerOrSigner: admin
                 })
             ).flowRate,
             updatedFlowRate
@@ -176,7 +167,7 @@ describe("Streaming Operations", async function () {
                     superToken: outToken.address,
                     publisher: streamSwapDistributeApp.address,
                     subscriber: alice.address,
-                    providerOrSigner: admin.provider,
+                    providerOrSigner: admin.provider
                 })
             ).units,
             updatedFlowRate
@@ -189,7 +180,7 @@ describe("Streaming Operations", async function () {
                 superToken: inToken.address,
                 flowRate,
                 receiver: streamSwapDistributeApp.address,
-                overrides,
+                overrides
             })
             .exec(alice);
 
@@ -198,7 +189,7 @@ describe("Streaming Operations", async function () {
                 superToken: inToken.address,
                 sender: alice.address,
                 receiver: streamSwapDistributeApp.address,
-                overrides,
+                overrides
             })
             .exec(alice);
 
@@ -208,7 +199,7 @@ describe("Streaming Operations", async function () {
                     superToken: inToken.address,
                     sender: alice.address,
                     receiver: streamSwapDistributeApp.address,
-                    providerOrSigner: admin,
+                    providerOrSigner: admin
                 })
             ).flowRate,
             "0"
@@ -221,7 +212,7 @@ describe("Streaming Operations", async function () {
                     superToken: outToken.address,
                     publisher: streamSwapDistributeApp.address,
                     subscriber: alice.address,
-                    providerOrSigner: admin.provider,
+                    providerOrSigner: admin.provider
                 })
             ).units,
             "0"
@@ -236,17 +227,18 @@ describe("IDA Operations", async function () {
                 superToken: inToken.address,
                 flowRate,
                 receiver: streamSwapDistributeApp.address,
-                overrides,
+                overrides
             })
             .exec(alice);
 
-        await sf.idaV1.approveSubscription({
-            indexId,
-            superToken: outToken.address,
-            publisher: streamSwapDistributeApp.address,
-            overrides
-        })
-        .exec(alice);
+        await sf.idaV1
+            .approveSubscription({
+                indexId,
+                superToken: outToken.address,
+                publisher: streamSwapDistributeApp.address,
+                overrides
+            })
+            .exec(alice);
     });
 });
 
@@ -263,22 +255,21 @@ describe("Action operations", async () => {
                 superToken: inToken.address,
                 flowRate,
                 receiver: streamSwapDistributeApp.address,
-                overrides,
+                overrides
             })
             .exec(alice);
 
-        await sf.idaV1.approveSubscription({
-            indexId,
-            superToken: outToken.address,
-            publisher: streamSwapDistributeApp.address,
-            overrides,
-        }).exec(alice);
+        await sf.idaV1
+            .approveSubscription({
+                indexId,
+                superToken: outToken.address,
+                publisher: streamSwapDistributeApp.address,
+                overrides
+            })
+            .exec(alice);
 
         await streamSwapDistributeApp.connect(alice).executeAction();
 
-        assert.notEqual(
-            (await outToken.balanceOf(alice.address)).toString(),
-            "0"
-        );
+        assert.notEqual((await outToken.balanceOf(alice.address)).toString(), "0");
     });
 });
