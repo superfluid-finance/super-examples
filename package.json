@@ -1,9 +1,0 @@
-{
-  "name": "superfluid-examples",
-  "version": "0.0.1",
-  "description": "Superfluid example projects",
-  "license": "AGPL-3.0",
-  "scripts": {
-    "new-project": "./scripts/new-project.sh"
-  }
-}
