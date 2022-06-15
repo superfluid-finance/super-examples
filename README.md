@@ -26,5 +26,5 @@ example, open an issue and select the "New Example" template.
 The following is a list of example projects in this repository. Follow the link
 on each to see their local README file.
 
--   [Stream In, Distribute Out](./examples/stream-in-distribute-out)
--   [Tradeable Cashflow NFT](./examples/tradeable-cashflow)
+-   [Stream In, Distribute Out](./examples/stream-in-distribute-out/README.md)
+-   [Tradeable Cashflow NFT](./examples/tradeable-cashflow/README.md)
