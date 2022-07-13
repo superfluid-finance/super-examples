@@ -1,0 +1,44 @@
+# Contributing
+
+Thank you for your interest in contributing to the Superfluid examples repository!
+
+Before getting started, be sure to review the [code of conduct](./code-of-conduct.md).
+
+## Editing an Existing Project
+
+To edit an existing project, follow the directions to get started under the [README](./README.md).
+
+## Creating a New Example
+
+To create a new example, start by opening an issue on this GitHub repository using the "New Example"
+template and follow its instructions.
+
+## Style Guidelines
+
+### Linting
+
+ESLint is used for linting and will prevent commits if the code does not conform to the standard.
+
+### Project Layout
+
+Each project should follow a similar pattern. Example projects should exist within the `./examples`
+directory.
+
+Inside of each project, the following is required.
+
+1. `README.md` file documenting its functionality and use.
+2. `package.json` with all local dependencies.
+3. `build-and-test.sh` with execute permission for the workflows.
+4. `hardhat.config.js` with the local configuration. When using Foundry, and exception may be made.
+5. `.env.template` if the project requires environment variables.
+
+### Testing
+
+While 100% test coverage is not required, it is highly recommended to get as close as possible.
+
+### Typescript
+
+If the project uses Typescript, be sure to extend the base tsconfig files in
+[this directory](./config).
+
+
