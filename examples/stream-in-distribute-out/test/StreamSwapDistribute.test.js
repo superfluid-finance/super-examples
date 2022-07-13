@@ -1,14 +1,16 @@
-const { ethers } = require("hardhat");
-const { assert } = require("chai");
-const { Framework } = require("@superfluid-finance/sdk-core");
-const deploySuperfluid = require("./util/deploy-sf.js");
-const createSuperToken = require("./util/create-supertoken.js");
+/* eslint-disable no-undef */
 
-const ten = ethers.utils.parseEther("10").toString();
-const flowRate = ethers.utils.parseEther("0.000001").toString();
-const updatedFlowRate = ethers.utils.parseEther("0.000002").toString();
-const indexId = "0";
-const overrides = { gasLimit: 3000000 }; // Using this to manually limit gas to avoid giga-errors.
+const { ethers } = require("hardhat")
+const { assert } = require("chai")
+const { Framework } = require("@superfluid-finance/sdk-core")
+const deploySuperfluid = require("./util/deploy-sf.js")
+const createSuperToken = require("./util/create-supertoken.js")
+
+const ten = ethers.utils.parseEther("10").toString()
+const flowRate = ethers.utils.parseEther("0.000001").toString()
+const updatedFlowRate = ethers.utils.parseEther("0.000002").toString()
+const indexId = "0"
+const overrides = { gasLimit: 3000000 } // Using this to manually limit gas to avoid giga-errors.
 
 // Deploying signer
 let admin,
@@ -29,12 +31,12 @@ let admin,
     // Stream swap distribute super app
     streamSwapDistributeApp,
     // Uniswap router mock
-    routerMock;
+    routerMock
 
 before(async function () {
-    [admin, alice, bob] = await ethers.getSigners();
+    ;[admin, alice, bob] = await ethers.getSigners()
 
-    const resolverAddress = await deploySuperfluid(admin);
+    const resolverAddress = await deploySuperfluid(admin)
 
     sf = await Framework.create({
         provider: admin.provider,
@@ -42,15 +44,15 @@ before(async function () {
         dataMode: "WEB3_ONLY",
         protocolReleaseVersion: "test",
         networkName: "custom"
-    });
-});
+    })
+})
 
 beforeEach(async function () {
     // deploy tokens
-    const ERC20MockFactory = await ethers.getContractFactory("ERC20Mock", admin);
+    const ERC20MockFactory = await ethers.getContractFactory("ERC20Mock", admin)
 
-    inUnderlyingToken = await ERC20MockFactory.deploy("In Token", "ITn");
-    outUnderlyingToken = await ERC20MockFactory.deploy("Out Token", "OTn");
+    inUnderlyingToken = await ERC20MockFactory.deploy("In Token", "ITn")
+    outUnderlyingToken = await ERC20MockFactory.deploy("Out Token", "OTn")
 
     inToken = await createSuperToken(
         inUnderlyingToken.address,
@@ -58,29 +60,35 @@ beforeEach(async function () {
         "ITnx",
         sf,
         admin
-    );
+    )
     outToken = await createSuperToken(
         outUnderlyingToken.address,
         "Super Out Token",
         "OTnx",
         sf,
         admin
-    );
+    )
 
     // mint to alice and bob
-    await inUnderlyingToken.connect(alice).mint(alice.address, ten);
-    await inUnderlyingToken.connect(alice).approve(inToken.address, ten);
-    await inToken.connect(alice).upgrade(ten);
+    await inUnderlyingToken.connect(alice).mint(alice.address, ten)
+    await inUnderlyingToken.connect(alice).approve(inToken.address, ten)
+    await inToken.connect(alice).upgrade(ten)
 
-    await inUnderlyingToken.connect(bob).mint(bob.address, ten);
-    await inUnderlyingToken.connect(bob).approve(inToken.address, ten);
-    await inToken.connect(bob).upgrade(ten);
+    await inUnderlyingToken.connect(bob).mint(bob.address, ten)
+    await inUnderlyingToken.connect(bob).approve(inToken.address, ten)
+    await inToken.connect(bob).upgrade(ten)
 
-    const routerFactory = await ethers.getContractFactory("UniswapRouterMock", admin);
+    const routerFactory = await ethers.getContractFactory(
+        "UniswapRouterMock",
+        admin
+    )
 
-    routerMock = await routerFactory.deploy();
+    routerMock = await routerFactory.deploy()
 
-    const appFactory = await ethers.getContractFactory("StreamSwapDistribute", admin);
+    const appFactory = await ethers.getContractFactory(
+        "StreamSwapDistribute",
+        admin
+    )
 
     streamSwapDistributeApp = await appFactory.deploy(
         sf.settings.config.hostAddress,
@@ -89,8 +97,8 @@ beforeEach(async function () {
         inToken.address,
         outToken.address,
         routerMock.address
-    );
-});
+    )
+})
 
 describe("Streaming Operations", async function () {
     it("Can create flow to super app", async function () {
@@ -101,7 +109,7 @@ describe("Streaming Operations", async function () {
                 receiver: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
+            .exec(alice)
 
         assert.equal(
             (
@@ -113,7 +121,7 @@ describe("Streaming Operations", async function () {
                 })
             ).flowRate,
             flowRate
-        );
+        )
 
         assert.equal(
             (
@@ -126,8 +134,8 @@ describe("Streaming Operations", async function () {
                 })
             ).units,
             flowRate
-        );
-    });
+        )
+    })
 
     it("Can update flow to super app", async function () {
         await sf.cfaV1
@@ -137,7 +145,7 @@ describe("Streaming Operations", async function () {
                 receiver: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
+            .exec(alice)
 
         await sf.cfaV1
             .updateFlow({
@@ -146,7 +154,7 @@ describe("Streaming Operations", async function () {
                 receiver: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
+            .exec(alice)
 
         assert.equal(
             (
@@ -158,7 +166,7 @@ describe("Streaming Operations", async function () {
                 })
             ).flowRate,
             updatedFlowRate
-        );
+        )
 
         assert.equal(
             (
@@ -171,8 +179,8 @@ describe("Streaming Operations", async function () {
                 })
             ).units,
             updatedFlowRate
-        );
-    });
+        )
+    })
 
     it("Can delete flow to super app", async function () {
         await sf.cfaV1
@@ -182,7 +190,7 @@ describe("Streaming Operations", async function () {
                 receiver: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
+            .exec(alice)
 
         await sf.cfaV1
             .deleteFlow({
@@ -191,7 +199,7 @@ describe("Streaming Operations", async function () {
                 receiver: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
+            .exec(alice)
 
         assert.equal(
             (
@@ -203,7 +211,7 @@ describe("Streaming Operations", async function () {
                 })
             ).flowRate,
             "0"
-        );
+        )
 
         assert.equal(
             (
@@ -216,9 +224,9 @@ describe("Streaming Operations", async function () {
                 })
             ).units,
             "0"
-        );
-    });
-});
+        )
+    })
+})
 
 describe("IDA Operations", async function () {
     it("Can approve subscription to super app", async function () {
@@ -229,7 +237,7 @@ describe("IDA Operations", async function () {
                 receiver: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
+            .exec(alice)
 
         await sf.idaV1
             .approveSubscription({
@@ -238,16 +246,16 @@ describe("IDA Operations", async function () {
                 publisher: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
-    });
-});
+            .exec(alice)
+    })
+})
 
 describe("Action operations", async () => {
     // this also asserts the `createFlow` from the first streamer won't throw.
     it("Can execute action with zero units", async function () {
-        await streamSwapDistributeApp.connect(alice).executeAction();
-        assert(true);
-    });
+        await streamSwapDistributeApp.connect(alice).executeAction()
+        assert(true)
+    })
 
     it("Can execute action after flow created", async function () {
         await sf.cfaV1
@@ -257,7 +265,7 @@ describe("Action operations", async () => {
                 receiver: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
+            .exec(alice)
 
         await sf.idaV1
             .approveSubscription({
@@ -266,10 +274,13 @@ describe("Action operations", async () => {
                 publisher: streamSwapDistributeApp.address,
                 overrides
             })
-            .exec(alice);
+            .exec(alice)
 
-        await streamSwapDistributeApp.connect(alice).executeAction();
+        await streamSwapDistributeApp.connect(alice).executeAction()
 
-        assert.notEqual((await outToken.balanceOf(alice.address)).toString(), "0");
-    });
-});
+        assert.notEqual(
+            (await outToken.balanceOf(alice.address)).toString(),
+            "0"
+        )
+    })
+})

@@ -1,6 +1,6 @@
-require("@nomiclabs/hardhat-truffle5");
-require("@nomiclabs/hardhat-ethers");
-require("hardhat-deploy");
+require("@nomiclabs/hardhat-truffle5")
+require("@nomiclabs/hardhat-ethers")
+require("hardhat-deploy")
 
 // require("dotenv").config();
 // const GAS_LIMIT = 8000000;
@@ -28,4 +28,4 @@ module.exports = {
     //   skipDryRun: false // Skip dry run before migrations? (default: false for public nets )
     //   },
     // },
-};
+}

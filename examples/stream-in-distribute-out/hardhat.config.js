@@ -1,6 +1,6 @@
-require("@nomiclabs/hardhat-waffle");
-require("hardhat-erc1820");
-require("hardhat-dependency-compiler");
+require("@nomiclabs/hardhat-waffle")
+require("hardhat-erc1820")
+require("hardhat-dependency-compiler")
 
 module.exports = {
     solidity: {
@@ -16,4 +16,4 @@ module.exports = {
             "@superfluid-finance/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol"
         ]
     }
-};
+}

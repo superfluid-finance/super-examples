@@ -3,17 +3,10 @@ pragma solidity ^0.8.13;
 
 import {IUniswapV2Router02} from "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import {IERC20} from "@uniswap/v2-periphery/contracts/interfaces/IERC20.sol";
-import {
-    ISuperfluid,
-    IInstantDistributionAgreementV1,
-    IConstantFlowAgreementV1,
-    StreamInDistributeOut,
-    ISuperToken
-} from "./base/StreamInDistributeOut.sol";
+import {ISuperfluid, IInstantDistributionAgreementV1, IConstantFlowAgreementV1, StreamInDistributeOut, ISuperToken} from "./base/StreamInDistributeOut.sol";
 
 /// @title Contract to Stream in, Swap, then Distribute out.
 contract StreamSwapDistribute is StreamInDistributeOut {
-
     /// @dev Uniswap V2 Router for swapping tokens.
     IUniswapV2Router02 internal immutable _router;
 
@@ -54,13 +47,7 @@ contract StreamSwapDistribute is StreamInDistributeOut {
 
         // Swap the full balance of underlying `_inToken` for the underlying `_outToken`.
         // Set the deadline for 1 minute into the future.
-        _router.swapExactTokensForTokens(
-            amountIn,
-            0,
-            path,
-            address(this),
-            type(uint256).max
-        );
+        _router.swapExactTokensForTokens(amountIn, 0, path, address(this), type(uint256).max);
 
         // Get the full balance of the underlying `_outToken`.
         // Implicitly return the `upgrade`d amount by the end of the function.

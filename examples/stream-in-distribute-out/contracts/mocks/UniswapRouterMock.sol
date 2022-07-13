@@ -4,7 +4,6 @@ pragma solidity ^0.8.13;
 import {ERC20Mock} from "./ERC20Mock.sol";
 
 contract UniswapRouterMock {
-
     // fakes a swap, mints the outToken (path[1]) to the receiver
     function swapExactTokensForTokens(
         uint256 amountIn,
@@ -12,10 +11,9 @@ contract UniswapRouterMock {
         address[] calldata path,
         address to,
         uint256 // deadline
-    ) public returns (uint[] memory) {
+    ) public returns (uint256[] memory) {
         ERC20Mock(path[0]).transferFrom(msg.sender, address(this), amountIn);
         ERC20Mock(path[1]).mint(to, amountIn);
         return new uint256[](0);
     }
-
 }
