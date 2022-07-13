@@ -41,4 +41,25 @@ While 100% test coverage is not required, it is highly recommended to get as clo
 If the project uses Typescript, be sure to extend the base tsconfig files in
 [this directory](./config).
 
+### Comments
+
+Natspec comments should always use three slashes `///` instead of the star pattern `/** */`.
+Natspec should be on every external function, modifier, public variable, event, and error. All
+parameters and return values should be documented.
+
+General comments should always use two slashes `//`.
+
+Comments that indicate a "section" of the code should use `// ---` where the dashes continue to the
+100th character in the line.
+
+Example:
+
+```
+// -------------------------------------------------------------------------------------------------
+// SECTION NAME
+
+...
+```
+
+Javascript files do not have to conform to this standard.
 
