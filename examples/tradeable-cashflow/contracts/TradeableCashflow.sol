@@ -18,6 +18,9 @@ contract TradeableCashflow is ERC721, RedirectAll {
         _mint(owner, 1);
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // BEFORE TOKEN TRANSFER CALLBACK
+
     /// @dev Before transferring the NFT, set the token receiver to be the stream receiver as
     /// defined in `RedirectAll`.
     /// @param to New receiver.

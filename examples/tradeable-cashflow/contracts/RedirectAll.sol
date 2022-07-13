@@ -68,17 +68,15 @@ contract RedirectAll is SuperAppBase {
         );
     }
 
-    // *************************************************************************
+    // ---------------------------------------------------------------------------------------------
     // EVENTS
-    // *************************************************************************
 
     /// @dev Logged when the receiver changes
     /// @param receiver The new receiver address.
     event ReceiverChanged(address indexed receiver);
 
-    // *************************************************************************
+    // ---------------------------------------------------------------------------------------------
     // MODIFIERS
-    // *************************************************************************
 
     modifier onlyHost() {
         if (msg.sender != address(cfaV1Lib.host)) revert Unauthorized();
@@ -91,9 +89,8 @@ contract RedirectAll is SuperAppBase {
         _;
     }
 
-    // *************************************************************************
+    // ---------------------------------------------------------------------------------------------
     // RECEIVER DATA
-    // *************************************************************************
 
     /// @notice Returns current receiver's address, start time, and flow rate.
     /// @return startTime Start time of the current flow.
@@ -119,9 +116,8 @@ contract RedirectAll is SuperAppBase {
         }
     }
 
-    // *************************************************************************
+    // ---------------------------------------------------------------------------------------------
     // SUPER APP CALLBACKS
-    // *************************************************************************
 
     function afterAgreementCreated(
         ISuperToken _superToken,
@@ -173,9 +169,8 @@ contract RedirectAll is SuperAppBase {
         return _updateOutflow(_ctx);
     }
 
-    // *************************************************************************
+    // ---------------------------------------------------------------------------------------------
     // INTERNAL LOGIC
-    // *************************************************************************
 
     /// @dev Changes receiver and redirects all flows to the new one. Logs `ReceiverChanged`.
     /// @param newReceiver The new receiver to redirect to.

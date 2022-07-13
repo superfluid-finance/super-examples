@@ -5,9 +5,8 @@ import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/c
 import {ISuperToken, ISuperfluid, SuperAppBase, SuperAppDefinitions} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
 import {IInstantDistributionAgreementV1, IDAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/IDAv1Library.sol";
 
-// //////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------------
 // ERRORS
-// //////////////////////////////////////////////////////////////
 
 /// @dev Thrown when the wrong token is streamed to the contract.
 error InvalidToken();
@@ -20,9 +19,8 @@ error Unauthorized();
 /// percentage of a distribution, which gets called in the `executeAction` function.
 /// @dev Inheriting contracts MUST implement `_beforeDistribution()` in inheriting contracts.
 abstract contract StreamInDistributeOut is SuperAppBase {
-    // //////////////////////////////////////////////////////////////
+    // ---------------------------------------------------------------------------------------------
     // EVENTS
-    // //////////////////////////////////////////////////////////////
 
     /// @dev Emits when action is successfully executed.
     /// @param distributionAmount Amount that gets distributed to the index.
@@ -33,9 +31,8 @@ abstract contract StreamInDistributeOut is SuperAppBase {
     /// @param amountOwed Amount owed back to the address that closed the stream.
     event ActionFailed(uint256 amountOwed);
 
-    // //////////////////////////////////////////////////////////////
+    // ---------------------------------------------------------------------------------------------
     // VARIABLES
-    // //////////////////////////////////////////////////////////////
 
     /// @dev Last Distribution timestamp. Used to compute the amount owed to an address that closes
     /// a stream but the `executeAction` call fails.
@@ -58,9 +55,8 @@ abstract contract StreamInDistributeOut is SuperAppBase {
     /// @dev Index ID for the distribution.
     uint32 internal constant INDEX_ID = 0;
 
-    // //////////////////////////////////////////////////////////////
+    // ---------------------------------------------------------------------------------------------
     // MODIFIERS
-    // //////////////////////////////////////////////////////////////
 
     /// @dev Checks every callback to validate inputs. MUST be called by the host.
     /// @param token The Super Token streamed in. MUST be the in-token.
@@ -93,9 +89,8 @@ abstract contract StreamInDistributeOut is SuperAppBase {
         _idaLib.createIndex(outToken, INDEX_ID);
     }
 
-    // //////////////////////////////////////////////////////////////
+    // ---------------------------------------------------------------------------------------------
     // ACTION EXECUTION
-    // //////////////////////////////////////////////////////////////
 
     /// @notice Executes dev-defined action and distributes the out-token.
     /// @dev DO NOT override this function, override `_beforeDistribution` instead.
@@ -130,9 +125,8 @@ abstract contract StreamInDistributeOut is SuperAppBase {
     /// @return distributionAmount Amount to distribute
     function _beforeDistribution() internal virtual returns (uint256 distributionAmount) {}
 
-    // //////////////////////////////////////////////////////////////
+    // ---------------------------------------------------------------------------------------------
     // SUPER APP CALLBACKS
-    // //////////////////////////////////////////////////////////////
 
     /// @dev Callback executed AFTER a stream is CREATED.
     /// @param token Super Token being streamed in.

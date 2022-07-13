@@ -27,6 +27,9 @@ contract StreamSwapDistribute is StreamInDistributeOut {
         IERC20(outToken.getUnderlyingToken()).approve(address(outToken), type(uint256).max);
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // BEFORE DISTRIBUTION CALLBACK
+
     /// @dev Before action callback. This swaps the `inToken` for the `outToken`, then returns the
     /// amount to distribute out in the `executeAction` function.
     /// @return distributionAmount amount to distribute after the callback.
