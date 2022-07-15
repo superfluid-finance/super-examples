@@ -63,9 +63,8 @@ contract EmploymentLoan is SuperAppBase {
     function getPaymentFlowRate() public view returns (int96 paymentFlowRate) {
         return (
             int96(
-                ((borrowAmount / paybackMonths) +
-                    ((borrowAmount * int256(int256(interestRate) / 100)) / paybackMonths)) /
-                    ((365 / 12) * 86400)
+                ((borrowAmount + ((borrowAmount * int256(interestRate)) / int256(100))) /
+                    paybackMonths) / ((365 / 12) * 86400)
             )
         );
     }

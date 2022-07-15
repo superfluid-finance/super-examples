@@ -27,15 +27,19 @@ module.exports = {
             enabled: true,
             runs: 1000
         }
-    }
+    },
 
-    // networks: {
-    //   goerli: {
-    //     url: `${process.env.GOERLI_URL}`,
-    //     accounts: [`0x${process.env.PRIVATE_KEY}`],
-    //   },
-    // },
-    // namedAccounts: {
-    //   deployer: 0
-    // }
+    networks: {
+        goerli: {
+            url: `${process.env.GOERLI_URL}`,
+            accounts: [
+                `${process.env.BORROWER_PRIVATE_KEY}`,
+                `${process.env.EMPLOYER_PRIVATE_KEY}`,
+                `${process.env.LENDER_PRIVATE_KEY}`
+            ]
+        }
+    },
+    namedAccounts: {
+        deployer: 0
+    }
 }
