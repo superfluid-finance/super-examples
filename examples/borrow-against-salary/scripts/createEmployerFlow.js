@@ -2,7 +2,7 @@ const ethers = require("ethers")
 const { Framework } = require("@superfluid-finance/sdk-core")
 require("dotenv").config()
 //here is where you'll put your loan address that you'll be interacting with
-const loanAddress = "0x6E15Bf3b8Ac5f9C8B89C15197db008cEC9fFFCD6"
+const loanAddress = "0x929B0e95f612461458bDA45D50590399443738A8"
 
 async function main() {
     //note - make sure that the proper URL is added

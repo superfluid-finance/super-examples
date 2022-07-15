@@ -285,7 +285,13 @@ contract EmploymentLoan is SuperAppBase {
         bytes calldata, /*_agreementData*/
         bytes calldata, // _cbdata,
         bytes calldata ctx
-    ) external override onlyExpected(_superToken, _agreementClass) returns (bytes memory newCtx) {
+    )
+        external
+        override
+        onlyExpected(_superToken, _agreementClass)
+        onlyHost
+        returns (bytes memory newCtx)
+    {
         newCtx = _updateOutflow(ctx);
     }
 

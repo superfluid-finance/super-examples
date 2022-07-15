@@ -3,7 +3,7 @@ const ethers = require("ethers")
 const { Framework } = require("@superfluid-finance/sdk-core")
 require("dotenv").config()
 
-const loanAddress = "0x6E15Bf3b8Ac5f9C8B89C15197db008cEC9fFFCD6" //NOTE: must change to reflect actual loan address
+const loanAddress = "0x929B0e95f612461458bDA45D50590399443738A8" //NOTE: must change to reflect actual loan address
 
 //NOTE - this should be run first to ensure that the contract has a small token balance
 
@@ -33,7 +33,7 @@ async function main() {
 
     const borrowerTransferOperation = daix.transfer({
         receiver: loanAddress,
-        amount: transferAmount //10k per month
+        amount: transferAmount // 100 dai
     })
 
     console.log("running transfer operation...")
