@@ -150,9 +150,12 @@ contract EmploymentLoan is SuperAppBase {
         //this will get us the amount of money that should be redirected to the lender out of the inflow, denominated in borrow token
 
         (, int96 borrowerInFlow, , ) = cfaV1.cfa.getFlow(borrowToken, address(this), borrower);
+
         //if the amount being sent is enough to cover loan
         if ((inFlowRate - paymentFlowRate) > 0) {
+            //if there is currently an outflow to the lender
             if (outFlowRateLender > 0) {
+                //if the borrower is receiving money
                 if (borrowerInFlow > 0) {
                     newCtx = cfaV1.updateFlowWithCtx(
                         newCtx,
@@ -172,7 +175,9 @@ contract EmploymentLoan is SuperAppBase {
             } else {
                 newCtx = cfaV1.updateFlowWithCtx(newCtx, borrower, borrowToken, inFlowRate);
             }
-        } else if ((inFlowRate - paymentFlowRate < 0) && inFlowRate > 0) {
+            //the following case is here because the lender will be paid first
+            //if there's not enough money to pay off the loan in full, the lender gets paid everything coming in to the contract
+        } else if ((inFlowRate - paymentFlowRate <= 0) && inFlowRate > 0) {
             //if inFlowRate is less than the required amount to pay interest, but there's still a flow, we'll stream it all to the lender
             if (outFlowRateLender > 0) {
                 newCtx = cfaV1.deleteFlowWithCtx(newCtx, address(this), borrower, borrowToken);
@@ -180,12 +185,6 @@ contract EmploymentLoan is SuperAppBase {
             } else {
                 //in this case, there is no lender outFlowRate..so we need to just update the outflow to borrower
                 newCtx = cfaV1.updateFlowWithCtx(newCtx, borrower, borrowToken, inFlowRate);
-            }
-        } else {
-            //in this case, there is no inFlowRate....
-            newCtx = cfaV1.deleteFlowWithCtx(newCtx, address(this), borrower, borrowToken);
-            if (outFlowRateLender > 0) {
-                newCtx = cfaV1.deleteFlowWithCtx(newCtx, address(this), lender, borrowToken);
             }
         }
     }
@@ -240,7 +239,7 @@ contract EmploymentLoan is SuperAppBase {
 
     //function to close a loan that is already completed
     function closeCompletedLoan() external {
-        require(msg.sender == lender || getTotalAmountRemaining() <= 0);
+        require(getTotalAmountRemaining() <= 0);
 
         (, int96 currentLenderFlowRate, , ) = cfaV1.cfa.getFlow(borrowToken, address(this), lender);
         cfaV1.deleteFlow(address(this), lender, borrowToken);
@@ -257,24 +256,20 @@ contract EmploymentLoan is SuperAppBase {
         (, int96 currentLenderFlowRate, , ) = cfaV1.cfa.getFlow(borrowToken, address(this), lender);
         (, int96 currentFlowRate, , ) = cfaV1.cfa.getFlow(borrowToken, address(this), borrower);
 
+        //lender may close the loan early to forgive the debt
         if (msg.sender == lender) {
             cfaV1.deleteFlow(address(this), lender, borrowToken);
             cfaV1.updateFlow(borrower, borrowToken, currentFlowRate + currentLenderFlowRate);
             loanOpen = false;
         } else {
-            if (getTotalAmountRemaining() > 0) {
-                require(amountForPayoff >= (getTotalAmountRemaining()), "insuf funds");
-                borrowToken.transferFrom(msg.sender, lender, amountForPayoff);
+            require(amountForPayoff >= (getTotalAmountRemaining()), "insuf funds");
+            require(getTotalAmountRemaining() > 0, "you should call closeOpenLoan() instead");
+            borrowToken.transferFrom(msg.sender, lender, amountForPayoff);
 
-                cfaV1.deleteFlow(address(this), lender, borrowToken);
+            cfaV1.deleteFlow(address(this), lender, borrowToken);
 
-                cfaV1.updateFlow(borrower, borrowToken, currentFlowRate + currentLenderFlowRate);
-                loanOpen = false;
-            } else {
-                cfaV1.deleteFlow(address(this), lender, borrowToken);
-                cfaV1.updateFlow(borrower, borrowToken, currentFlowRate + currentLenderFlowRate);
-                loanOpen = false;
-            }
+            cfaV1.updateFlow(borrower, borrowToken, currentFlowRate + currentLenderFlowRate);
+            loanOpen = false;
         }
     }
 
