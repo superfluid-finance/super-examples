@@ -5,7 +5,7 @@ const LoanFactoryABI =
 require("dotenv").config()
 
 //place deployed address of the loan factory here...
-const LoanFactoryAddress = "0x388dE15D91712a62210119491fA12ecb83D09E06"
+const LoanFactoryAddress = ""
 
 //place the ID of your loan here. Note that loanIds start at 1
 const LoanId = 1
