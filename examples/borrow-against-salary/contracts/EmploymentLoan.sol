@@ -10,33 +10,47 @@ import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/c
 import {SuperAppBase} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
 
 contract EmploymentLoan is SuperAppBase {
+    ///importing the CFAv1 Library to make working with streams easy
     using CFAv1Library for CFAv1Library.InitData;
     CFAv1Library.InitData public cfaV1;
 
+    ///constant used for initialization of CFAv1 and for callback modifiers
     bytes32 constant CFA_ID =
         keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1");
 
+    ///the block.timestamp of the loan start time
     uint256 public loanStartTime;
+    ///total amount that is being borrowed in the borrow token
     int256 public borrowAmount;
+    ///interest rate, in whole number. I.e. 8% interest rate would be passed as '8'
     int8 public interestRate;
+    ///number of months the loan will be paid back in. I.e. 2 years = '24'
     int256 public paybackMonths;
+    ///address of employer - must be whitelisted for this example
     address public employer;
+    ///address of borrower
     address public borrower;
+    ///account lending to borrower
     address public lender;
+
+    ///address of superfluid host contract. can be found at https://console.superfluid.finance/protocol
     ISuperfluid public host;
+    ///token being borrowed. you can find super token addresses at https://console.superfluid.finance/super-tokens
     ISuperToken public borrowToken;
 
+    ///boolean flag to track whether or not the loan is open
     bool public loanOpen;
 
     constructor(
-        int256 _borrowAmount,
-        int8 _interestRate, //annual interest rate, in whole number - i.e. 8% would be passed as 8
-        int256 _paybackMonths,
-        address _employer,
-        address _borrower,
-        ISuperToken _borrowToken,
-        ISuperfluid _host
+        int256 _borrowAmount, ///amount to be borrowed
+        int8 _interestRate, ///annual interest rate, in whole number - i.e. 8% would be passed as 8
+        int256 _paybackMonths, ///total payback months
+        address _employer, ///whitelisted employer address
+        address _borrower, ///borrower address
+        ISuperToken _borrowToken, ///super token to be used in borrowing
+        ISuperfluid _host /// address of SF host
     ) {
+        ///used in initialization of the CFA lib
         IConstantFlowAgreementV1 cfa = IConstantFlowAgreementV1(
             address(_host.getAgreementClass(CFA_ID))
         );
@@ -50,16 +64,20 @@ contract EmploymentLoan is SuperAppBase {
         host = _host;
         loanOpen = false;
 
+        ///CFAv1 library initialization
         cfaV1 = CFAv1Library.InitData(_host, cfa);
 
+        ///super app registration
         uint256 configWord = SuperAppDefinitions.APP_LEVEL_FINAL |
             SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
             SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
             SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP;
-
+        ///using host.registerApp because we are using testnet. If you would like to deploy to mainnet, this process will work differently. You'll need to use registerAppWithKey or registerAppByFactory
+        ///learn more at: https://github.com/superfluid-finance/protocol-monorepo/wiki/Super-App-White-listing-Guide
         _host.registerApp(configWord);
     }
 
+    ///used to calculate the flow rate to be sent to the lender to repay the stream
     function getPaymentFlowRate() public view returns (int96 paymentFlowRate) {
         return (
             int96(
@@ -69,6 +87,8 @@ contract EmploymentLoan is SuperAppBase {
         );
     }
 
+    ///get the total amount of super tokens that the borrower still needs to repay on the loan
+    ///used to calculate whether or not a loan may be closed
     function getTotalAmountRemaining() public view returns (uint256) {
         //if there is no time left on loan, return zero
         int256 secondsLeft = (paybackMonths * int256((365 * 86400) / 12)) -
@@ -82,7 +102,8 @@ contract EmploymentLoan is SuperAppBase {
         }
     }
 
-    //lender can use this function to send funds to the borrower and start the loan
+    ///lender can use this function to send funds to the borrower and start the loan
+    ///function also handles the splitting of flow to lender
     function lend() external {
         (, int96 employerFlowRate, , ) = cfaV1.cfa.getFlow(borrowToken, employer, address(this));
 
@@ -108,10 +129,7 @@ contract EmploymentLoan is SuperAppBase {
         loanStartTime = block.timestamp;
     }
 
-    ///If a new stream is opened, or an existing one is opened
-    //1) get expected payment flowRte, current netflowRate, etc.
-    //2) check how much the employer is sending - if they're not sending enough, revert
-
+    ///handle the case of a stream being created into the contract
     function _updateOutFlowCreate(
         bytes calldata ctx,
         int96 paymentFlowRate,
@@ -140,6 +158,9 @@ contract EmploymentLoan is SuperAppBase {
         }
     }
 
+    ///manages edge cases related to flow updates
+    ///if flowrate into the contract is enough to cover loan repayment, then just update outflow to borrower
+    ///if flowrate into contract is not enough to cover loan repayment, we need to ensure that the lender gets everything going into the contract
     function _updateOutFlowUpdate(
         bytes calldata ctx,
         int96 paymentFlowRate,
@@ -189,6 +210,8 @@ contract EmploymentLoan is SuperAppBase {
         }
     }
 
+    ///handles deletion of flow into contract
+    ///ensures that streams sent out of the contract are also stopped
     function _updateOutFlowDelete(bytes calldata ctx, int96 outFlowRateLender)
         private
         returns (bytes memory newCtx)
@@ -202,6 +225,7 @@ contract EmploymentLoan is SuperAppBase {
         newCtx = cfaV1.deleteFlowWithCtx(newCtx, address(this), borrower, borrowToken);
     }
 
+    ///handles create, update, and delete case - to be run in each callback
     function _updateOutflow(bytes calldata ctx) private returns (bytes memory newCtx) {
         newCtx = ctx;
         //this will get us the amount of money that should be redirected to the lender out of the inflow, denominated in borrow token

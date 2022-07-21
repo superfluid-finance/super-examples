@@ -2,13 +2,18 @@ const { Framework } = require("@superfluid-finance/sdk-core")
 const { assert } = require("chai")
 const { expectRevert } = require("@openzeppelin/test-helpers")
 const { ethers, web3, network } = require("hardhat")
-const daiABI = require("./abis/fDAIABI")
+// const daiABI = require("./abis/fDAIABI")
 const LoanArtifact = require("../artifacts/contracts/EmploymentLoan.sol/EmploymentLoan.json")
 const LoanABI = LoanArtifact.abi
 
 const deployFramework = require("@superfluid-finance/ethereum-contracts/scripts/deploy-framework")
 const deployTestToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-token")
 const deploySuperToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-super-token")
+
+const daiABI = [
+    "function approve(address,uint256) returns (bool)",
+    "function mint(address,uint256)"
+]
 
 const provider = web3
 

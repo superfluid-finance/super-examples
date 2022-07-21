@@ -6,8 +6,12 @@ import {ISuperfluid, ISuperToken, ISuperApp, ISuperAgreement, SuperAppDefinition
 import {EmploymentLoan} from "./EmploymentLoan.sol";
 
 contract LoanFactory {
+    ///counter which is iterated +1 for each new loan created. Note that the value begins at 0 here, but the first one will start at one
     uint256 loanId = 0;
+
+    ///mapping of loanId to the loan contract
     mapping(uint256 => EmploymentLoan) public idToLoan;
+    ///mapping of loan owner (i.e. the msg.sender on the call) to the loan Id
     mapping(address => uint256) public employmentLoanOwners;
 
     function createNewLoan(
@@ -37,10 +41,12 @@ contract LoanFactory {
         return loanId;
     }
 
+    //get loan address by Id
     function getLoanAddressByID(uint256 _id) public view returns (EmploymentLoan) {
         return idToLoan[_id];
     }
 
+    //get loan address by owner
     function getLoanByOwner(address _owner) public view returns (uint256) {
         return employmentLoanOwners[_owner];
     }
