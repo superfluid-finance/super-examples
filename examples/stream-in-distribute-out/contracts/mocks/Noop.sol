@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: AGPLv3
 pragma solidity 0.8.14;
 
-// Hi there! I'm just a little hack so that we can get InstantDistributionAgreementV1.sol into our artifacts directory
-// This way, we can easily access and deploy it locally in deploy-sf.js
-// Why is this a convenience? Well, InstantDistributionAgreementV1 needs to be deployed with the SlotsBitmapLibrary linked.
-// With ethers.getContractFactory, we have the ability to do that, but only if the InstantDistributionAgreementV1.sol is in our artifacts directly
-// Phew, so yeah that's why I'm here.
+// This is a hack to ensure the protocol is deployed properly in the testing script. The problem is,
+// the `InstantDistributionAgreementV1` contract uses an external contract, the
+// `SlotsBitmapLibrary`. The only way Hardhat facilitates external library linking is via contract
+// artifacts. However, unless the `InstantDistributionAgreementV1` contract is explicitly imported
+// into the project, it won't be compiled and the artifact won't be generated.
+
+// Hardhat has a dependency compiler extension, but developers have reported issues with usage in
+// Node 14. This should go away with the publishing of the Superfluid hardhat deployer.
+
+// https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-ethers#library-linking
 
 import {InstantDistributionAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol"; 
