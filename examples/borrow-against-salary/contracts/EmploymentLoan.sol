@@ -10,35 +10,39 @@ import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/c
 import {SuperAppBase} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
 
 contract EmploymentLoan is SuperAppBase {
-    ///importing the CFAv1 Library to make working with streams easy
+    //VARIABLES
+
+    /// @dev importing the CFAv1 Library to make working with streams easy
     using CFAv1Library for CFAv1Library.InitData;
     CFAv1Library.InitData public cfaV1;
 
-    ///constant used for initialization of CFAv1 and for callback modifiers
+    /// @dev constant used for initialization of CFAv1 and for callback modifiers
     bytes32 constant CFA_ID =
         keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1");
 
-    ///the block.timestamp of the loan start time
+    /// @dev the block.timestamp of the loan start time
     uint256 public loanStartTime;
-    ///total amount that is being borrowed in the borrow token
+
+    /// @dev total amount that is being borrowed in the borrow token
     int256 public borrowAmount;
-    ///interest rate, in whole number. I.e. 8% interest rate would be passed as '8'
+
+    /// @dev interest rate, in whole number. I.e. 8% interest rate would be passed as '8'
     int8 public interestRate;
-    ///number of months the loan will be paid back in. I.e. 2 years = '24'
+    /// @dev number of months the loan will be paid back in. I.e. 2 years = '24'
     int256 public paybackMonths;
-    ///address of employer - must be whitelisted for this example
+    /// @dev address of employer - must be whitelisted for this example
     address public employer;
-    ///address of borrower
+    /// @dev address of borrower
     address public borrower;
-    ///account lending to borrower
+    /// @dev account lending to borrower
     address public lender;
 
-    ///address of superfluid host contract. can be found at https://console.superfluid.finance/protocol
+    /// @dev address of superfluid host contract. can be found at https://console.superfluid.finance/protocol
     ISuperfluid public host;
-    ///token being borrowed. you can find super token addresses at https://console.superfluid.finance/super-tokens
+    /// @dev token being borrowed. you can find super token addresses at https://console.superfluid.finance/super-tokens
     ISuperToken public borrowToken;
 
-    ///boolean flag to track whether or not the loan is open
+    /// @dev boolean flag to track whether or not the loan is open
     bool public loanOpen;
 
     constructor(
@@ -64,20 +68,21 @@ contract EmploymentLoan is SuperAppBase {
         host = _host;
         loanOpen = false;
 
-        ///CFAv1 library initialization
+        /// @dev CFAv1 library initialization
         cfaV1 = CFAv1Library.InitData(_host, cfa);
 
-        ///super app registration
+        /// @dev super app registration
         uint256 configWord = SuperAppDefinitions.APP_LEVEL_FINAL |
             SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
             SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
             SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP;
-        ///using host.registerApp because we are using testnet. If you would like to deploy to mainnet, this process will work differently. You'll need to use registerAppWithKey or registerAppByFactory
+        //using host.registerApp because we are using testnet. If you would like to deploy to mainnet, this process will work differently. You'll need to use registerAppWithKey or registerAppByFactory
         ///learn more at: https://github.com/superfluid-finance/protocol-monorepo/wiki/Super-App-White-listing-Guide
         _host.registerApp(configWord);
     }
 
-    ///used to calculate the flow rate to be sent to the lender to repay the stream
+    /// @dev used to calculate the flow rate to be sent to the lender to repay the stream
+    /// @notice returns the flow rate to be paid to the lender
     function getPaymentFlowRate() public view returns (int96 paymentFlowRate) {
         return (
             int96(
@@ -87,8 +92,11 @@ contract EmploymentLoan is SuperAppBase {
         );
     }
 
-    ///get the total amount of super tokens that the borrower still needs to repay on the loan
-    ///used to calculate whether or not a loan may be closed
+    ///FUNCTIONS & CORE LOGIC
+
+    /// @dev get the total amount of super tokens that the borrower still needs to repay on the loan
+    /// @notice will return total number of remaining tokens to be paid on the loan in wei
+    //used to calculate whether or not a loan may be closed
     function getTotalAmountRemaining() public view returns (uint256) {
         //if there is no time left on loan, return zero
         int256 secondsLeft = (paybackMonths * int256((365 * 86400) / 12)) -
@@ -102,8 +110,8 @@ contract EmploymentLoan is SuperAppBase {
         }
     }
 
-    ///lender can use this function to send funds to the borrower and start the loan
-    ///function also handles the splitting of flow to lender
+    ///@dev lender can use this function to send funds to the borrower and start the loan
+    //function also handles the splitting of flow to lender
     function lend() external {
         (, int96 employerFlowRate, , ) = cfaV1.cfa.getFlow(borrowToken, employer, address(this));
 
@@ -129,7 +137,11 @@ contract EmploymentLoan is SuperAppBase {
         loanStartTime = block.timestamp;
     }
 
-    ///handle the case of a stream being created into the contract
+    ///@dev handle the case of a stream being created into the contract
+    ///@param ctx the context value passed into updateOutflow in super app callbacks
+    ///@param paymentFlowRate the flow rate to be sent to the lender if a loan were to activate (this could be the same value as outFlowRate)
+    ///@param inFlowRate the flow rate sent into the contract from the employer
+    //used within the _updateOutflow function which is ultimately called in the callbacks
     function _updateOutFlowCreate(
         bytes calldata ctx,
         int96 paymentFlowRate,
@@ -158,9 +170,14 @@ contract EmploymentLoan is SuperAppBase {
         }
     }
 
-    ///manages edge cases related to flow updates
-    ///if flowrate into the contract is enough to cover loan repayment, then just update outflow to borrower
-    ///if flowrate into contract is not enough to cover loan repayment, we need to ensure that the lender gets everything going into the contract
+    ///@dev manages edge cases related to flow updates
+    ///to be used within _updateOutflow function
+    ///@param ctx context passed by super app callback
+    ///@param paymentFlowRate the flow rate to be sent to the lender if a loan were to activate (this could be the same value as outFlowRate)
+    ///@param outFlowRateLender the flow rate being sent to lender from the contract
+    ///@param inFlowRate the flow rate sent into the contract from the employer
+    //if flowrate into the contract is enough to cover loan repayment, then just update outflow to borrower
+    //if flowrate into contract is not enough to cover loan repayment, we need to ensure that the lender gets everything going into the contract
     function _updateOutFlowUpdate(
         bytes calldata ctx,
         int96 paymentFlowRate,
@@ -210,7 +227,9 @@ contract EmploymentLoan is SuperAppBase {
         }
     }
 
-    ///handles deletion of flow into contract
+    ///@dev handles deletion of flow into contract
+    ///@param ctx context passed by super app callback
+    ///@param outFlowRateLender the flow rate being sent to lender from the contract
     ///ensures that streams sent out of the contract are also stopped
     function _updateOutFlowDelete(bytes calldata ctx, int96 outFlowRateLender)
         private
@@ -225,7 +244,8 @@ contract EmploymentLoan is SuperAppBase {
         newCtx = cfaV1.deleteFlowWithCtx(newCtx, address(this), borrower, borrowToken);
     }
 
-    ///handles create, update, and delete case - to be run in each callback
+    ///@dev handles create, update, and delete case - to be run in each callback
+    ///@param ctx context passed by super app callback
     function _updateOutflow(bytes calldata ctx) private returns (bytes memory newCtx) {
         newCtx = ctx;
         //this will get us the amount of money that should be redirected to the lender out of the inflow, denominated in borrow token
@@ -273,7 +293,8 @@ contract EmploymentLoan is SuperAppBase {
         loanOpen = false;
     }
 
-    //allows lender or borrower to close a loan
+    ///@dev allows lender or borrower to close a loan that is not yet finished
+    ///@param amountForPayoff the amount to be paid right now to close the loan in wei
     //if the loan is paid off, or if the loan is closed by the lender, pass 0
     //if the loan is not yet paid off, pass in the required amount to close loan
     function closeOpenLoan(uint256 amountForPayoff) external {
@@ -297,6 +318,9 @@ contract EmploymentLoan is SuperAppBase {
         }
     }
 
+    //SUPER APP CALLBACKS
+
+    ///@dev super app after agreement created callback
     function afterAgreementCreated(
         ISuperToken _superToken,
         address _agreementClass,
@@ -314,6 +338,7 @@ contract EmploymentLoan is SuperAppBase {
         newCtx = _updateOutflow(ctx);
     }
 
+    ///@dev super app after agreement updated callback
     function afterAgreementUpdated(
         ISuperToken _superToken,
         address _agreementClass,
@@ -331,6 +356,7 @@ contract EmploymentLoan is SuperAppBase {
         newCtx = _updateOutflow(ctx);
     }
 
+    ///@dev super app after agreement terminated callback
     function afterAgreementTerminated(
         ISuperToken _superToken,
         address _agreementClass,
@@ -345,19 +371,30 @@ contract EmploymentLoan is SuperAppBase {
         return _updateOutflow(ctx);
     }
 
+    //MODIFIERS
+
+    ///@dev checks that only the CFA is being used
+    ///@param agreementClass the address of the agreement which triggers callback
     function _isCFAv1(address agreementClass) private view returns (bool) {
         return ISuperAgreement(agreementClass).agreementType() == CFA_ID;
     }
 
+    ///@dev checks that only the borrowToken is used when sending streams into this contract
+    ///@param superToken the token being streamed into the contract
     function _isSameToken(ISuperToken superToken) private view returns (bool) {
         return address(superToken) == address(borrowToken);
     }
 
+    ///@dev ensures that only the host can call functions where this is implemented
+    //for usage in callbacks only
     modifier onlyHost() {
         require(msg.sender == address(cfaV1.host), "Only host can call callback");
         _;
     }
 
+    ///@dev used to implement _isSameToken and _isCFAv1 modifiers
+    ///@param superToken used when sending streams into contract to trigger callbacks
+    ///@param agreementClass the address of the agreement which triggers callback
     modifier onlyExpected(ISuperToken superToken, address agreementClass) {
         require(_isSameToken(superToken), "RedirectAll: not accepted token");
         require(_isCFAv1(agreementClass), "RedirectAll: only CFAv1 supported");

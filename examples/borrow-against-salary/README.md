@@ -1,4 +1,4 @@
-## Borrowing against a Superfluid salary stream
+# Borrowing against a Superfluid salary stream
 
 This example is a base implementation of a loan contract which is tied to a salary stream.
 
