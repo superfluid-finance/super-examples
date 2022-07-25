@@ -8,7 +8,7 @@ This guide is meant to service developers of all skill levels, but we recommend 
 
 This example also comes with a Youtube video you can use to follow along! You can watch it here: https://www.youtube.com/watch?v=xe7j06A2dQo
 
-# **What is the Instant Distribution Agreement (IDA)?**
+## **What is the Instant Distribution Agreement (IDA)?**
 
 **But before going any further, we highly recommend you go through this [conceptual breakdown](https://docs.superfluid.finance/superfluid/protocol-overview/in-depth-overview/super-agreements/instant-distribution-agreement-ida) from our docs that thoroughly explains the IDA**. This will get you comfortable with the terminology and core concepts which you’ll apply through code in this tutorial.
 
@@ -22,7 +22,7 @@ For instance, if there were 3 outstanding units, 1 held by account A and 3 held 
 
 ---
 
-# Token Spreader Example
+## Token Spreader Example
 
 To help demo using the IDA in a smart contract, we’re going to write a ✨ **Token Spreader contract** ✨
 
@@ -241,7 +241,7 @@ Here is the functionality we introduce where accounts can work with their shares
 
 ---
 
-# Setting up Hardhat Config and Environment
+## Setting up Hardhat Config and Environment
 
 Before we try out testing and scripting, we need to get our config and environment set. Let’s start with the environment.
 
@@ -292,7 +292,7 @@ mocha: {
 }
 ```
 
-# Setting Up the Test Suite
+## Setting Up the Test Suite
 
 Great, so our smart contract and our environment is set up. Let’s get to work testing it! Normally, we’d want to practice test-driven development (TDD) where we write the tests first and then write the Solidity after, but this sequence makes for a nicer tutorial 😄
 
@@ -475,7 +475,7 @@ This way the Super Tokens that TokenSpreader distributes actually show up in eac
 });
 ```
 
-# Unit Testing
+## Unit Testing
 
 So, you want to make sure that after certain actions have been done to the contract and units have been issued/deleted/etc., that once `distribute()` is called, everyone’s getting the right amount of tokens.
 
@@ -577,7 +577,7 @@ It’s too much for this tutorial to walk through the entire test suite. So havi
 
 ---
 
-# Deploying and using the TokenSpreader with Hardhat scripts
+## Deploying and using the TokenSpreader with Hardhat scripts
 
 Ok, so we’ve got our TokenSpreader set and we’ve written some tests. Let’s hop in the **scripts** folder get to work deploying it to Goerli and then using some scripts to interact with them.
 
@@ -662,7 +662,7 @@ Now, run the viewStatus.js script again and you’ll see that TokenSpreader’s 
 
 ![Image](https://user-images.githubusercontent.com/62968241/174394290-8b03e3fd-6d5d-4cd0-ad79-795f03857671.png)
 
-# That’s all, folks!
+## That’s all, folks!
 
 Through this tutorial, you have:
 

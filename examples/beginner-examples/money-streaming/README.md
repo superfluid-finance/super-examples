@@ -1,4 +1,5 @@
-### Welcome to the Money Router - a basic example to get you started with the Superfluid Constant Flow Agreement
+# Welcome to the Money Router 
+### A basic example to get you started with the Superfluid Constant Flow Agreement
 
 This example has a Youtube walkthrough to go along with it! You can watch it here: https://www.youtube.com/watch?v=1mwbYQ429IU
 
