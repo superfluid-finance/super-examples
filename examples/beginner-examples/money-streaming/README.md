@@ -1,5 +1,7 @@
 ### Welcome to the Money Router - a basic example to get you started with the Superfluid Constant Flow Agreement
 
+This example has a Youtube walkthrough to go along with it! You can watch it here: https://www.youtube.com/watch?v=1mwbYQ429IU
+
 1) Run `yarn` to install 
 2) `yarn build` to compile contracts
 3) `yarn test` to run the test suite.
