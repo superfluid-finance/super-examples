@@ -6,6 +6,8 @@ Here’s the place to get started building with Superfluid’s [Instant Distribu
 
 This guide is meant to service developers of all skill levels, but we recommend having some competence with Solidity and Javascript before getting started. We also recommend reading through our In-Depth [Protocol Overview](https://docs.superfluid.finance/superfluid/protocol-overview/in-depth-overview), and looking through our [Interactive Tutorials](https://docs.superfluid.finance/superfluid/developers/interactive-tutorials) in the docs.
 
+This example also comes with a Youtube video you can use to follow along! You can watch it here: https://www.youtube.com/watch?v=xe7j06A2dQo
+
 # **What is the Instant Distribution Agreement (IDA)?**
 
 **But before going any further, we highly recommend you go through this [conceptual breakdown](https://docs.superfluid.finance/superfluid/protocol-overview/in-depth-overview/super-agreements/instant-distribution-agreement-ida) from our docs that thoroughly explains the IDA**. This will get you comfortable with the terminology and core concepts which you’ll apply through code in this tutorial.
