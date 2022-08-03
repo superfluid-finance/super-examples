@@ -1,8 +1,8 @@
 {
     "name": "examples",
     "version": "1.0.0",
-    "repository": "git@github.com:JoshuaTrujillo15/examples.git",
-    "author": "Joshua Trujillo <Jtriley15@gmail.com>",
+    "repository": "git@github.com:superfluid-finance/super-examples.git",
+    "author": "superfluid-finance",
     "license": "MIT",
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.30.6",
