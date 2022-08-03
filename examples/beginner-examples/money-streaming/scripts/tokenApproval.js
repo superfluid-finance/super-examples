@@ -37,8 +37,9 @@ async function main() {
 
   //approve contract to spend 1000 daix
   const moneyRouterApproval = daix.approve({
-      receiver: moneyRouter.address,
-      amount: ethers.utils.parseEther("1000")
+    receiver: moneyRouterAddress,
+    superToken: daix.address,
+    amount: ethers.utils.parseEther("1000")
   });
 
   await moneyRouterApproval.exec(signers[0]).then(function (tx) {
