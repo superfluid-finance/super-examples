@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPLv3
-pragma solidity 0.8.14;
+pragma solidity ^0.8.14;
 
 // This is a hack to ensure the protocol is deployed properly in the testing script. The problem is,
 // the `InstantDistributionAgreementV1` contract uses an external contract, the
