@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPLv3
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.14;
 
 import {IUniswapV2Router02} from "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import {IERC20} from "@uniswap/v2-periphery/contracts/interfaces/IERC20.sol";
