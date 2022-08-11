@@ -4,7 +4,7 @@
 set -xe
 
 # build contracts
-yarn
+yarn install
 yarn build
 
 # test contracts

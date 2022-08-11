@@ -4,7 +4,7 @@
 set -xe
 
 # build contracts
-yarn install --frozen-lockfile
+yarn install
 yarn build
 
 # test contracts
