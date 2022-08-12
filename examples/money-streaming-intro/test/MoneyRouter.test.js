@@ -1,18 +1,10 @@
 const { Framework } = require("@superfluid-finance/sdk-core")
-const { assert, expect } = require("chai")
-const { ethers, web3 } = require("hardhat")
-const daiABI = [
-    "function approve(address,uint256) returns (bool)",
-    "function mint(address,uint256)"
-]
-const deployFramework = require("@superfluid-finance/ethereum-contracts/scripts/deploy-framework")
-const deployTestToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-token")
-const deploySuperToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-super-token")
+const { expect } = require("chai")
+const { ethers } = require("hardhat")
 
-const provider = web3
+const { deployFramework, deployWrapperSuperToken } = require("./util/deploy-sf")
 
-let accounts
-
+let contractsFramework
 let sf
 let dai
 let daix
@@ -21,31 +13,22 @@ let account1
 let account2
 let moneyRouter
 
-const errorHandler = err => {
-    if (err) throw err
-}
-
 before(async function () {
     //get accounts from hardhat
-    accounts = await ethers.getSigners()
+    ;[owner, account1, account2] = await ethers.getSigners()
 
     //deploy the framework
-    await deployFramework(errorHandler, {
-        web3,
-        from: accounts[0].address
-    })
+    contractsFramework = deployFramework(owner)
 
-    //deploy a fake erc20 token for borrow token
-    let fDAIAddress = await deployTestToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: accounts[0].address
-    })
+    const tokenPair = deployWrapperSuperToken(
+        owner,
+        contractsFramework.superTokenFactory,
+        "fDAI",
+        "fDAI"
+    )
 
-    //deploy a fake erc20 wrapper super token around the fDAI token
-    let fDAIxAddress = await deploySuperToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: accounts[0].address
-    })
+    dai = tokenPair.underlyingToken
+    daix = tokenPair.superToken
 
     //initialize the superfluid framework...put custom and web3 only bc we are using hardhat locally
     sf = await Framework.create({
@@ -55,32 +38,8 @@ before(async function () {
         protocolReleaseVersion: "test"
     })
 
-    owner = await sf.createSigner({
-        signer: accounts[0],
-        provider: provider
-    })
+    let MoneyRouter = await ethers.getContractFactory("MoneyRouter", owner)
 
-    account1 = await sf.createSigner({
-        signer: accounts[1],
-        provider: provider
-    })
-
-    account2 = await sf.createSigner({
-        signer: accounts[2],
-        provider: provider
-    })
-
-    //use the framework to get the super toen
-    daix = await sf.loadSuperToken("fDAIx")
-
-    //get the contract object for the erc20 token
-    let daiAddress = daix.underlyingToken.address
-    dai = new ethers.Contract(daiAddress, daiABI, accounts[0])
-
-    let MoneyRouter = await ethers.getContractFactory(
-        "MoneyRouter",
-        accounts[0]
-    )
     moneyRouter = await MoneyRouter.deploy(
         sf.settings.config.hostAddress,
         owner.address
@@ -91,17 +50,11 @@ before(async function () {
 beforeEach(async function () {
     console.log("Topping up account balances...")
 
-    await dai
-        .connect(owner)
-        .mint(owner.address, ethers.utils.parseEther("10000"))
+    await dai.mint(owner.address, ethers.utils.parseEther("10000"))
 
-    await dai
-        .connect(account1)
-        .mint(account1.address, ethers.utils.parseEther("10000"))
+    await dai.mint(account1.address, ethers.utils.parseEther("10000"))
 
-    await dai
-        .connect(account2)
-        .mint(account2.address, ethers.utils.parseEther("1000"))
+    await dai.mint(account2.address, ethers.utils.parseEther("1000"))
 
     await dai
         .connect(owner)
@@ -133,17 +86,17 @@ describe("Money Router", function () {
         expect(await moneyRouter.owner()).to.equal(owner.address)
     })
     it("Access Control #2 - Should allow you to add account to account list", async function () {
-        await moneyRouter.connect(owner).whitelistAccount(account1.address)
+        await moneyRouter.whitelistAccount(account1.address)
 
         expect(await moneyRouter.accountList(account1.address), true)
     })
     it("Access Control #3 - Should allow for removing accounts from whitelist", async function () {
-        await moneyRouter.connect(owner).removeAccount(account1.address)
+        await moneyRouter.removeAccount(account1.address)
 
         expect(await moneyRouter.accountList(account1.address), true)
     })
     it("Access Control #4 - Should allow for change in ownership", async function () {
-        await moneyRouter.connect(owner).changeOwner(account1.address)
+        await moneyRouter.changeOwner(account1.address)
 
         expect(await moneyRouter.owner(), account1.address)
     })
@@ -156,9 +109,10 @@ describe("Money Router", function () {
             amount: ethers.utils.parseEther("100")
         })
         await daixApproveOperation.exec(owner)
-        await moneyRouter
-            .connect(owner)
-            .sendLumpSumToContract(daix.address, ethers.utils.parseEther("100"))
+        await moneyRouter.sendLumpSumToContract(
+            daix.address,
+            ethers.utils.parseEther("100")
+        )
 
         let contractDAIxBalance = await daix.balanceOf({
             account: moneyRouter.address,

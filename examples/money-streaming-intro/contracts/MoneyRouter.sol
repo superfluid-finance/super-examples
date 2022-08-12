@@ -1,21 +1,17 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.14;
 
-import "hardhat/console.sol";
-
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-
 import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-
 import {ISuperfluidToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol";
-
 import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-
 import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol";
 
 contract MoneyRouter {
+    // ---------------------------------------------------------------------------------------------
+    // STATE VARIABLES
+
     ///owner of contract
     address public owner;
 
@@ -26,11 +22,11 @@ contract MoneyRouter {
     ///mapping list of whitelisted accounts
     mapping(address => bool) public accountList;
 
-    ///constructor requires the address of the superfluid host, which can be found for each network at https://console.superfluid.finance/protocol
+    ///constructor requires the address of the superfluid host, which can be found for each network
+    // at https://console.superfluid.finance/protocol
     ///owner is the initial owner of the contract
     constructor(ISuperfluid host, address _owner) {
         assert(address(host) != address(0));
-        console.log("Deploying a Money Router with owner:", owner);
         owner = _owner;
 
         //initialize InitData struct, and set equal to cfaV1
@@ -78,7 +74,8 @@ contract MoneyRouter {
         cfaV1.createFlowByOperator(msg.sender, address(this), token, flowRate);
     }
 
-    ///update an existing stream being sent into the contract by msg.sender. NOTE: this requires the contract to be a flowOperator for the caller
+    ///update an existing stream being sent into the contract by msg.sender. NOTE: this requires the
+    // contract to be a flowOperator for the caller
     function updateFlowIntoContract(ISuperfluidToken token, int96 newFlowRate) external {
         require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
 
