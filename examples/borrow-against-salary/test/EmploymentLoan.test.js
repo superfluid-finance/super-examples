@@ -1,99 +1,48 @@
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { assert } = require("chai")
-const { expectRevert } = require("@openzeppelin/test-helpers")
-const { ethers, web3, network } = require("hardhat")
-// const daiABI = require("./abis/fDAIABI")
+const { ethers, network } = require("hardhat")
 const LoanArtifact = require("../artifacts/contracts/EmploymentLoan.sol/EmploymentLoan.json")
-const LoanABI = LoanArtifact.abi
+const { deployFramework, deployWrapperSuperToken } = require("./util/deploy-sf")
 
-const deployFramework = require("@superfluid-finance/ethereum-contracts/scripts/deploy-framework")
-const deployTestToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-token")
-const deploySuperToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-super-token")
-
-const daiABI = [
-    "function approve(address,uint256) returns (bool)",
-    "function mint(address,uint256)"
-]
-
-const provider = web3
-
-let accounts
-
+let contractsFramework
 let sf
 let dai
 let daix
 let borrower
 let lender
 let employer
-let outsider
 let loanFactory
 let employmentLoan
 
-const errorHandler = err => {
-    if (err) throw err
-}
+const alotOfEth = ethers.utils.parseEther("100000")
 
 before(async function () {
     //get accounts from hardhat
-    accounts = await ethers.getSigners()
+    ;[admin, borrower, lender, employer] = await ethers.getSigners()
 
-    //deploy the framework
-    await deployFramework(errorHandler, {
-        web3,
-        from: accounts[0].address
-    })
-
-    //deploy a fake erc20 token for borrow token
-    let fDAIAddress = await deployTestToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: accounts[0].address
-    })
-
-    //deploy a fake erc20 wrapper super token around the fDAI token
-    let fDAIxAddress = await deploySuperToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: accounts[0].address
-    })
+    contractsFramework = await deployFramework(admin)
 
     //initialize the superfluid framework...put custom and web3 only bc we are using hardhat locally
     sf = await Framework.create({
         chainId: 31337,
-        provider,
-        resolverAddress: process.env.RESOLVER_ADDRESS, //this is how you get the resolver address
+        provider: admin.provider,
+        resolverAddress: contractsFramework.resolver,
         protocolReleaseVersion: "test"
     })
 
-    borrower = await sf.createSigner({
-        signer: accounts[0],
-        provider: provider
-    })
-
-    lender = await sf.createSigner({
-        signer: accounts[1],
-        provider: provider
-    })
-
-    employer = await sf.createSigner({
-        signer: accounts[2],
-        provider: provider
-    })
-
-    outsider = await sf.createSigner({
-        signer: accounts[3],
-        provider: provider
-    })
-    //use the framework to get the super toen
-    daix = await sf.loadSuperToken("fDAIx")
-
-    //get the contract object for the erc20 token
-    let daiAddress = daix.underlyingToken.address
-    dai = new ethers.Contract(daiAddress, daiABI, accounts[0])
-
-    let LoanFactory = await ethers.getContractFactory(
-        "LoanFactory",
-        accounts[0]
+    const tokenDeployment = await deployWrapperSuperToken(
+        admin,
+        contractsFramework.superTokenFactory,
+        "fDAI",
+        "fDAI"
     )
+
+    dai = tokenDeployment.underlyingToken
+    daix = tokenDeployment.superToken
+
+    const LoanFactory = await ethers.getContractFactory("LoanFactory", admin)
     loanFactory = await LoanFactory.deploy()
+
     await loanFactory.deployed()
 
     let borrowAmount = ethers.utils.parseEther("1000")
@@ -112,57 +61,36 @@ before(async function () {
 
     let loanAddress = await loanFactory.idToLoan(1)
 
-    employmentLoan = new ethers.Contract(loanAddress, LoanABI, accounts[0])
+    employmentLoan = new ethers.Contract(loanAddress, LoanArtifact.abi, admin)
 })
 
 beforeEach(async function () {
-    console.log("Topping up account balances...")
+    await dai.mint(admin.address, alotOfEth)
 
-    await dai
-        .connect(employer)
-        .mint(employer.address, ethers.utils.parseEther("10000"))
+    await dai.mint(employer.address, alotOfEth)
 
-    await dai
-        .connect(lender)
-        .mint(lender.address, ethers.utils.parseEther("10000"))
+    await dai.mint(lender.address, alotOfEth)
 
-    await dai
-        .connect(employer)
-        .approve(daix.address, ethers.utils.parseEther("10000"))
-    await dai
-        .connect(lender)
-        .approve(daix.address, ethers.utils.parseEther("10000"))
+    await dai.approve(daix.address, alotOfEth)
 
-    const employerDaixUpgradeOperation = daix.upgrade({
-        amount: ethers.utils.parseEther("10000")
-    })
-    const lenderDaixUpgradeOperation = daix.upgrade({
-        amount: ethers.utils.parseEther("10000")
-    })
+    await dai.connect(employer).approve(daix.address, alotOfEth)
 
-    await employerDaixUpgradeOperation.exec(employer)
-    await lenderDaixUpgradeOperation.exec(lender)
+    await dai.connect(lender).approve(daix.address, alotOfEth)
+
+    await daix.upgrade(alotOfEth)
+
+    await daix.connect(employer).upgrade(alotOfEth)
+
+    await daix.connect(lender).upgrade(alotOfEth)
+
+    await daix.transfer(employmentLoan.address, alotOfEth)
 })
 
 describe("employment loan deployment", async function () {
-    it("0 deploys correctly", async () => {
+    it("0 deploys correctly", async function () {
         let borrowAmount = ethers.utils.parseEther("1000")
         let interest = 10
         let paybackMonths = 12
-
-        console.log(
-            `
-        New Loan Generated...
-        Loan Address: ${employmentLoan.address}
-        Borrow Amount: ${await employmentLoan.borrowAmount()}
-        Interest Rate: ${await employmentLoan.interestRate()}
-        Payback Months: ${await employmentLoan.paybackMonths()}
-        Borrow Token: ${await employmentLoan.borrowToken()}
-        Borrow Amount: ${await employmentLoan.borrowAmount()}
-        Employer: ${await employmentLoan.employer()}
-        Borrower: ${await employmentLoan.borrower()}
-        `
-        )
 
         let actualBorrowAmount = await employmentLoan.borrowAmount()
         let actualInterest = await employmentLoan.interestRate()
@@ -202,12 +130,7 @@ describe("employment loan deployment", async function () {
 })
 
 describe("Loan is initialized properly", async function () {
-    it("1 First flow into contract works correctly", async () => {
-        let loadEmployerBalance = await daix.balanceOf({
-            account: employer.address,
-            providerOrSigner: borrower
-        })
-
+    it("1 First flow into contract works correctly", async function () {
         let employerFlowOperation = sf.cfaV1.createFlow({
             superToken: daix.address,
             receiver: employmentLoan.address,
@@ -234,10 +157,6 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: employer
         })
 
-        console.log("employer flow into contract", employerNetFlowRate)
-        console.log("borrower flow from contract", borrowerNetFlowRate)
-        console.log("contract net flow rate", contractNetFlowRate)
-
         assert.equal(employerNetFlowRate, -3215019290123456)
 
         assert.equal(borrowerNetFlowRate, 3215019290123456)
@@ -245,17 +164,8 @@ describe("Loan is initialized properly", async function () {
         assert.equal(contractNetFlowRate, 0)
     })
 
-    it("2 - Flow Reduction works correctly", async () => {
+    it("2 - Flow Reduction works correctly", async function () {
         //testing reduction in flow
-
-        const getEmployerContractFlow = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employer.address,
-            receiver: employmentLoan.address,
-            providerOrSigner: employer
-        })
-
-        console.log("current flow is.....", getEmployerContractFlow.flowRate)
 
         const reduceFlowOperation = sf.cfaV1.updateFlow({
             superToken: daix.address,
@@ -272,8 +182,6 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: employer
         })
 
-        console.log("New Employer flow rate:", newEmployerFlowRate.flowRate)
-
         const newBorrowerFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
             sender: employmentLoan.address,
@@ -281,15 +189,11 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: borrower
         })
 
-        console.log("New Borrower flow rate: ", newBorrowerFlowRate.flowRate)
-
         const newContractFlowRate = await sf.cfaV1.getNetFlow({
             superToken: daix.address,
             account: employmentLoan.address,
             providerOrSigner: employer
         })
-
-        console.log("New contract flow rate:", newContractFlowRate)
 
         assert.equal(
             newEmployerFlowRate.flowRate,
@@ -306,17 +210,12 @@ describe("Loan is initialized properly", async function () {
         assert.equal(newContractFlowRate, 0, "contract is not balanced")
     })
 
-    it("3 Lend Function works correctly", async () => {
+    it("3 Lend Function works correctly", async function () {
         //should reduce flow rate, test to ensure failure, then test update flow rate
         //try calling lend - should revert
         const borrowAmount = await employmentLoan.borrowAmount()
 
-        const lenderApprovalOperation = daix.approve({
-            receiver: employmentLoan.address,
-            amount: borrowAmount
-        })
-
-        await lenderApprovalOperation.exec(lender)
+        await daix.connect(lender).approve(employmentLoan.address, borrowAmount)
 
         const employerUpdateFlowOperation = sf.cfaV1.updateFlow({
             superToken: daix.address,
@@ -326,15 +225,9 @@ describe("Loan is initialized properly", async function () {
 
         await employerUpdateFlowOperation.exec(employer)
 
-        let borrowerBalBefore = await daix.balanceOf({
-            account: borrower.address,
-            providerOrSigner: borrower
-        })
+        let borrowerBalBefore = await daix.balanceOf(borrower.address)
 
-        let lenderBalBefore = await daix.balanceOf({
-            account: lender.address,
-            providerOrSigner: lender
-        })
+        let lenderBalBefore = await daix.balanceOf(lender.address)
 
         let borrowerFlowRateBefore = await sf.cfaV1.getFlow({
             superToken: daix.address,
@@ -343,28 +236,11 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: borrower
         })
 
-        let lenderFlowRateBefore = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employmentLoan.address,
-            receiver: lender.address,
-            providerOrSigner: lender
-        })
-
-        console.log("borrow bal before", borrowerBalBefore)
-        console.log("lender bal before", lenderBalBefore)
-        console.log("borrow amount", borrowAmount.toString())
-
         await employmentLoan.connect(lender).lend()
 
-        let lenderBalAfter = await daix.balanceOf({
-            account: lender.address,
-            providerOrSigner: lender
-        })
+        let lenderBalAfter = await daix.balanceOf(lender.address)
 
-        let borrowerBalAfter = await daix.balanceOf({
-            account: borrower.address,
-            providerOrSigner: borrower
-        })
+        let borrowerBalAfter = await daix.balanceOf(borrower.address)
 
         let borrowerFlowRateAfter = await sf.cfaV1.getFlow({
             superToken: daix.address,
@@ -391,7 +267,6 @@ describe("Loan is initialized properly", async function () {
         let loanStartedTime = await employmentLoan.loanStartTime()
 
         let expectedFlowRate = await employmentLoan.getPaymentFlowRate()
-        console.log("expected lender flow rate", expectedFlowRate.flowRate)
 
         assert.isAtLeast(
             Number(borrowerBalBefore + borrowAmount),
@@ -436,16 +311,7 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("4 - flow is reduced", async () => {
-        const lenderInitialFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employmentLoan.address,
-            receiver: lender.address,
-            providerOrSigner: lender
-        })
-
-        console.log(lenderInitialFlowRate.flowRate)
-
+    it("4 - flow is reduced", async function () {
         const updateFlowOp = await sf.cfaV1.updateFlow({
             superToken: daix.address,
             receiver: employmentLoan.address,
@@ -454,33 +320,12 @@ describe("Loan is initialized properly", async function () {
 
         await updateFlowOp.exec(employer)
 
-        const newEmployerFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employer.address,
-            receiver: employmentLoan.address,
-            providerOrSigner: employer
-        })
-
-        console.log("updated contract flow rate", newEmployerFlowRate.flowRate)
-
-        const newBorrowerNetflow = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
-            account: borrower.address,
-            providerOrSigner: borrower
-        })
-
-        console.log("new borrower net flow:", newBorrowerNetflow)
-
         const borrowFlowToLender = await sf.cfaV1.getFlow({
             superToken: daix.address,
             sender: employmentLoan.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
-        console.log(
-            "borrow token amount sent to lender: ",
-            borrowFlowToLender.flowRate
-        )
 
         const borrowerNewFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
@@ -488,8 +333,6 @@ describe("Loan is initialized properly", async function () {
             receiver: borrower.address,
             providerOrSigner: borrower
         })
-
-        console.log("lender init flowRate: ", lenderInitialFlowRate.flowRate)
 
         assert.equal(
             borrowFlowToLender.flowRate,
@@ -504,30 +347,14 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("5 - should allow a loan to become solvent again after a flow is reduced", async () => {
-        const borrowTokenFlowToLenderBefore = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employmentLoan.address,
-            receiver: lender.address,
-            providerOrSigner: lender
-        })
-        //should be 10000
-
-        const borrowTokenFlowToBorrowerBefore = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employmentLoan.address,
-            receiver: borrower.address,
-            providerOrSigner: lender
-        })
-        //should be 0
-
+    it("5 - should allow a loan to become solvent again after a flow is reduced", async function () {
         let employerFlowOperation = sf.cfaV1.updateFlow({
             superToken: daix.address,
             receiver: employmentLoan.address,
             flowRate: "3215019290123456" // ~100k per year in usd
         })
 
-        await employerFlowOperation.exec(employer).then(console.log)
+        await employerFlowOperation.exec(employer)
 
         const employerFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
@@ -572,14 +399,8 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("6 - flow is deleted", async () => {
+    it("6 - flow is deleted", async function () {
         //delete flow
-        const lenderInitialFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employmentLoan.address,
-            receiver: lender.address,
-            providerOrSigner: lender
-        })
 
         const deleteFlowOp = await sf.cfaV1.deleteFlow({
             superToken: daix.address,
@@ -596,26 +417,12 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: employer
         })
 
-        console.log("updated contract flow rate", newEmployerFlowRate.flowRate)
-
-        const newBorrowerNetflow = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
-            account: borrower.address,
-            providerOrSigner: borrower
-        })
-
-        console.log("new borrower net flow:", newBorrowerNetflow)
-
         const borrowFlowToLender = await sf.cfaV1.getFlow({
             superToken: daix.address,
             sender: employmentLoan.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
-        console.log(
-            "borrow token amount sent to lender: ",
-            borrowFlowToLender.flowRate
-        )
 
         const borrowerNewFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
@@ -623,8 +430,6 @@ describe("Loan is initialized properly", async function () {
             receiver: borrower.address,
             providerOrSigner: borrower
         })
-
-        console.log("lender init flowRate: ", lenderInitialFlowRate.flowRate)
 
         assert.equal(
             newEmployerFlowRate.flowRate,
@@ -646,23 +451,8 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("7 - should allow loan to become solvent again after deletion ", async () => {
+    it("7 - should allow loan to become solvent again after deletion ", async function () {
         //re start flow
-
-        const borrowTokenFlowToLenderBefore = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employmentLoan.address,
-            receiver: lender.address,
-            providerOrSigner: lender
-        })
-        //should be 0
-        const borrowTokenFlowToBorrowerBefore = await sf.cfaV1.getFlow({
-            superToken: daix.address,
-            sender: employmentLoan.address,
-            receiver: borrower.address,
-            providerOrSigner: lender
-        })
-        //should be 0
 
         let employerFlowOperation = sf.cfaV1.createFlow({
             superToken: daix.address,
@@ -714,30 +504,17 @@ describe("Loan is initialized properly", async function () {
     })
 
     //todo fix - looks like transfer and approve opp don't work here
-    it("8 closing the loan early with payment from borrower", async () => {
+    it("8 closing the loan early with payment from borrower", async function () {
         //borrower sends payment to pay off loan
         const amountLeft = await employmentLoan
             .connect(borrower)
             .getTotalAmountRemaining()
-        const lenderBalBefore = await daix.balanceOf({
-            account: lender.address,
-            providerOrSigner: lender
-        })
+        const lenderBalBefore = await daix.balanceOf(lender.address)
 
         //somewhat impractical, but we'll assume that the borrower is sent money from lender (they just need the money in general to pay off loan)
-        const transferTokenOperation = daix.transfer({
-            receiver: borrower.address,
-            amount: amountLeft
-        })
+        await daix.connect(lender).transfer(borrower.address, amountLeft)
 
-        await transferTokenOperation.exec(lender)
-
-        const borrowerApprovalOperation = await daix.approve({
-            receiver: employmentLoan.address,
-            amount: amountLeft
-        })
-
-        await borrowerApprovalOperation.exec(borrower)
+        await daix.connect(borrower).approve(employmentLoan.address, amountLeft)
 
         await employmentLoan.connect(borrower).closeOpenLoan(amountLeft)
 
@@ -782,7 +559,7 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("9 closing the loan early from lender", async () => {
+    it("9 closing the loan early from lender", async function () {
         //other party sends payment to pay off loan
         let borrowAmount = ethers.utils.parseEther("1000")
         let interest = 10
@@ -798,13 +575,17 @@ describe("Loan is initialized properly", async function () {
             sf.settings.config.hostAddress
         )
 
-        let loanAddress = await loanFactory.idToLoan(1)
         let loan2Address = await loanFactory.idToLoan(2)
         let employmentLoan2 = new ethers.Contract(
             loan2Address,
-            LoanABI,
-            accounts[0]
+            LoanArtifact.abi,
+            admin
         )
+
+        await dai.mint(admin.address, alotOfEth)
+        await dai.approve(daix.address, alotOfEth)
+        await daix.upgrade(alotOfEth)
+        await daix.transfer(employmentLoan2.address, alotOfEth)
 
         //create flow
 
@@ -818,14 +599,9 @@ describe("Loan is initialized properly", async function () {
 
         //lend
 
-        const lenderApprovalOperation = daix.approve({
-            receiver: employmentLoan2.address,
-            amount: borrowAmount.toString()
-        })
-
-        await lenderApprovalOperation.exec(lender)
-
-        console.log("lender lends for loan 2")
+        await daix
+            .connect(lender)
+            .approve(employmentLoan2.address, borrowAmount.toString())
 
         await employmentLoan2.connect(lender).lend()
 
@@ -851,9 +627,6 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: employer
         })
 
-        console.log("Borrower flow: ", borrowerFlow.flowRate)
-        console.log("lender flow: ", lenderFlow.flowRate)
-
         let pass6Months = 86400 * (365 / 2)
         await network.provider.send("evm_increaseTime", [pass6Months])
         await network.provider.send("evm_mine")
@@ -875,8 +648,6 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: lender
         })
 
-        console.log("borrower flow after: ", borrowerFlowAfter.flowRate)
-        console.log("lender flow after: ", lenderFlowAfter.flowRate)
         const loanStatus = await employmentLoan2.loanOpen()
 
         assert.equal(loanStatus, false)
@@ -900,15 +671,9 @@ describe("Loan is initialized properly", async function () {
             0,
             "lender flow rate should be zero after"
         )
-
-        const employerDAIxBalance = await daix.balanceOf({
-            account: employer.address,
-            providerOrSigner: employer
-        })
-        console.log("employer daix balance in 2.11...", employerDAIxBalance)
     })
 
-    it("10 borrower closing the loan once completed", async () => {
+    it("10 borrower closing the loan once completed", async function () {
         //borrower closes loan once complete
         let borrowAmount = ethers.utils.parseEther("1000")
         let interest = 10
@@ -924,18 +689,18 @@ describe("Loan is initialized properly", async function () {
             sf.settings.config.hostAddress
         )
 
-        let loanAddress = await loanFactory.idToLoan(1)
-        let loan2Address = await loanFactory.idToLoan(2)
         let loan3Address = await loanFactory.idToLoan(3)
-        console.log("first loan address", loanAddress)
-        console.log("second loan address", loan2Address)
-        console.log("third loan address", loan3Address)
 
         let employmentLoan3 = new ethers.Contract(
             loan3Address,
-            LoanABI,
-            accounts[0]
+            LoanArtifact.abi,
+            admin
         )
+
+        await dai.mint(admin.address, alotOfEth)
+        await dai.approve(daix.address, alotOfEth)
+        await daix.upgrade(alotOfEth)
+        await daix.transfer(employmentLoan3.address, alotOfEth)
 
         //create flow
 
@@ -945,27 +710,13 @@ describe("Loan is initialized properly", async function () {
             flowRate: "3215019290123456"
         })
 
-        console.log("creating a flow from employer to loan 3...")
-        const employerDAIxBalance = await daix.balanceOf({
-            account: employer.address,
-            providerOrSigner: employer
-        })
-        console.log("employer daix balance...", employerDAIxBalance)
-
         await createLoan3FlowOperation.exec(employer)
 
         //lend
 
-        console.log("approving lender spend for loan 3...")
-
-        const lenderApprovalOperation = daix.approve({
-            receiver: employmentLoan3.address,
-            amount: borrowAmount.toString()
-        })
-
-        await lenderApprovalOperation.exec(lender)
-
-        console.log("lender lends for loan 3")
+        await daix
+            .connect(lender)
+            .approve(employmentLoan3.address, borrowAmount.toString())
 
         await employmentLoan3.connect(lender).lend()
 
@@ -991,9 +742,6 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: employer
         })
 
-        console.log("Borrower flow: ", borrowerFlow.flowRate)
-        console.log("lender flow: ", lenderFlow.flowRate)
-
         //we will close loan 1 hour after the loan expires
         let passLoanDuration = 86400 * (365 / 12) * paybackMonths + 3600
         await network.provider.send("evm_increaseTime", [passLoanDuration])
@@ -1016,8 +764,6 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: lender
         })
 
-        console.log("borrower flow after: ", borrowerFlowAfter.flowRate)
-        console.log("lender flow after: ", lenderFlowAfter.flowRate)
         const loanStatus = await employmentLoan3.loanOpen()
 
         assert.equal(loanStatus, false)
