@@ -51,4 +51,18 @@ contract LoanFactory {
 
         return loanId;
     }
+
+    /// @notice Query loan address from loan id.
+    /// @param _id Loan ID.
+    /// @return Loan Address.
+    function getLoanAddressByID(uint _id) public view returns (EmploymentLoan) {
+        return idToLoan[_id];
+    }
+
+    /// @notice Query loan address from owner.
+    /// @param _owner Employee.
+    /// @return Loan Address.
+    function getLoanByOwner(address _owner) public view returns (uint) {
+        return employmentLoanOwners[_owner];
+    }
 }
