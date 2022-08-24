@@ -95,8 +95,6 @@ abstract contract StreamInDistributeOut is SuperAppBase {
     /// @notice Executes dev-defined action and distributes the out-token.
     /// @dev DO NOT override this function, override `_beforeDistribution` instead.
     function executeAction() public {
-        if (!_shouldDistributeHax()) return;
-
         uint256 distributionAmount = _beforeDistribution();
 
         _idaLib.distribute(_outToken, INDEX_ID, distributionAmount);
@@ -110,8 +108,6 @@ abstract contract StreamInDistributeOut is SuperAppBase {
     /// @param ctx Super app callback context byte string.
     /// @return newCtx New context returned from IDA distribution.
     function executeActionInCallback(bytes calldata ctx) public returns (bytes memory newCtx) {
-        if (!_shouldDistributeHax()) return ctx;
-
         uint256 distributionAmount = _beforeDistribution();
 
         newCtx = _idaLib.distributeWithCtx(ctx, _outToken, INDEX_ID, distributionAmount);
@@ -161,11 +157,12 @@ abstract contract StreamInDistributeOut is SuperAppBase {
             );
     }
 
-    /// @dev Callback executed AFTER a stream is UPADTED.
+    /// @notice Callback executed AFTER a stream is UPADTED.
     /// @param token Super Token being streamed in.
     /// @param agreementClass Agreement contract address.
     /// @param agreementId Unique stream ID for fetching the flowRate.
     /// @param ctx Callback context.
+    /// @return newCtx New Callback context.
     function afterAgreementUpdated(
         ISuperToken token,
         address agreementClass,
@@ -262,20 +259,5 @@ abstract contract StreamInDistributeOut is SuperAppBase {
             return
                 _idaLib.deleteSubscriptionWithCtx(ctx, _outToken, address(this), INDEX_ID, sender);
         }
-    }
-
-    // Hey, this is me. You're probably wondering how I got here.
-    // It all starts with the InstantDistributionAgreementV1 having a bug where `updateIndex` does
-    // not break when there are no issued units, however `distribute` throws an 0x12 divide by zero
-    // panic. so to avoid this, we check if the units would break. This has been updated in dev and
-    // should be in prod soon:tm:. Until this gets updated in prod, though, the hack stays.
-    function _shouldDistributeHax() internal view returns (bool) {
-        (, , uint128 approved, uint128 pending) = _idaLib.ida.getIndex(
-            _outToken,
-            address(this),
-            INDEX_ID
-        );
-
-        return pending + approved > 0;
     }
 }
