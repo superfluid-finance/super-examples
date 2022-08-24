@@ -2,37 +2,34 @@
 pragma solidity ^0.8.14;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {ISuperfluidToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol";
 import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol";
 
+error Unauthorized();
+
 contract MoneyRouter {
     // ---------------------------------------------------------------------------------------------
     // STATE VARIABLES
 
-    ///owner of contract
+    /// @notice Owner.
     address public owner;
 
-    ///initialization of CFA lib
+    /// @notice CFA Library.
     using CFAv1Library for CFAv1Library.InitData;
-    CFAv1Library.InitData public cfaV1; //initialize cfaV1 variable
+    CFAv1Library.InitData public cfaV1;
 
-    ///mapping list of whitelisted accounts
+    /// @notice Allow list.
     mapping(address => bool) public accountList;
 
-    ///constructor requires the address of the superfluid host, which can be found for each network
-    // at https://console.superfluid.finance/protocol
-    ///owner is the initial owner of the contract
     constructor(ISuperfluid host, address _owner) {
         assert(address(host) != address(0));
         owner = _owner;
 
-        //initialize InitData struct, and set equal to cfaV1
+        // Initialize CFA Library
         cfaV1 = CFAv1Library.InitData(
             host,
-            //here, we are deriving the address of the CFA using the host contract
             IConstantFlowAgreementV1(
                 address(
                     host.getAgreementClass(
@@ -43,81 +40,111 @@ contract MoneyRouter {
         );
     }
 
-    ///whitelist an account who is able to call functions on this contract
-    function whitelistAccount(address _account) external {
-        require(msg.sender == owner, "only owner can whitelist accounts");
+    /// @notice Add account to allow list.
+    /// @param _account Account to allow.
+    function allowAccount(address _account) external {
+        if (msg.sender != owner) revert Unauthorized();
+
         accountList[_account] = true;
     }
 
-    ///remove an account from whitelist
+    /// @notice Removes account from allow list.
+    /// @param _account Account to disallow.
     function removeAccount(address _account) external {
-        require(msg.sender == owner, "only owner can remove accounts");
+        if (msg.sender != owner) revert Unauthorized();
+
         accountList[_account] = false;
     }
 
-    ///transfer ownership over the contract
+    /// @notice Transfer ownership.
+    /// @param _newOwner New owner account.
     function changeOwner(address _newOwner) external {
-        require(msg.sender == owner, "only owner can change ownership");
+        if (msg.sender != owner) revert Unauthorized();
+
         owner = _newOwner;
     }
 
-    ///send a lump sum of super tokens into the contract. NOTE: this requires a super token ERC20 approval step first
+    /// @notice Send a lump sum of super tokens into the contract.
+    /// @dev This requires a super token ERC20 approval.
+    /// @param token Super Token to transfer.
+    /// @param amount Amount to transfer.
     function sendLumpSumToContract(ISuperToken token, uint256 amount) external {
-        require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
+        if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
+
         token.transferFrom(msg.sender, address(this), amount);
     }
 
-    ///create a stream into the contract. NOTE: this requires the contract to be a flowOperator for the caller
+    /// @notice Create a stream into the contract.
+    /// @dev This requires the contract to be a flowOperator for the msg sender.
+    /// @param token Token to stream.
+    /// @param flowRate Flow rate per second to stream.
     function createFlowIntoContract(ISuperfluidToken token, int96 flowRate) external {
-        require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
+        if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
         cfaV1.createFlowByOperator(msg.sender, address(this), token, flowRate);
     }
 
-    ///update an existing stream being sent into the contract by msg.sender. NOTE: this requires the
-    // contract to be a flowOperator for the caller
-    function updateFlowIntoContract(ISuperfluidToken token, int96 newFlowRate) external {
-        require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
+    /// @notice Update an existing stream being sent into the contract by msg sender.
+    /// @dev This requires the contract to be a flowOperator for the msg sender.
+    /// @param token Token to stream.
+    /// @param flowRate Flow rate per second to stream.
+    function updateFlowIntoContract(ISuperfluidToken token, int96 flowRate) external {
+        if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
-        cfaV1.updateFlowByOperator(msg.sender, address(this), token, newFlowRate);
+        cfaV1.updateFlowByOperator(msg.sender, address(this), token, flowRate);
     }
 
-    ///delete a stream that the msg.sender has open into the contract
+    /// @notice Delete a stream that the msg.sender has open into the contract.
+    /// @param token Token to quit streaming.
     function deleteFlowIntoContract(ISuperfluidToken token) external {
-        require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
+        if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
         cfaV1.deleteFlow(msg.sender, address(this), token);
     }
 
-    ///take funds from the contract
+    /// @notice Withdraw funds from the contract.
+    /// @param token Token to withdraw.
+    /// @param amount Amount to withdraw.
     function withdrawFunds(ISuperToken token, uint256 amount) external {
-        require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
+        if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
+
         token.transfer(msg.sender, amount);
     }
 
-    ///create flow from contract to specified address
+    /// @notice Create flow from contract to specified address.
+    /// @param token Token to stream.
+    /// @param receiver Receiver of stream.
+    /// @param flowRate Flow rate per second to stream.
     function createFlowFromContract(
         ISuperfluidToken token,
         address receiver,
         int96 flowRate
     ) external {
-        require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
+        if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
+
         cfaV1.createFlow(receiver, token, flowRate);
     }
 
-    ///update one of the contract's existing outflows
+    /// @notice Update flow from contract to specified address.
+    /// @param token Token to stream.
+    /// @param receiver Receiver of stream.
+    /// @param flowRate Flow rate per second to stream.
     function updateFlowFromContract(
         ISuperfluidToken token,
         address receiver,
-        int96 newFlowRate
+        int96 flowRate
     ) external {
-        require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
-        cfaV1.updateFlow(receiver, token, newFlowRate);
+        if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
+
+        cfaV1.updateFlow(receiver, token, flowRate);
     }
 
-    ///delete an existing stream that the contract is sending
+    /// @notice Delete flow from contract to specified address.
+    /// @param token Token to stop streaming.
+    /// @param receiver Receiver of stream.
     function deleteFlowFromContract(ISuperfluidToken token, address receiver) external {
-        require(msg.sender == owner || accountList[msg.sender] == true, "must be authorized");
+        if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
+
         cfaV1.deleteFlow(address(this), receiver, token);
     }
 }

@@ -5,7 +5,7 @@ require("@nomiclabs/hardhat-ethers")
 require("hardhat-gas-reporter")
 require("solidity-coverage")
 
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+task("accounts", "Prints the list of accounts", async (_, hre) => {
     const accounts = await hre.ethers.getSigners()
 
     for (const account of accounts) {
@@ -16,13 +16,16 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
     solidity: "0.8.14",
     networks: {
-        goerli: {
-            url: process.env.GOERLI_URL || "",
-            accounts:
-                process.env.PRIVATE_KEY !== undefined
-                    ? [process.env.PRIVATE_KEY]
-                    : []
+        hardhat: {
+            blockGasLimit: 100000000
         }
+        // goerli: {
+        //     url: process.env.GOERLI_URL || "",
+        //     accounts:
+        //         process.env.PRIVATE_KEY !== undefined
+        //             ? [process.env.PRIVATE_KEY]
+        //             : []
+        // }
     },
     gasReporter: {
         enabled: process.env.REPORT_GAS !== undefined,

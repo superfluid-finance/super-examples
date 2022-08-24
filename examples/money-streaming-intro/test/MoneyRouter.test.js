@@ -13,14 +13,16 @@ let account1
 let account2
 let moneyRouter
 
+const tenKEther = ethers.utils.parseEther("10000")
+
 before(async function () {
     //get accounts from hardhat
     ;[owner, account1, account2] = await ethers.getSigners()
 
     //deploy the framework
-    contractsFramework = deployFramework(owner)
+    contractsFramework = await deployFramework(owner)
 
-    const tokenPair = deployWrapperSuperToken(
+    const tokenPair = await deployWrapperSuperToken(
         owner,
         contractsFramework.superTokenFactory,
         "fDAI",
@@ -30,11 +32,11 @@ before(async function () {
     dai = tokenPair.underlyingToken
     daix = tokenPair.superToken
 
-    //initialize the superfluid framework...put custom and web3 only bc we are using hardhat locally
+    // initialize the superfluid framework...put custom and web3 only bc we are using hardhat locally
     sf = await Framework.create({
         chainId: 31337,
-        provider,
-        resolverAddress: process.env.RESOLVER_ADDRESS, //this is how you get the resolver address
+        provider: owner.provider,
+        resolverAddress: contractsFramework.resolver, //this is how you get the resolver address
         protocolReleaseVersion: "test"
     })
 
@@ -48,37 +50,19 @@ before(async function () {
 })
 
 beforeEach(async function () {
-    console.log("Topping up account balances...")
+    await dai.mint(owner.address, tenKEther)
 
-    await dai.mint(owner.address, ethers.utils.parseEther("10000"))
+    await dai.mint(account1.address, tenKEther)
 
-    await dai.mint(account1.address, ethers.utils.parseEther("10000"))
+    await dai.mint(account2.address, tenKEther)
 
-    await dai.mint(account2.address, ethers.utils.parseEther("1000"))
+    await dai.connect(owner).approve(daix.address, tenKEther)
+    await dai.connect(account1).approve(daix.address, tenKEther)
+    await dai.connect(account2).approve(daix.address, tenKEther)
 
-    await dai
-        .connect(owner)
-        .approve(daix.address, ethers.utils.parseEther("10000"))
-    await dai
-        .connect(account1)
-        .approve(daix.address, ethers.utils.parseEther("10000"))
-    await dai
-        .connect(account2)
-        .approve(daix.address, ethers.utils.parseEther("1000"))
-
-    const ownerDaixUpgradeOperation = daix.upgrade({
-        amount: ethers.utils.parseEther("10000")
-    })
-    const account1DaixUpgradeOperation = daix.upgrade({
-        amount: ethers.utils.parseEther("10000")
-    })
-    const account2DaixUpgradeOperation = daix.upgrade({
-        amount: ethers.utils.parseEther("1000")
-    })
-
-    await ownerDaixUpgradeOperation.exec(owner)
-    await account1DaixUpgradeOperation.exec(account1)
-    await account2DaixUpgradeOperation.exec(account2)
+    await daix.upgrade(tenKEther)
+    await daix.connect(account1).upgrade(tenKEther)
+    await daix.connect(account2).upgrade(tenKEther)
 })
 
 describe("Money Router", function () {
@@ -86,7 +70,7 @@ describe("Money Router", function () {
         expect(await moneyRouter.owner()).to.equal(owner.address)
     })
     it("Access Control #2 - Should allow you to add account to account list", async function () {
-        await moneyRouter.whitelistAccount(account1.address)
+        await moneyRouter.allowAccount(account1.address)
 
         expect(await moneyRouter.accountList(account1.address), true)
     })
@@ -104,20 +88,13 @@ describe("Money Router", function () {
         //transfer ownership back to real owner...
         await moneyRouter.connect(account1).changeOwner(owner.address)
 
-        let daixApproveOperation = daix.approve({
-            receiver: moneyRouter.address,
-            amount: ethers.utils.parseEther("100")
-        })
-        await daixApproveOperation.exec(owner)
+        await daix.approve(moneyRouter.address, ethers.utils.parseEther("100"))
         await moneyRouter.sendLumpSumToContract(
             daix.address,
             ethers.utils.parseEther("100")
         )
 
-        let contractDAIxBalance = await daix.balanceOf({
-            account: moneyRouter.address,
-            providerOrSigner: owner
-        })
+        let contractDAIxBalance = await daix.balanceOf(moneyRouter.address)
         expect(contractDAIxBalance, ethers.utils.parseEther("100"))
     })
     it("Contract Receives Funds #2 - a flow is created into the contract", async function () {
@@ -173,20 +150,14 @@ describe("Money Router", function () {
         expect(ownerContractFlowRate, "0")
     })
     it("Contract sends funds #1 - withdrawing a lump sum from the contract", async function () {
-        let contractStartingBalance = await daix.balanceOf({
-            account: moneyRouter.address,
-            providerOrSigner: owner
-        })
+        let contractStartingBalance = await daix.balanceOf(moneyRouter.address)
 
         await moneyRouter.withdrawFunds(
             daix.address,
             ethers.utils.parseEther("10")
         )
 
-        let contractFinishingBalance = await daix.balanceOf({
-            account: moneyRouter.address,
-            providerOrSigner: owner
-        })
+        let contractFinishingBalance = await daix.balanceOf(moneyRouter.address)
 
         expect(Number(contractStartingBalance) - 10, contractFinishingBalance)
     })
