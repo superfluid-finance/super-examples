@@ -1,19 +1,13 @@
-const { assert, expect } = require("chai")
-
+const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
-const TestTokenABI = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
+const { ethers } = require("hardhat")
+const { deployFramework, deployWrapperSuperToken } = require("./util/deploy-sf")
 
-const { ethers, web3 } = require("hardhat")
-
-const deployFramework = require("@superfluid-finance/ethereum-contracts/scripts/deploy-framework")
-const deployTestToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-token")
-const deploySuperToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-super-token")
-
-// Instances
-let sf // Superfluid framework API object
-let spreader // spreader contract object
-let dai // underlying token of daix
-let daix // will act as `spreaderToken` - is a super token wrapper of dai
+let contractsFramework
+let sf
+let spreader
+let dai
+let daix
 
 // Test Accounts
 let admin
@@ -21,81 +15,54 @@ let alice
 let bob
 
 // Constants
-let expecationDiffLimit = 10 // sometimes the IDA distributes a little less wei than expected. Accounting for potential discrepency with 10 wei margin
+const expecationDiffLimit = 10 // sometimes the IDA distributes a little less wei than expected. Accounting for potential discrepency with 10 wei margin
 
-const errorHandler = err => {
-    if (err) throw err
-}
+const thousandEther = ethers.utils.parseEther("10000")
 
 before(async function () {
     // get hardhat accounts
     ;[admin, alice, bob] = await ethers.getSigners()
 
-    //// GETTING SUPERFLUID FRAMEWORK SET UP
+    // GETTING SUPERFLUID FRAMEWORK SET UP
 
     // deploy the framework locally
-    await deployFramework(errorHandler, {
-        web3: web3,
-        from: admin.address
-        // newTestResolver:true
-    })
+    contractsFramework = await deployFramework(admin)
 
     // initialize framework
     sf = await Framework.create({
         chainId: 31337,
-        provider: web3,
-        resolverAddress: process.env.RESOLVER_ADDRESS, // (empty)
+        provider: admin.provider,
+        resolverAddress: contractsFramework.resolver, // (empty)
         protocolReleaseVersion: "test"
     })
 
-    //// DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
-
-    // deploy a fake erc20 token
-    await deployTestToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: admin.address
-    })
-
-    // deploy a fake erc20 wrapper super token around the DAI token
-    await deploySuperToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: admin.address
-    })
-
-    // deploy a fake erc20 wrapper super token around the DAI token
-    daix = await sf.loadSuperToken("fDAIx")
-
-    dai = new ethers.Contract(
-        daix.underlyingToken.address,
-        TestTokenABI.abi,
-        admin
+    // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
+    const tokenDeployment = await deployWrapperSuperToken(
+        admin,
+        contractsFramework.superTokenFactory,
+        "fDAI",
+        "fDAI"
     )
 
-    //// SETTING UP NON-ADMIN ACCOUNTS WITH DAIx
+    dai = tokenDeployment.underlyingToken
+    daix = tokenDeployment.superToken
 
     // minting test DAI
-    await dai
-        .connect(admin)
-        .mint(admin.address, ethers.utils.parseEther("10000"))
-    await dai
-        .connect(alice)
-        .mint(alice.address, ethers.utils.parseEther("10000"))
-    await dai.connect(bob).mint(bob.address, ethers.utils.parseEther("10000"))
+    await dai.mint(admin.address, thousandEther)
+    await dai.mint(alice.address, thousandEther)
+    await dai.mint(bob.address, thousandEther)
 
     // approving DAIx to spend DAI (Super Token object is not an ethers contract object and has different operation syntax)
-    await dai.connect(admin).approve(daix.address, ethers.constants.MaxInt256)
+    await dai.approve(daix.address, ethers.constants.MaxInt256)
     await dai.connect(alice).approve(daix.address, ethers.constants.MaxInt256)
     await dai.connect(bob).approve(daix.address, ethers.constants.MaxInt256)
 
     // Upgrading all DAI to DAIx
-    const daiXUpgradeOperation = daix.upgrade({
-        amount: ethers.utils.parseEther("10000").toString()
-    })
-    await daiXUpgradeOperation.exec(admin)
-    await daiXUpgradeOperation.exec(alice)
-    await daiXUpgradeOperation.exec(bob)
+    await daix.upgrade(thousandEther)
+    await daix.connect(alice).upgrade(thousandEther)
+    await daix.connect(bob).upgrade(thousandEther)
 
-    //// INITIALIZING SPREADER CONTRACT
+    // INITIALIZING SPREADER CONTRACT
 
     const spreaderContractFactory = await ethers.getContractFactory(
         "TokenSpreader",
@@ -107,7 +74,7 @@ before(async function () {
         daix.address // Setting DAIx as spreader token
     )
 
-    //// SUBSCRIBING TO SPREADER CONTRACT'S IDA INDEX
+    // SUBSCRIBING TO SPREADER CONTRACT'S IDA INDEX
 
     // subscribe to distribution (doesn't matter if this happens before or after distribution execution)
     const approveSubscriptionOperation = await sf.idaV1.approveSubscription({
@@ -117,11 +84,6 @@ before(async function () {
     })
     await approveSubscriptionOperation.exec(alice)
     await approveSubscriptionOperation.exec(bob)
-
-    console.log(
-        "Set Up Complete! - TokenSpreader Contract Address:",
-        spreader.address
-    )
 })
 
 describe("TokenSpreader Test Sequence", async () => {
@@ -131,12 +93,12 @@ describe("TokenSpreader Test Sequence", async () => {
     })
 
     it("Distribution with [ 1 unit issued ] but [ 0 spreaderTokens held ] - gainShare", async function () {
-        //// ACTIONS
+        // ACTIONS
 
         // Alice claims distribution unit
         await spreader.connect(alice).gainShare(alice.address)
 
-        //// EXPECTATIONS
+        // EXPECTATIONS
 
         // expect alice to have 1 distribution unit
         let aliceSubscription = await sf.idaV1.getSubscription({
@@ -154,12 +116,12 @@ describe("TokenSpreader Test Sequence", async () => {
     })
 
     it("Distribution with [ 2 units issued to different accounts ] but [ 0 spreaderTokens ] - gainShare", async function () {
-        //// ACTIONS
+        // ACTIONS
 
         // Bob claims distribution unit
         await spreader.connect(bob).gainShare(bob.address)
 
-        //// EXPECTATIONS
+        // EXPECTATIONS
 
         // expect alice to have 1 distribution unit
         let aliceSubscription = await sf.idaV1.getSubscription({
@@ -190,38 +152,22 @@ describe("TokenSpreader Test Sequence", async () => {
     it("Distribution with [ 2 units issued to different accounts ] and [ 100 spreaderTokens ] - gainShare", async function () {
         let distributionAmount = ethers.utils.parseEther("100")
 
-        //// ACTIONS
+        // ACTIONS
 
         // Admin gives spreader 100 DAIx
-        const daiXTransferOperation = daix.transfer({
-            receiver: spreader.address,
-            amount: distributionAmount,
-            providerOrSigner: admin
-        })
-        await daiXTransferOperation.exec(admin)
+        await daix.transfer(spreader.address, distributionAmount)
 
         // (snapshot balances)
-        let aliceInitialBlance = await daix.balanceOf({
-            account: alice.address,
-            providerOrSigner: admin
-        })
-        let bobInitialBlance = await daix.balanceOf({
-            account: bob.address,
-            providerOrSigner: admin
-        })
+        let aliceInitialBlance = await daix.balanceOf(alice.address)
+        let bobInitialBlance = await daix.balanceOf(bob.address)
 
         // Distribution executed
         await expect(spreader.connect(admin).distribute()).to.be.not.reverted
 
-        //// EXPECTATIONS
+        // EXPECTATIONS
 
         // expect alice to receive 1/2 of distribution
-        await expect(
-            await daix.balanceOf({
-                account: alice.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(alice.address)).to.closeTo(
             ethers.BigNumber.from(aliceInitialBlance).add(
                 distributionAmount.div("2")
             ), // expect original balance + distribution amount / 2
@@ -229,12 +175,7 @@ describe("TokenSpreader Test Sequence", async () => {
         )
 
         // expect bob to receive 1/2 of distribution
-        await expect(
-            await daix.balanceOf({
-                account: bob.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(bob.address)).to.closeTo(
             ethers.BigNumber.from(bobInitialBlance).add(
                 distributionAmount.div("2")
             ), // expect original balance + distribution amount / 2
@@ -242,44 +183,31 @@ describe("TokenSpreader Test Sequence", async () => {
         )
 
         // expect balance of spreader contract to be zeroed out
-        await expect(
-            await daix.balanceOf({
-                account: spreader.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(ethers.BigNumber.from("0"), expecationDiffLimit)
+        await expect(await daix.balanceOf(spreader.address)).to.closeTo(
+            ethers.BigNumber.from("0"),
+            expecationDiffLimit
+        )
     })
 
     it("Distribution with [ 3 units issued to different accounts ] and [ 100 spreaderTokens ] - gainShare", async function () {
         let distributionAmount = ethers.utils.parseEther("100")
 
-        //// ACTIONS
+        // ACTIONS
 
         // Bob claims another distribution unit
         await spreader.connect(bob).gainShare(bob.address)
 
         // Admin gives spreader 100 DAIx
-        const daiXTransferOperation = daix.transfer({
-            receiver: spreader.address,
-            amount: distributionAmount,
-            providerOrSigner: admin
-        })
-        await daiXTransferOperation.exec(admin)
+        await daix.transfer(spreader.address, distributionAmount)
 
         // (snapshot balances)
-        let aliceInitialBlance = await daix.balanceOf({
-            account: alice.address,
-            providerOrSigner: admin
-        })
-        let bobInitialBlance = await daix.balanceOf({
-            account: bob.address,
-            providerOrSigner: admin
-        })
+        let aliceInitialBlance = await daix.balanceOf(alice.address)
+        let bobInitialBlance = await daix.balanceOf(bob.address)
 
         // Distribution executed
         await expect(spreader.connect(admin).distribute()).to.be.not.reverted
 
-        //// EXPECTATIONS
+        // EXPECTATIONS
 
         // expect bob to have 2 distribution units
         let bobSubscription = await sf.idaV1.getSubscription({
@@ -293,12 +221,7 @@ describe("TokenSpreader Test Sequence", async () => {
         await expect(bobSubscription.units).to.equal("2")
 
         // expect alice to receive 1/3 of distribution
-        await expect(
-            await daix.balanceOf({
-                account: alice.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(alice.address)).to.closeTo(
             ethers.BigNumber.from(aliceInitialBlance).add(
                 distributionAmount.div("3")
             ), // expect original balance + distribution amount * 1/2
@@ -306,12 +229,7 @@ describe("TokenSpreader Test Sequence", async () => {
         )
 
         // expect bob to receive 2/3 of distribution
-        await expect(
-            await daix.balanceOf({
-                account: bob.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(bob.address)).to.closeTo(
             ethers.BigNumber.from(bobInitialBlance).add(
                 distributionAmount.div("3").mul("2")
             ), // expect original balance + distribution amount * 2/3
@@ -319,44 +237,31 @@ describe("TokenSpreader Test Sequence", async () => {
         )
 
         // expect balance of spreader contract to be zeroed out
-        await expect(
-            await daix.balanceOf({
-                account: spreader.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(ethers.BigNumber.from("0"), expecationDiffLimit)
+        await expect(await daix.balanceOf(spreader.address)).to.closeTo(
+            ethers.BigNumber.from("0"),
+            expecationDiffLimit
+        )
     })
 
     it("Distribution with [ 2 units issued to single account ] and [ 100 spreaderTokens ] - deleteShares", async function () {
         let distributionAmount = ethers.utils.parseEther("100")
 
-        //// ACTIONS
+        // ACTIONS
 
         // Alice deletes here entire subscription
         await spreader.connect(alice).deleteShares(alice.address)
 
         // Admin gives spreader 100 DAIx
-        const daiXTransferOperation = daix.transfer({
-            receiver: spreader.address,
-            amount: distributionAmount,
-            providerOrSigner: admin
-        })
-        await daiXTransferOperation.exec(admin)
+        await daix.transfer(spreader.address, distributionAmount)
 
         // (snapshot balances)
-        let aliceInitialBlance = await daix.balanceOf({
-            account: alice.address,
-            providerOrSigner: admin
-        })
-        let bobInitialBlance = await daix.balanceOf({
-            account: bob.address,
-            providerOrSigner: admin
-        })
+        let aliceInitialBlance = await daix.balanceOf(alice.address)
+        let bobInitialBlance = await daix.balanceOf(bob.address)
 
         // Distribution executed
         await expect(spreader.connect(admin).distribute()).to.be.not.reverted
 
-        //// EXPECTATIONS
+        // EXPECTATIONS
 
         // expect alice to have 0 distribution units
         let aliceSubscription = await sf.idaV1.getSubscription({
@@ -370,66 +275,43 @@ describe("TokenSpreader Test Sequence", async () => {
         await expect(aliceSubscription.units).to.equal("0")
 
         // expect alice to receive none of distribution
-        await expect(
-            await daix.balanceOf({
-                account: alice.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(alice.address)).to.closeTo(
             ethers.BigNumber.from(aliceInitialBlance), // expect original balance
             expecationDiffLimit
         )
 
         // expect bob to receive all of distribution
-        await expect(
-            await daix.balanceOf({
-                account: bob.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(bob.address)).to.closeTo(
             ethers.BigNumber.from(bobInitialBlance).add(distributionAmount), // expect original balance + distribution amount
             expecationDiffLimit
         )
 
         // expect balance of spreader contract to be zeroed out
-        await expect(
-            await daix.balanceOf({
-                account: spreader.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(ethers.BigNumber.from("0"), expecationDiffLimit)
+        await expect(await daix.balanceOf(spreader.address)).to.closeTo(
+            ethers.BigNumber.from("0"),
+            expecationDiffLimit
+        )
     })
 
     it("Distribution with [ 1 unit issued to single account ] and [ 100 spreaderTokens ] - loseShare", async function () {
         let distributionAmount = ethers.utils.parseEther("100")
 
-        //// ACTIONS
+        // ACTIONS
 
         // Bob deletes one of his two units
         await spreader.connect(bob).loseShare(bob.address)
 
         // Admin gives spreader 100 DAIx
-        const daiXTransferOperation = daix.transfer({
-            receiver: spreader.address,
-            amount: distributionAmount,
-            providerOrSigner: admin
-        })
-        await daiXTransferOperation.exec(admin)
+        await daix.transfer(spreader.address, distributionAmount)
 
         // (snapshot balances)
-        let aliceInitialBlance = await daix.balanceOf({
-            account: alice.address,
-            providerOrSigner: admin
-        })
-        let bobInitialBlance = await daix.balanceOf({
-            account: bob.address,
-            providerOrSigner: admin
-        })
+        let aliceInitialBlance = await daix.balanceOf(alice.address)
+        let bobInitialBlance = await daix.balanceOf(bob.address)
 
         // Distribution executed
         await expect(spreader.connect(admin).distribute()).to.be.not.reverted
 
-        //// EXPECTATIONS
+        // EXPECTATIONS
 
         // expect bob to have 1 distribution unit
         let bobSubscription = await sf.idaV1.getSubscription({
@@ -443,66 +325,43 @@ describe("TokenSpreader Test Sequence", async () => {
         await expect(bobSubscription.units).to.equal("1")
 
         // expect alice to receive none of distribution
-        await expect(
-            await daix.balanceOf({
-                account: alice.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(alice.address)).to.closeTo(
             ethers.BigNumber.from(aliceInitialBlance), // expect original balance
             expecationDiffLimit
         )
 
         // expect bob to receive all of distribution
-        await expect(
-            await daix.balanceOf({
-                account: bob.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(bob.address)).to.closeTo(
             ethers.BigNumber.from(bobInitialBlance).add(distributionAmount), // expect original balance + distribution amount
             expecationDiffLimit
         )
 
         // expect balance of spreader contract to be zeroed out
-        await expect(
-            await daix.balanceOf({
-                account: spreader.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(ethers.BigNumber.from("0"), expecationDiffLimit)
+        await expect(await daix.balanceOf(spreader.address)).to.closeTo(
+            ethers.BigNumber.from("0"),
+            expecationDiffLimit
+        )
     })
 
     it("Distribution with [ no units outstanding ] and [ 100 spreaderTokens ] - loseShare", async function () {
         let distributionAmount = ethers.utils.parseEther("100")
 
-        //// ACTIONS
+        // ACTIONS
 
         // Bob deletes his last unit
         await spreader.connect(bob).loseShare(bob.address)
 
         // Admin gives spreader 100 DAIx
-        const daiXTransferOperation = daix.transfer({
-            receiver: spreader.address,
-            amount: distributionAmount,
-            providerOrSigner: admin
-        })
-        await daiXTransferOperation.exec(admin)
+        await daix.transfer(spreader.address, distributionAmount)
 
         // (snapshot balances)
-        let aliceInitialBlance = await daix.balanceOf({
-            account: alice.address,
-            providerOrSigner: admin
-        })
-        let bobInitialBlance = await daix.balanceOf({
-            account: bob.address,
-            providerOrSigner: admin
-        })
+        let aliceInitialBlance = await daix.balanceOf(alice.address)
+        let bobInitialBlance = await daix.balanceOf(bob.address)
 
         // distribution SHOULD REVERT since no units are outstanding
         await expect(spreader.connect(admin).distribute()).to.be.reverted
 
-        //// EXPECTATIONS
+        // EXPECTATIONS
 
         // expect bob to have no distribution units
         let bobSubscription = await sf.idaV1.getSubscription({
@@ -516,33 +375,21 @@ describe("TokenSpreader Test Sequence", async () => {
         await expect(bobSubscription.units).to.equal("0")
 
         // expect alice to receive none of distribution
-        await expect(
-            await daix.balanceOf({
-                account: alice.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(alice.address)).to.closeTo(
             ethers.BigNumber.from(aliceInitialBlance), // expect original balance
             expecationDiffLimit
         )
 
         // expect bob to receive none of distribution
-        await expect(
-            await daix.balanceOf({
-                account: bob.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(
+        await expect(await daix.balanceOf(bob.address)).to.closeTo(
             ethers.BigNumber.from(bobInitialBlance), // expect original balance
             expecationDiffLimit
         )
 
         // expect balance of spreader contract to remain same
-        await expect(
-            await daix.balanceOf({
-                account: spreader.address,
-                providerOrSigner: admin
-            })
-        ).to.closeTo(distributionAmount, expecationDiffLimit)
+        await expect(await daix.balanceOf(spreader.address)).to.closeTo(
+            distributionAmount,
+            expecationDiffLimit
+        )
     })
 })

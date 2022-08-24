@@ -9,21 +9,20 @@ import {IDAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/app
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract TokenSpreader {
-    ISuperToken public spreaderToken; // Token to be distributed to unit holders by distribute() function
+    /// @notice Super token to be distributed.
+    ISuperToken public spreaderToken;
 
-    using IDAv1Library for IDAv1Library.InitData; // Creating idaV1 object for easy use of IDA functions
+    /// @notice IDA Library
+    using IDAv1Library for IDAv1Library.InitData;
     IDAv1Library.InitData public idaV1;
 
-    uint32 public constant INDEX_ID = 0; // The IDA Index. Since this contract will only use one index, we'll hardcode it to "0".
+    /// @notice Index ID. Never changes.
+    uint32 public constant INDEX_ID = 0;
 
     constructor(ISuperfluid _host, ISuperToken _spreaderToken) {
-        // Ensure _spreaderToken is indeed a super token
-        require(address(_host) == _spreaderToken.getHost(), "!superToken");
-
         spreaderToken = _spreaderToken;
 
-        // Initializing the host and agreement type in the idaV1 object so the object can have them on hand for enacting IDA functions
-        // Read more on initialization: https://docs.superfluid.finance/superfluid/developers/solidity-examples/solidity-libraries/idav1-library#importing-and-initialization
+        // IDA Library Initialize.
         idaV1 = IDAv1Library.InitData(
             _host,
             IInstantDistributionAgreementV1(
@@ -41,9 +40,8 @@ contract TokenSpreader {
         idaV1.createIndex(_spreaderToken, INDEX_ID);
     }
 
-    /**************************************************************************
-     * IDA Operations
-     *************************************************************************/
+    // ---------------------------------------------------------------------------------------------
+    // IDA OPERATIONS
 
     /// @notice Takes the entire balance of the designated spreaderToken in the contract and distributes it out to unit holders w/ IDA
     function distribute() public {
