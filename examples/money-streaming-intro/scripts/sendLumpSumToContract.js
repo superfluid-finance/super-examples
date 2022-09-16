@@ -47,7 +47,7 @@ async function main() {
         .sendLumpSumToContract(daix.address, ethers.utils.parseEther("500"))
         .then(function (tx) {
             console.log(`
-        Congrats! You just successfully sent funds tp the money router contract. 
+        Congrats! You just successfully sent funds to the money router contract. 
         Tx Hash: ${tx.hash}
     `)
         })
