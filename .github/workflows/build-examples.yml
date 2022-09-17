@@ -35,7 +35,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Install, Build, and Test
-              if: ${{ github.event_name != push || env.BUILD_EXAMPLES == 1 }}
+              if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               run: |
                   cp -r examples/examples${{ matrix.project }} .
                   cd "$(basename ${{ matrix.project }}"
