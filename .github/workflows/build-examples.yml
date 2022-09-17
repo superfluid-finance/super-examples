@@ -22,7 +22,7 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["/stream-in-distribute-out", "/tradeable-cashflow", "/borrow-against-salary"]
+                project: ["/stream-in-distribute-out", "/tradeable-cashflow", "/borrow-against-salary", "/instant-distribution-intro", "/money-streaming-intro"]
                 install: ["clean-install"]
                 node-version: [16]
         steps:
