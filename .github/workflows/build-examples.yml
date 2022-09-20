@@ -22,7 +22,7 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["/stream-in-distribute-out", "/tradeable-cashflow", "/borrow-against-salary"]
+                project: ["/stream-in-distribute-out", "/tradeable-cashflow", "/borrow-against-salary", "/instant-distribution-intro", "/money-streaming-intro"]
                 install: ["clean-install"]
                 node-version: [16]
         steps:
@@ -35,7 +35,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Install, Build, and Test
-              if: ${{ github.event_name != push || env.BUILD_EXAMPLES == 1 }}
+              if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               run: |
                   cp -r examples/examples${{ matrix.project }} .
                   cd "$(basename ${{ matrix.project }}"
