@@ -29,4 +29,5 @@ jobs:
               run: |
                   cd "${{ matrix.project }}"
                   yarn install
+                  yarn build
                   yarn test
