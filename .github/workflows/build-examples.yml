@@ -25,12 +25,10 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - name: Use Node.js ${{ matrix.node-version }}
-              if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Install, Build, and Test
-              if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               run: |
                   ls -l
                   cd "${{ matrix.project }}"
