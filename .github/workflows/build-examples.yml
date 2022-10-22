@@ -3,9 +3,6 @@ name: Build Examples
 on:
     # trigger on git push
     push:
-        paths:
-            - "examples/**"
-            - ".github/workflows/build-examples.yml" # might not need this
     # trigger manually
     workflow_dispatch:
     # trigger daily
@@ -35,5 +32,6 @@ jobs:
             - name: Install, Build, and Test
               if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               run: |
+                  ls -l
                   cd "${{ matrix.project }}"
                   ./build-and-test.sh
