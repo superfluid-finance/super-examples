@@ -22,13 +22,11 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["/stream-in-distribute-out", "/tradeable-cashflow", "/borrow-against-salary", "/instant-distribution-intro", "/money-streaming-intro"]
+                project: ["/tradeable-cashflow", "/borrow-against-salary", "/instant-distribution-intro", "/money-streaming-intro"]
                 install: ["clean-install"]
                 node-version: [16]
         steps:
             - uses: actions/checkout@v3
-              with:
-                  path: examples
             - name: Use Node.js ${{ matrix.node-version }}
               if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               uses: actions/setup-node@v3
@@ -37,7 +35,5 @@ jobs:
             - name: Install, Build, and Test
               if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               run: |
-                  cp -r examples/examples${{ matrix.project }} .
-                  cd "$(basename ${{ matrix.project }}"
-                  find . -name yarn.lock | xargs rm -f
+                  cd "${{ matrix.project }}"
                   ./build-and-test.sh
