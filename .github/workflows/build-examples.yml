@@ -19,7 +19,7 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["/tradeable-cashflow", "/borrow-against-salary", "/instant-distribution-intro", "/money-streaming-intro"]
+                project: ["tradeable-cashflow", "borrow-against-salary", "instant-distribution-intro", "money-streaming-intro"]
                 install: ["clean-install"]
                 node-version: [16]
         steps:
@@ -30,6 +30,5 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install, Build, and Test
               run: |
-                  ls -l
                   cd "${{ matrix.project }}"
                   ./build-and-test.sh
