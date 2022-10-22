@@ -3,6 +3,9 @@ name: Build Examples
 on:
     # trigger on git push
     push:
+        paths:
+            - "projects/**"
+            - ".github/workflows/build-examples.yml" # might not need this
     # trigger manually
     workflow_dispatch:
 
