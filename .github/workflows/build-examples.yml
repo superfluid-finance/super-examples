@@ -28,4 +28,5 @@ jobs:
             - name: Install, Build, and Test
               run: |
                   cd "${{ matrix.project }}"
-                  ./build-and-test.sh
+                  yarn install
+                  yarn test
