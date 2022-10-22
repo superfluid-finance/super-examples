@@ -27,7 +27,7 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install, Build, and Test
               run: |
-                  cd "${{ matrix.project }}"
+                  cd "projects/${{ matrix.project }}"
                   yarn install
                   yarn build
                   yarn test
