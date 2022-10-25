@@ -1,44 +1,72 @@
-const { Framework } = require("@superfluid-finance/sdk-core")
-const { expect } = require("chai")
-const { ethers } = require("hardhat")
+const { expect } = require("chai");
+const { Framework } = require("@superfluid-finance/sdk-core");
+const { ethers } = require("hardhat");
+const deployTestFramework = require("./util/deploy-sf");
+const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json");
 
-const { deployFramework, deployWrapperSuperToken } = require("./util/deploy-sf")
+let sfDeployer;
+let contractsFramework;
+let sf;
+let moneyRouter;
+let dai;
+let daix;
 
-let contractsFramework
-let sf
-let dai
-let daix
-let owner
-let account1
-let account2
-let moneyRouter
+// Test Accounts
+let owner;
+let account1;
+let account2;
 
-const tenKEther = ethers.utils.parseEther("10000")
+// Constants
+const expecationDiffLimit = 10; // sometimes the IDA distributes a little less wei than expected. Accounting for potential discrepency with 10 wei margin
+
+const thousandEther = ethers.utils.parseEther("10000");
 
 before(async function () {
-    //get accounts from hardhat
-    ;[owner, account1, account2] = await ethers.getSigners()
+    // get hardhat accounts
+    [owner, account1, account2] = await ethers.getSigners();
 
-    //deploy the framework
-    contractsFramework = await deployFramework(owner)
+    sfDeployer = await deployTestFramework();
 
-    const tokenPair = await deployWrapperSuperToken(
-        owner,
-        contractsFramework.superTokenFactory,
-        "fDAI",
-        "fDAI"
-    )
+    // GETTING SUPERFLUID FRAMEWORK SET UP
 
-    dai = tokenPair.underlyingToken
-    daix = tokenPair.superToken
+    // deploy the framework locally
+    contractsFramework = await sfDeployer.getFramework();
 
-    // initialize the superfluid framework...put custom and web3 only bc we are using hardhat locally
+    // initialize framework
     sf = await Framework.create({
         chainId: 31337,
         provider: owner.provider,
-        resolverAddress: contractsFramework.resolver, //this is how you get the resolver address
+        resolverAddress: contractsFramework.resolver, // (empty)
         protocolReleaseVersion: "test"
-    })
+    });
+
+    // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
+    tokenDeployment = await sfDeployer.deployWrapperSuperToken(
+        "Fake DAI Token",
+        "fDAI",
+        18,
+        ethers.utils.parseEther("100000000").toString()
+    );
+
+    daix = await sf.loadSuperToken("fDAIx");
+    dai = new ethers.Contract(daix.underlyingToken.address, TestToken.abi, owner);
+    // minting test DAI
+    await dai.mint(owner.address, thousandEther);
+    await dai.mint(account1.address, thousandEther);
+    await dai.mint(account2.address, thousandEther);
+
+    // approving DAIx to spend DAI (Super Token object is not an ethers contract object and has different operation syntax)
+    await dai.approve(daix.address, ethers.constants.MaxInt256);
+    await dai.connect(account1).approve(daix.address, ethers.constants.MaxInt256);
+    await dai.connect(account2).approve(daix.address, ethers.constants.MaxInt256);
+    // Upgrading all DAI to DAIx
+    const ownerUpgrade = daix.upgrade({amount: thousandEther});
+    const account1Upgrade = daix.upgrade({amount: thousandEther});
+    const account2Upgrade = daix.upgrade({amount: thousandEther});
+
+    await ownerUpgrade.exec(owner);
+    await account1Upgrade.exec(account1);
+    await account2Upgrade.exec(account2);
 
     let MoneyRouter = await ethers.getContractFactory("MoneyRouter", owner)
 
@@ -46,24 +74,8 @@ before(async function () {
         sf.settings.config.hostAddress,
         owner.address
     )
-    await moneyRouter.deployed()
-})
-
-beforeEach(async function () {
-    await dai.mint(owner.address, tenKEther)
-
-    await dai.mint(account1.address, tenKEther)
-
-    await dai.mint(account2.address, tenKEther)
-
-    await dai.connect(owner).approve(daix.address, tenKEther)
-    await dai.connect(account1).approve(daix.address, tenKEther)
-    await dai.connect(account2).approve(daix.address, tenKEther)
-
-    await daix.upgrade(tenKEther)
-    await daix.connect(account1).upgrade(tenKEther)
-    await daix.connect(account2).upgrade(tenKEther)
-})
+    await moneyRouter.deployed();
+});
 
 describe("Money Router", function () {
     it("Access Control #1 - Should deploy properly with the correct owner", async function () {
@@ -88,13 +100,14 @@ describe("Money Router", function () {
         //transfer ownership back to real owner...
         await moneyRouter.connect(account1).changeOwner(owner.address)
 
-        await daix.approve(moneyRouter.address, ethers.utils.parseEther("100"))
+        await daix.approve({receiver: moneyRouter.address, amount: ethers.utils.parseEther("100")}).exec(owner);
+
         await moneyRouter.sendLumpSumToContract(
             daix.address,
             ethers.utils.parseEther("100")
         )
 
-        let contractDAIxBalance = await daix.balanceOf(moneyRouter.address)
+        let contractDAIxBalance = await daix.balanceOf({account: moneyRouter.address, providerOrSigner: owner});
         expect(contractDAIxBalance, ethers.utils.parseEther("100"))
     })
     it("Contract Receives Funds #2 - a flow is created into the contract", async function () {
@@ -150,14 +163,14 @@ describe("Money Router", function () {
         expect(ownerContractFlowRate, "0")
     })
     it("Contract sends funds #1 - withdrawing a lump sum from the contract", async function () {
-        let contractStartingBalance = await daix.balanceOf(moneyRouter.address)
+        let contractStartingBalance = await daix.balanceOf({account: moneyRouter.address, providerOrSigner: owner});
 
         await moneyRouter.withdrawFunds(
             daix.address,
             ethers.utils.parseEther("10")
         )
 
-        let contractFinishingBalance = await daix.balanceOf(moneyRouter.address)
+        let contractFinishingBalance = await daix.balanceOf({account: moneyRouter.address, providerOrSigner: owner});
 
         expect(Number(contractStartingBalance) - 10, contractFinishingBalance)
     })
@@ -205,5 +218,5 @@ describe("Money Router", function () {
         })
 
         expect(receiverContractFlowRate, "0")
-    })
-})
+    });
+});
