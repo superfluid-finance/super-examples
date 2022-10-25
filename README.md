@@ -26,7 +26,7 @@ example, open an issue and select the "New Example" template.
 The following is a list of example projects in this repository. Follow the link
 on each to see their local README file.
 
--   [Borrow Against Salary](./examples/borrow-against-salary/README.md)
--   [Instant Distribution Intro](./examples/instant-distribution-intro/README.md)
--   [Money Streaming Intro](./examples/money-streaming-intro/README.md)
--   [Tradeable Cashflow NFT](./examples/tradeable-cashflow/README.md)
+-   [Borrow Against Salary](./projects/borrow-against-salary/README.md)
+-   [Instant Distribution Intro](./projects/instant-distribution-intro/README.md)
+-   [Money Streaming Intro](./projects/money-streaming-intro/README.md)
+-   [Tradeable Cashflow NFT](./projects/tradeable-cashflow/README.md)

@@ -4,13 +4,10 @@ on:
     # trigger on git push
     push:
         paths:
-            - "examples/**"
+            - "projects/**"
             - ".github/workflows/build-examples.yml" # might not need this
     # trigger manually
     workflow_dispatch:
-    # trigger daily
-    schedule:
-        - cron: "0 8 * * *"
 
 jobs:
     build-example:
@@ -22,22 +19,18 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["/stream-in-distribute-out", "/tradeable-cashflow", "/borrow-against-salary", "/instant-distribution-intro", "/money-streaming-intro"]
+                project: ["tradeable-cashflow", "borrow-against-salary", "instant-distribution-intro", "money-streaming-intro"]
                 install: ["clean-install"]
                 node-version: [16]
         steps:
             - uses: actions/checkout@v3
-              with:
-                  path: examples
             - name: Use Node.js ${{ matrix.node-version }}
-              if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Install, Build, and Test
-              if: ${{ github.event_name != 'push' || env.BUILD_EXAMPLES == 1 }}
               run: |
-                  cp -r examples/examples${{ matrix.project }} .
-                  cd "$(basename ${{ matrix.project }}"
-                  find . -name yarn.lock | xargs rm -f
-                  ./build-and-test.sh
+                  cd "projects/${{ matrix.project }}"
+                  yarn install
+                  yarn build
+                  yarn test

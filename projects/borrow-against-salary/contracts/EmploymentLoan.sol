@@ -158,7 +158,7 @@ contract EmploymentLoan is SuperAppBase {
     function lend() external {
         (, int96 employerFlowRate, , ) = cfaV1.cfa.getFlow(borrowToken, employer, address(this));
 
-        require(employerFlowRate >= getPaymentFlowRate());
+        require(employerFlowRate >= getPaymentFlowRate(), "insufficient flowRate");
 
         //lender must approve contract before running next line
         borrowToken.transferFrom(msg.sender, borrower, uint256(borrowAmount));
