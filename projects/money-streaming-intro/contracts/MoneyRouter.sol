@@ -1,11 +1,10 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.14;
+pragma solidity ^0.8.16;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import {ISuperfluidToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol";
+import {ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol";
+import { CFAv1Forwarder } from "@superfluid-finance/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol";
 
 error Unauthorized();
 
@@ -16,28 +15,14 @@ contract MoneyRouter {
     /// @notice Owner.
     address public owner;
 
-    /// @notice CFA Library.
-    using CFAv1Library for CFAv1Library.InitData;
-    CFAv1Library.InitData public cfaV1;
+    CFAv1Forwarder private cfaV1;
 
     /// @notice Allow list.
     mapping(address => bool) public accountList;
 
-    constructor(ISuperfluid host, address _owner) {
-        assert(address(host) != address(0));
+    constructor(CFAv1Forwarder _cfaForwarder, address _owner) {
         owner = _owner;
-
-        // Initialize CFA Library
-        cfaV1 = CFAv1Library.InitData(
-            host,
-            IConstantFlowAgreementV1(
-                address(
-                    host.getAgreementClass(
-                        keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1")
-                    )
-                )
-            )
-        );
+        cfaV1 = _cfaForwarder;
     }
 
     /// @notice Add account to allow list.
@@ -78,28 +63,28 @@ contract MoneyRouter {
     /// @dev This requires the contract to be a flowOperator for the msg sender.
     /// @param token Token to stream.
     /// @param flowRate Flow rate per second to stream.
-    function createFlowIntoContract(ISuperfluidToken token, int96 flowRate) external {
+    function createFlowIntoContract(ISuperToken token, int96 flowRate) external {
         if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
-        cfaV1.createFlowByOperator(msg.sender, address(this), token, flowRate);
+        cfaV1.createFlow(token, msg.sender, address(this), flowRate, "0x");
     }
 
     /// @notice Update an existing stream being sent into the contract by msg sender.
     /// @dev This requires the contract to be a flowOperator for the msg sender.
     /// @param token Token to stream.
     /// @param flowRate Flow rate per second to stream.
-    function updateFlowIntoContract(ISuperfluidToken token, int96 flowRate) external {
+    function updateFlowIntoContract(ISuperToken token, int96 flowRate) external {
         if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
-        cfaV1.updateFlowByOperator(msg.sender, address(this), token, flowRate);
+        cfaV1.updateFlow(token, msg.sender, address(this), flowRate, "0x");
     }
 
     /// @notice Delete a stream that the msg.sender has open into the contract.
     /// @param token Token to quit streaming.
-    function deleteFlowIntoContract(ISuperfluidToken token) external {
+    function deleteFlowIntoContract(ISuperToken token) external {
         if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
-        cfaV1.deleteFlow(msg.sender, address(this), token);
+        cfaV1.deleteFlow(token, msg.sender, address(this), "0x");
     }
 
     /// @notice Withdraw funds from the contract.
@@ -116,13 +101,13 @@ contract MoneyRouter {
     /// @param receiver Receiver of stream.
     /// @param flowRate Flow rate per second to stream.
     function createFlowFromContract(
-        ISuperfluidToken token,
+        ISuperToken token,
         address receiver,
         int96 flowRate
     ) external {
         if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
-        cfaV1.createFlow(receiver, token, flowRate);
+        cfaV1.createFlow(token, address(this), receiver, flowRate, "0x");
     }
 
     /// @notice Update flow from contract to specified address.
@@ -130,21 +115,21 @@ contract MoneyRouter {
     /// @param receiver Receiver of stream.
     /// @param flowRate Flow rate per second to stream.
     function updateFlowFromContract(
-        ISuperfluidToken token,
+        ISuperToken token,
         address receiver,
         int96 flowRate
     ) external {
         if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
-        cfaV1.updateFlow(receiver, token, flowRate);
+        cfaV1.updateFlow(token, address(this), receiver, flowRate, "0x");
     }
 
     /// @notice Delete flow from contract to specified address.
     /// @param token Token to stop streaming.
     /// @param receiver Receiver of stream.
-    function deleteFlowFromContract(ISuperfluidToken token, address receiver) external {
+    function deleteFlowFromContract(ISuperToken token, address receiver) external {
         if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
-        cfaV1.deleteFlow(address(this), receiver, token);
+        cfaV1.deleteFlow(token, address(this), receiver, "0x");
     }
 }

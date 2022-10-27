@@ -69,9 +69,8 @@ before(async function () {
     await account2Upgrade.exec(account2);
 
     let MoneyRouter = await ethers.getContractFactory("MoneyRouter", owner);
-
     moneyRouter = await MoneyRouter.deploy(
-        sf.settings.config.hostAddress,
+        sf.settings.config.cfaV1ForwarderAddress,
         owner.address
     );
     await moneyRouter.deployed();
@@ -200,20 +199,21 @@ describe("Money Router", function () {
 
         let receiverContractFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
-            sender: account1.address,
-            receiver: moneyRouter.address,
+            sender: moneyRouter.address,
+            receiver: account1.address,
             providerOrSigner: owner
         });
 
         expect(receiverContractFlowRate, "200000000000000");
     })
     it("Contract sends funds #3 - deleting a flow from the contract", async function () {
+
         await moneyRouter.deleteFlowFromContract(daix.address, account1.address); //about 500 per month
 
         let receiverContractFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
-            sender: account1.address,
-            receiver: moneyRouter.address,
+            sender: moneyRouter.address,
+            receiver: account1.address,
             providerOrSigner: owner
         });
 

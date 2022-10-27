@@ -16,7 +16,7 @@
         "hardhat-gas-reporter": "^1.0.8",
         "solhint": "^3.3.7",
         "solidity-coverage": "^0.7.21",
-        "@superfluid-finance/sdk-core": "^0.4.4",
+        "@superfluid-finance/sdk-core": "^0.5.7",
         "graphql": "^16.5.0"
     },
     "dependencies": {
