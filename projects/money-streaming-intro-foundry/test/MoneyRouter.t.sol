@@ -79,7 +79,6 @@ contract MoneyRouterTest is Test {
 
         vm.startPrank(account1);
         daix.transfer(address(moneyRouter), 50000000000000000);
-        // sf.cfaV1Forwarder.createFlow(daix, account1, address(moneyRouter), 51235235, "0x");
 
         vm.stopPrank();
     }
