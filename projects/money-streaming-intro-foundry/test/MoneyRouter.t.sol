@@ -2,17 +2,14 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-// import "../lib/forge-std/src/console.sol";
 import "forge-std/console.sol";
-// import "../lib/forge-std/console.sol";
-// import "./lib/forge-std/console.sol";
 import "ds-test/test.sol";
 
 import "../src/MoneyRouter.sol";
 import {ISuperfluid, ISuperToken, ISuperApp, ISuperfluidToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {IConstantFlowAgreementV1} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 import { ERC1820RegistryCompiled } from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
-// import {SuperfluidFrameworkDeployer} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
+
 import {TestToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol";
 import {
     SuperfluidFrameworkDeployer,
@@ -28,8 +25,6 @@ import {
 contract MoneyRouterTest is Test {
     MoneyRouter public moneyRouter;
 
-    SuperfluidFrameworkDeployer public sfDeployer;
-    SuperfluidFrameworkDeployer.Framework public sfFramework;
     ISuperfluid public host;
     IConstantFlowAgreementV1 public cfa;
     TestToken public dai;
@@ -67,7 +62,6 @@ contract MoneyRouterTest is Test {
         host = sf.host;
         cfa = sf.cfa;
         cfaV1 = CFAv1Library.InitData(host, cfa);
-        // cfaV1.authorizeFlowOperatorWithFullControl(flowOperator, token);
         ( ,daix ) = sfd.deployWrapperSuperToken(
             "fake dai token",
             "DAI",
