@@ -77,10 +77,9 @@ contract MoneyRouterTest is Test {
         vm.stopPrank();
         moneyRouter = new MoneyRouter(host, account1);
 
-        vm.startPrank(account1);
+        vm.prank(account1);
         daix.transfer(address(moneyRouter), 50000000000000000);
 
-        vm.stopPrank();
     }
 }
 
