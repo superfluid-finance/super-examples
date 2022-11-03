@@ -7,6 +7,7 @@
     },
     "scripts": {
         "test": "forge test && hardhat test",
+        "build": "forge build && npx hardhat compile",
         "forge-test": "forge test",
         "hardhat-test": "hardhat test",
         "coverage": "hardhat coverage",
