@@ -6,6 +6,7 @@
         "lib": "lib"
     },
     "scripts": {
+        "install": "forge install && yarn install",
         "test": "forge test && hardhat test",
         "build": "forge build && npx hardhat compile",
         "forge-test": "forge test",
