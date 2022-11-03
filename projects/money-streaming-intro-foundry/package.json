@@ -1,8 +1,8 @@
 {
     "name": "money-streaming-intro",
     "scripts": {
-        "install": "curl -L https://foundry.paradigm.xyz",
-        "test": "foundryup && forge install && forge test",
+        "install": "curl -L https://foundry.paradigm.xyz && foundryup",
+        "test": "forge install && forge test",
         "build": "forge build"
     }
 }
