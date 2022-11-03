@@ -1,7 +1,7 @@
 {
     "name": "money-streaming-intro",
     "scripts": {
-        "install": "forge install",
+        "install": "foundryup && forge install",
         "test": "forge test",
         "build": "forge build"
     }
