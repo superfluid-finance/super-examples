@@ -6,9 +6,8 @@
         "lib": "lib"
     },
     "scripts": {
-        "install": "forge install && yarn install",
-        "test": "forge test && hardhat test",
-        "build": "forge build && npx hardhat compile",
+        "test": "npx hardhat test",
+        "build": "npx hardhat compile",
         "forge-test": "forge test",
         "hardhat-test": "hardhat test",
         "coverage": "hardhat coverage",
