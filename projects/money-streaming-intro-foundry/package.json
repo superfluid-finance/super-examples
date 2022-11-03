@@ -1,0 +1,8 @@
+{
+    "name": "money-streaming-intro",
+    "scripts": {
+        "install": "forge install",
+        "test": "forge test",
+        "build": "forge build"
+    }
+}
