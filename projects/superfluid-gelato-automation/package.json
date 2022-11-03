@@ -1,11 +1,12 @@
 {
-    "name": "simple-acl-close",
+    "name": "superfluid-gelato-automation",
     "version": "0.0.1",
     "description": "A simple gelato resolver which uses Superfluid's ACL feature to close a single stream.",
     "directories": {
         "lib": "lib"
     },
     "scripts": {
+        "test": "forge test && hardhat test",
         "forge-test": "forge test",
         "hardhat-test": "hardhat test",
         "coverage": "hardhat coverage",
