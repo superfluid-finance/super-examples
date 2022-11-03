@@ -1,9 +1,13 @@
-const {ethers } = require("hardhat");
+const { ethers } = require("hardhat");
 
 const SlotsBitmapLibraryArtifact = require("@superfluid-finance/ethereum-contracts/build/contracts/SlotsBitmapLibrary.json");
 const SuperfluidFrameworkDeployerArtifact = require("@superfluid-finance/ethereum-contracts/build/contracts/SuperfluidFrameworkDeployer.json");
 
 const ERC1820Registry = require("@superfluid-finance/ethereum-contracts/scripts/artifacts/ERC1820Registry.json");
+// https://github.com/0xjac/ERC1820
+//Universal registry smart contract where any address (contract or regular account)
+// can register which interface it supports and which smart contract is responsible for its implementation.
+
 
 const ERC1820_ADDRESS = "0x1820a4b7618bde71dce8cdc73aab6c95905fad24";
 const ERC1820_DEPLOYER = "0xa990077c3205cbDf861e17Fa532eeB069cE9fF96";
@@ -56,7 +60,7 @@ const deployTestFramework = async () => {
 
     const slotsBitmapLibraryPlaceholder = "__SlotsBitmapLibrary____________________"
     const addr = SlotsBitmapLibrary.address.replace("0x", "")
-        
+
     console.log("Deploying the deployer...")
     const superfluidFrameworkDeployer = await new ethers.ContractFactory(
         SuperfluidFrameworkDeployerArtifact.abi,
@@ -64,7 +68,7 @@ const deployTestFramework = async () => {
             .split(slotsBitmapLibraryPlaceholder)
             .join(addr),
         signer
-    ).deploy({ gasLimit: 100000000})
+    ).deploy({ gasLimit: 100000000 })
     console.log("Deployer deployed successfully");
     return superfluidFrameworkDeployer;
 };
