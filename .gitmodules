@@ -9,3 +9,6 @@
 [submodule "projects/money-streaming-intro-foundry/lib/forge-std"]
 	path = projects/money-streaming-intro-foundry/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "projects/money-streaming-intro-foundry/lib/protocol-monorepo"]
+	path = projects/money-streaming-intro-foundry/lib/protocol-monorepo
+	url = https://github.com/superfluid-finance/protocol-monorepo
