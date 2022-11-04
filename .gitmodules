@@ -1,0 +1,3 @@
+[submodule "projects/money-streaming-intro-foundry/lib/solmate"]
+	path = projects/money-streaming-intro-foundry/lib/solmate
+	url = https://github.com/transmissions11/solmate
