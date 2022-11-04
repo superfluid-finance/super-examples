@@ -89,7 +89,14 @@ To get this up and running and helping you close a stream, here is a step-by-ste
 
 You can do this with forge or Hardhat.
 
-You can get your desired end time by creating a date object in javascript and then calling `.getTime()` to get the time in milliseconds and dividing by 1000 to convert that to seconds.
+You can get your desired end time by creating a date object in javascript and then calling `.getTime()` to get the time in milliseconds and dividing by 1000 to convert that to seconds. Example:
+
+```js
+//say I want to have my stream closed on Dec 1st 2022 and 12pm UTC
+//create date object
+let date = new Date('December 1, 2022 12:00:00');
+let timestampInSeconds = date.getTime() / 1000;
+```
 
 Forge command: `make deploy`
 
