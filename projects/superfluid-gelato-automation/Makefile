@@ -12,7 +12,7 @@ clean  :; forge clean
 
 # Install the Modules
 install :; 
-	forge install foundry-rs/forge-std
+	forge install foundry-rs/forge-std --no-commit
 
 # # Remapping
 remappings :; 
