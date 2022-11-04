@@ -3,3 +3,6 @@
 	url = https://github.com/transmissions11/solmate
 [submodule "G:/code/clone/super-examples/projects/money-streaming-intro-foundry/lib\\solmate"]
 	branch = v7
+[submodule "projects/money-streaming-intro-foundry/lib/openzeppelin-contracts"]
+	path = projects/money-streaming-intro-foundry/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
