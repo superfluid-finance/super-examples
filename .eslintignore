@@ -2,3 +2,4 @@ node_modules
 artifacts
 cache
 coverage
+money-streaming-intro-foundry/lib

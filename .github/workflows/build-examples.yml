@@ -19,7 +19,7 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["tradeable-cashflow", "borrow-against-salary", "instant-distribution-intro", "money-streaming-intro", "superfluid-gelato-automation"]
+                project: ["tradeable-cashflow", "borrow-against-salary", "instant-distribution-intro","superfluid-gelato-automation",  "money-streaming-intro/money-streaming-intro-hardhat"]
                 install: ["clean-install"]
                 node-version: [16]
         steps:
@@ -34,3 +34,30 @@ jobs:
                   yarn install
                   yarn build
                   yarn test
+
+    build-foundry-example:
+        name: Build Foundry Examples
+        runs-on: ubuntu-latest
+        strategy:
+            # build all examples independently
+            fail-fast: false
+            matrix:
+                project: ["money-streaming-intro/money-streaming-intro-foundry"]
+                install: ["clean-install"]
+                node-version: [16]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: Install Foundry
+              uses: foundry-rs/foundry-toolchain@v1
+              with:
+                version: nightly
+            - name: Install, Build, and Test
+              run: |
+                  cd "projects/${{ matrix.project }}"
+                  forge install
+                  forge build
+                  forge test

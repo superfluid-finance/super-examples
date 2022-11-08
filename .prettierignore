@@ -21,6 +21,7 @@ out
 data
 build
 dist
+lib
 
 # github
 .github

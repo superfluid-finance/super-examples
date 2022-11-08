@@ -1,0 +1,32 @@
+query tokenStatistics(
+    $first: Int = 10
+    $orderBy: TokenStatistic_orderBy = id
+    $orderDirection: OrderDirection = asc
+    $skip: Int = 0
+    $where: TokenStatistic_filter = {}
+    $block: Block_height
+) {
+    tokenStatistics(
+        first: $first
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+        skip: $skip
+        where: $where
+        block: $block
+    ) {
+        id
+        totalAmountDistributedUntilUpdatedAt
+        totalAmountStreamedUntilUpdatedAt
+        totalAmountTransferredUntilUpdatedAt
+        totalApprovedSubscriptions
+        totalNumberOfActiveIndexes
+        totalNumberOfActiveStreams
+        totalNumberOfIndexes
+        totalNumberOfClosedStreams
+        totalOutflowRate
+        totalSubscriptionsWithUnits
+        totalSupply
+        updatedAtTimestamp
+        updatedAtBlockNumber
+    }
+}

@@ -25,9 +25,10 @@ contract TradeableCashflow is ERC721, RedirectAll {
     /// defined in `RedirectAll`.
     /// @param to New receiver.
     function _beforeTokenTransfer(
-        address, // from
+        address from, // from
         address to,
-        uint256 // tokenId
+        uint256 tokenId, // tokenId
+        uint256 //open zeppelin's batchSize param
     ) internal override {
         _changeReceiver(to);
     }
