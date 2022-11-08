@@ -54,6 +54,7 @@ jobs:
             - name: Install, Build, and Test
               run: |
                   cd "projects/${{ matrix.project }}"
+                  curl -L https://foundry.paradigm.xyz | bash
                   foundryup
                   forge clean
                   forge install foundry-rs/forge-std --no-commit
