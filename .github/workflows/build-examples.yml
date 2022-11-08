@@ -56,7 +56,6 @@ jobs:
                   cd "projects/${{ matrix.project }}"
                   curl -L https://foundry.paradigm.xyz | bash
                   foundryup
-                  forge clean
                   forge install foundry-rs/forge-std --no-commit
                   forge install
                   forge build
