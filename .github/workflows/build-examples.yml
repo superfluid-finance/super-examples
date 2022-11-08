@@ -51,9 +51,12 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
+            - name: Install Foundry
+              uses: foundry-rs/foundry-toolchain@v1
+              with:
+              version: nightly
             - name: Install, Build, and Test
               run: |
-                  nohup curl -L https://foundry.paradigm.xyz | bash
                   foundryup
                   forge install foundry-rs/forge-std --no-commit
                   forge install
