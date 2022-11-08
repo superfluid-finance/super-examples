@@ -1,0 +1,6 @@
+[submodule "projects/simple-acl-close/lib/forge-std"]
+	path = projects/simple-acl-close/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "projects/superfluid-gelato-automation/lib/forge-std"]
+	path = projects/superfluid-gelato-automation/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
