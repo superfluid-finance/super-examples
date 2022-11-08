@@ -18,8 +18,8 @@ module.exports = {
     namedAccounts: {
         deployer: 0
     }
-    // kovan: {
-    //   url: `${process.env.KOVAN_RPC_URL}`,
+    // goerli: {
+    //   url: `${process.env.GOERLI_RPC_URL}`,
     //   accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`],
     //   gas: GAS_LIMIT,
     //   gasPrice: 11e9, // 10 GWEI
