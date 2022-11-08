@@ -39,12 +39,11 @@ jobs:
         name: Build Foundry Examples
         runs-on: ubuntu-latest
         env:
-            CI: false # might not need this. this refers to react ui related things.
-            strategy:
+        strategy:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: "money-streaming-intro/money-streaming-intro-foundry"
+                project: ["money-streaming-intro/money-streaming-intro-foundry"]
                 install: ["clean-install"]
                 node-version: [16]
         steps:
