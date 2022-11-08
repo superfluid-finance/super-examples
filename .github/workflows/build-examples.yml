@@ -44,7 +44,7 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["money-streaming-intro/money-streaming-intro-foundry"]
+                project: "money-streaming-intro/money-streaming-intro-foundry"
                 install: ["clean-install"]
                 node-version: [16]
         steps:
