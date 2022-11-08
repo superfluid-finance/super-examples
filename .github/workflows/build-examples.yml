@@ -57,8 +57,6 @@ jobs:
                 version: nightly
             - name: Install, Build, and Test
               run: |
-                  foundryup
-                  forge install foundry-rs/forge-std --no-commit
                   forge install
                   forge build
                   forge test
