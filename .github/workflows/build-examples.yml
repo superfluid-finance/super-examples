@@ -54,8 +54,9 @@ jobs:
             - name: Install, Build, and Test
               run: |
                   cd "projects/${{ matrix.project }}"
-                  forge install foundry-rs/forge-std --no-commit
+                  foundryup
                   forge clean
+                  forge install foundry-rs/forge-std --no-commit
                   forge install
                   forge build
                   forge test
