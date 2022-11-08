@@ -47,10 +47,11 @@ jobs:
             - name: Install, Build, and Test
               run: |
                   cd "projects/${{ matrix.project }}"
-                  curl -L https://foundry.paradigm.xyz
+                  curl -L https://foundry.paradigm.xyz | bash
     build-foundry-example:
         name: Build Foundry Examples
         runs-on: ubuntu-latest
+        needs: install-foundry
         strategy:
             # build all examples independently
             fail-fast: false
