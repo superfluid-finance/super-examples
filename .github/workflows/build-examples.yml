@@ -35,24 +35,9 @@ jobs:
                   yarn build
                   yarn test
 
-    install-foundry:
-        name: Install Foundry
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - name: Install, Build, and Test
-              run: |
-                  cd "projects/${{ matrix.project }}"
-                  curl -L https://foundry.paradigm.xyz | bash
-                  foundryup
     build-foundry-example:
         name: Build Foundry Examples
         runs-on: ubuntu-latest
-        needs: install-foundry
         strategy:
             # build all examples independently
             fail-fast: false
@@ -68,6 +53,8 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install, Build, and Test
               run: |
+                  nohup curl -L https://foundry.paradigm.xyz | bash
+                  foundryup
                   forge install foundry-rs/forge-std --no-commit
                   forge install
                   forge build
