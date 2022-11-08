@@ -57,6 +57,7 @@ jobs:
                 version: nightly
             - name: Install, Build, and Test
               run: |
+                  cd "projects/${{ matrix.project }}"
                   forge install
                   forge build
                   forge test
