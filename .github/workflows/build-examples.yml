@@ -48,6 +48,7 @@ jobs:
               run: |
                   cd "projects/${{ matrix.project }}"
                   curl -L https://foundry.paradigm.xyz | bash
+                  foundryup
     build-foundry-example:
         name: Build Foundry Examples
         runs-on: ubuntu-latest
@@ -67,7 +68,6 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install, Build, and Test
               run: |
-                  foundryup
                   forge install foundry-rs/forge-std --no-commit
                   forge install
                   forge build
