@@ -38,7 +38,6 @@ jobs:
     build-foundry-example:
         name: Build Foundry Examples
         runs-on: ubuntu-latest
-        env:
         strategy:
             # build all examples independently
             fail-fast: false
