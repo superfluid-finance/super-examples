@@ -34,7 +34,7 @@ jobs:
                   yarn install
                   yarn build
                   yarn test
-                  
+
     build-foundry-example:
         name: Build Foundry Examples
         runs-on: ubuntu-latest
@@ -58,5 +58,5 @@ jobs:
                   cd "projects/${{ matrix.project }}"
                   forge clean
                   forge install
-                  yarn build
-                  yarn test
+                  forge build
+                  forge test
