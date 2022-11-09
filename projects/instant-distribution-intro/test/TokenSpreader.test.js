@@ -1,8 +1,8 @@
-const { expect } = require("chai");
-const { Framework } = require("@superfluid-finance/sdk-core");
-const { ethers } = require("hardhat");
-const deployTestFramework = require("./util/deploy-sf");
-const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json");
+const { expect } = require("chai")
+const { Framework } = require("@superfluid-finance/sdk-core")
+const { ethers } = require("hardhat")
+const frameworkDeployer = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework")
+const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
 let sfDeployer;
 let contractsFramework;
@@ -25,7 +25,7 @@ before(async function () {
     // get hardhat accounts
     [admin, alice, bob] = await ethers.getSigners();
 
-    sfDeployer = await deployTestFramework();
+    sfDeployer = await frameworkDeployer.deployTestFramework();
 
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
@@ -36,7 +36,7 @@ before(async function () {
     sf = await Framework.create({
         chainId: 31337,
         provider: admin.provider,
-        resolverAddress: contractsFramework.resolver, // (empty)
+        resolverAddress: contractsFramework.resolver, // needed as placeholder
         protocolReleaseVersion: "test"
     });
 
@@ -67,9 +67,6 @@ before(async function () {
     await adminUpgrade.exec(admin);
     await aliceUpgrade.exec(alice);
     await bobUpgrade.exec(bob);
-
-    // await daix.upgrade(thousandEther).exec(alice);
-    // await daix.connect(bob).upgrade(thousandEther);
 
     // INITIALIZING SPREADER CONTRACT
 
