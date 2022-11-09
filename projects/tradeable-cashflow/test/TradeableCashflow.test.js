@@ -1,24 +1,15 @@
-/* eslint-disable no-undef */
-
+const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
-const { assert } = require("chai")
+const { ethers } = require("hardhat")
+const frameworkDeployer = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework")
+const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
-// TODO BUILD A HARDHAT PLUGIN AND REMOVE WEB3 FROM THIS
-const { ethers, web3 } = require("hardhat")
-
-const deployFramework = require("@superfluid-finance/ethereum-contracts/scripts/deploy-framework")
-const deployTestToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-token")
-const deploySuperToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-super-token")
-
-// This is only used in the set up, and these are the only functions called in this script.
-const daiABI = [
-    "function mint(address to,uint256 amount) returns (bool)",
-    "function approve(address,uint256) returns (bool)"
-]
-
-const provider = web3
-
+let provider;
 let accounts
+
+let sfDeployer
+let contractsFramework
+let owner
 
 let sf
 let dai
@@ -26,52 +17,59 @@ let daix
 let superSigner
 let TradeableCashflow
 
-const errorHandler = err => {
-    if (err) throw err
-}
+const thousandEther = ethers.utils.parseEther("10000")
 
 before(async function () {
     //get accounts from hardhat
     accounts = await ethers.getSigners()
+    provider = accounts[0].provider;
+    sfDeployer = await frameworkDeployer.deployTestFramework()
 
-    //deploy the framework
-    await deployFramework(errorHandler, {
-        web3,
-        from: accounts[0].address
-    })
+    // GETTING SUPERFLUID FRAMEWORK SET UP
 
-    //deploy a fake erc20 token
-    await deployTestToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: accounts[0].address
-    })
+    // deploy the framework locally
+    contractsFramework = await sfDeployer.getFramework()
 
-    //deploy a fake erc20 wrapper super token around the fDAI token
-    await deploySuperToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: accounts[0].address
-    })
-
-    //initialize the superfluid framework...put custom and web3 only bc we are using hardhat locally
+    //initialize the superfluid framework...put custom and web3 only bc we are usinghardhat locally
     sf = await Framework.create({
-        networkName: "custom",
+        chainId: 31337, //note: this is hardhat's local chainId
         provider,
-        dataMode: "WEB3_ONLY",
-        resolverAddress: process.env.RESOLVER_ADDRESS, //this is how you get the resolver address
+        resolverAddress: contractsFramework.resolver, //this is how you get the resolveraddress
         protocolReleaseVersion: "test"
     })
 
+    // DEPLOYING DAI and DAI wrapper super token
+    tokenDeployment = await sfDeployer.deployWrapperSuperToken(
+        "Fake DAI Token",
+        "fDAI",
+        18,
+        ethers.utils.parseEther("100000000").toString()
+    )
+    
+    daix = await sf.loadSuperToken("fDAIx")
+    dai = new ethers.Contract(
+        daix.underlyingToken.address,
+        TestToken.abi,
+        owner
+    )
+
+    //note: this is not totally necessary. you can just as easily use an ethers signer to execute ops
     superSigner = sf.createSigner({
         signer: accounts[0],
         provider: provider
     })
 
     //use the framework to get the super toen
-    daix = await sf.loadSuperToken("fDAIx")
+    daix = await sf.loadSuperToken("fDAIx");
+    dai = new ethers.Contract(
+        daix.underlyingToken.address,
+        TestToken.abi,
+        owner
+    )
 
     //get the contract object for the erc20 token
-    let daiAddress = daix.underlyingToken.address
-    dai = new ethers.Contract(daiAddress, daiABI, accounts[0])
+    // let daiAddress = daix.underlyingToken.address
+    // dai = new ethers.Contract(daiAddress, daiABI, accounts[0])
     let App = await ethers.getContractFactory("TradeableCashflow", accounts[0])
 
     TradeableCashflow = await App.deploy(
@@ -84,19 +82,23 @@ before(async function () {
 })
 
 beforeEach(async function () {
-    await dai
-        .connect(accounts[0])
-        .mint(accounts[0].address, ethers.utils.parseEther("1000"))
-
-    await dai
-        .connect(accounts[0])
-        .approve(daix.address, ethers.utils.parseEther("1000"))
-
-    const daixUpgradeOperation = daix.upgrade({
-        amount: ethers.utils.parseEther("1000")
-    })
-
-    await daixUpgradeOperation.exec(accounts[0])
+    // minting test DAI
+    await dai.connect(accounts[0]).mint(accounts[0].address, thousandEther)
+    await dai.connect(accounts[1]).mint(accounts[1].address, thousandEther)
+    await dai.connect(accounts[2]).mint(accounts[2].address, thousandEther)
+    
+    // approving DAIx to spend DAI (Super Token object is not an etherscontract object and has different operation syntax)
+    await dai.connect(accounts[0]).approve(daix.address, ethers.constants.MaxInt256)
+    await dai.connect(accounts[1]).approve(daix.address, ethers.constants.MaxInt256)
+    await dai.connect(accounts[2]).approve(daix.address, ethers.constants.MaxInt256)
+    // Upgrading all DAI to DAIx
+    const ownerUpgrade = daix.upgrade({ amount: thousandEther })
+    const account1Upgrade = daix.upgrade({ amount: thousandEther })
+    const account2Upgrade = daix.upgrade({ amount: thousandEther })
+    
+    await ownerUpgrade.exec(accounts[0])
+    await account1Upgrade.exec(accounts[1])
+    await account2Upgrade.exec(accounts[2])
 
     const daiBal = await daix.balanceOf({
         account: accounts[0].address,
