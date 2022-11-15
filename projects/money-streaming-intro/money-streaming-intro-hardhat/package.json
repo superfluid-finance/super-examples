@@ -20,6 +20,6 @@
         "graphql": "^16.5.0"
     },
     "dependencies": {
-        "@superfluid-finance/ethereum-contracts": "1.4.4-dev.affff41.0"
+        "@superfluid-finance/ethereum-contracts": "^1.4.3"
     }
 }
