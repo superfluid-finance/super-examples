@@ -29,3 +29,17 @@ The [tradable cashflow contract](./contracts/TradeableCashflow.sol) contains
 ERC721 NFT logic, inheriting Open Zeppelin's implementations. It also inherits
 the `RedirectAll.sol` logic. In this implementation, the receiver of the stream
 is changed on-transfer through the Open Zeppelin ERC721 `_beforeTransfer` hook.
+
+## Compile
+ ```npx hardhat compile```
+
+## Deploy
+```npx hardhat deploy```
+
+## Verify 
+```npx hardhat verify --constructor-args arguments.js  --network goerli CONTRACTADDRESS```
+
+In order to verify the contract, you would require an etherscan key and passin the ctor arguments with the file arguments,js
+
+## Create Flow
+```npx hardhat run scripts/createFlow.js```
