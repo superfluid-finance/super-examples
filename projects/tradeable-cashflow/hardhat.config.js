@@ -2,9 +2,11 @@ require("@nomiclabs/hardhat-truffle5")
 require("@nomiclabs/hardhat-ethers")
 require("hardhat-deploy")
 
-// require("dotenv").config();
-// const GAS_LIMIT = 8000000;
-//  const defaultNetwork = 'kovan';
+require("@nomiclabs/hardhat-etherscan");
+
+ require("dotenv").config();
+ const GAS_LIMIT = 10000000;
+  const defaultNetwork = 'goerli';
 
 module.exports = {
     solidity: {
