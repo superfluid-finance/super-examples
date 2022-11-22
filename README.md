@@ -30,3 +30,4 @@ on each to see their local README file.
 -   [Instant Distribution Intro](./projects/instant-distribution-intro/README.md)
 -   [Money Streaming Intro](./projects/money-streaming-intro/README.md)
 -   [Tradeable Cashflow NFT](./projects/tradeable-cashflow/README.md)
+-   [Gelato ACL Automation](./projects/superfluid-gelato-automation/)
