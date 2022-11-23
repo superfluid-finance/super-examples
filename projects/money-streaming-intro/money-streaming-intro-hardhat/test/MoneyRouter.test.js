@@ -89,17 +89,17 @@ describe("Money Router", function () {
     it("Access Control #2 - Should allow you to add account to account list", async function () {
         await moneyRouter.allowAccount(account1.address)
 
-        expect(await moneyRouter.accountList(account1.address), true)
+        expect(await moneyRouter.accountList(account1.address)).to.equal(true)
     })
     it("Access Control #3 - Should allow for removing accounts from whitelist", async function () {
         await moneyRouter.removeAccount(account1.address)
 
-        expect(await moneyRouter.accountList(account1.address), true)
+        expect(await moneyRouter.accountList(account1.address)).to.equal(false)
     })
     it("Access Control #4 - Should allow for change in ownership", async function () {
         await moneyRouter.changeOwner(account1.address)
 
-        expect(await moneyRouter.owner(), account1.address)
+        expect(await moneyRouter.owner()).to.equal(account1.address)
     })
     it("Contract Receives Funds #1 - lump sum is transferred to contract", async function () {
         //transfer ownership back to real owner...
@@ -121,7 +121,7 @@ describe("Money Router", function () {
             account: moneyRouter.address,
             providerOrSigner: owner
         })
-        expect(contractDAIxBalance, ethers.utils.parseEther("100"))
+        expect(contractDAIxBalance).to.equal(ethers.utils.parseEther("100"))
     })
     it("Contract Receives Funds #2 - a flow is created into the contract", async function () {
         let authorizeContractOperation = sf.cfaV1.updateFlowOperatorPermissions(
@@ -146,9 +146,9 @@ describe("Money Router", function () {
             providerOrSigner: owner
         })
 
-        expect(ownerContractFlowRate, "100000000000000")
+        expect(ownerContractFlowRate.flowRate).to.equal("100000000000000");
     })
-    it("Contract recieves funds #3 - a flow into the contract is updated", async function () {
+    it("Contract Recieves Funds #3 - a flow into the contract is updated", async function () {
         await moneyRouter.updateFlowIntoContract(
             daix.address,
             "200000000000000"
@@ -161,9 +161,9 @@ describe("Money Router", function () {
             providerOrSigner: owner
         })
 
-        expect(ownerContractFlowRate, "200000000000000")
+        expect(ownerContractFlowRate.flowRate).to.equal("200000000000000")
     })
-    it("Contract receives funds #4 - a flow into the contract is deleted", async function () {
+    it("Contract Receives Funds #4 - a flow into the contract is deleted", async function () {
         await moneyRouter.deleteFlowIntoContract(daix.address)
 
         let ownerContractFlowRate = await sf.cfaV1.getFlow({
@@ -173,7 +173,7 @@ describe("Money Router", function () {
             providerOrSigner: owner
         })
 
-        expect(ownerContractFlowRate, "0")
+        expect(ownerContractFlowRate.flowRate).to.equal("0")
     })
     it("Contract sends funds #1 - withdrawing a lump sum from the contract", async function () {
         let contractStartingBalance = await daix.balanceOf({
@@ -191,7 +191,7 @@ describe("Money Router", function () {
             providerOrSigner: owner
         })
 
-        expect(Number(contractStartingBalance) - 10, contractFinishingBalance)
+        expect(contractStartingBalance - ethers.utils.parseEther("10")).to.equal(Number(contractFinishingBalance))
     })
 
     it("Contract sends funds #2 - creating a flow from the contract", async function () {
@@ -203,12 +203,12 @@ describe("Money Router", function () {
 
         let receiverContractFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
-            sender: account1.address,
-            receiver: moneyRouter.address,
+            sender: moneyRouter.address,
+            receiver: account1.address,
             providerOrSigner: owner
         })
 
-        expect(receiverContractFlowRate, "100000000000000")
+        expect(receiverContractFlowRate.flowRate).to.equal("100000000000000");
     })
     it("Contract sends funds #3 - updating a flow from the contract", async function () {
         await moneyRouter.updateFlowFromContract(
@@ -219,23 +219,23 @@ describe("Money Router", function () {
 
         let receiverContractFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
-            sender: account1.address,
-            receiver: moneyRouter.address,
+            sender: moneyRouter.address,
+            receiver: account1.address,
             providerOrSigner: owner
         })
 
-        expect(receiverContractFlowRate, "200000000000000")
+        expect(receiverContractFlowRate.flowRate).to.equal("200000000000000");
     })
-    it("Contract sends funds #3 - deleting a flow from the contract", async function () {
+    it("Contract sends funds #4 - deleting a flow from the contract", async function () {
         await moneyRouter.deleteFlowFromContract(daix.address, account1.address) //about 500 per month
 
         let receiverContractFlowRate = await sf.cfaV1.getFlow({
             superToken: daix.address,
-            sender: account1.address,
-            receiver: moneyRouter.address,
+            sender: moneyRouter.address,
+            receiver: account1.address,
             providerOrSigner: owner
         })
 
-        expect(receiverContractFlowRate, "0")
+        expect(receiverContractFlowRate.flowRate).to.equal("0");
     })
 })
