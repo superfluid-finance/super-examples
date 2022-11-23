@@ -121,7 +121,7 @@ describe("Money Router", function () {
             account: moneyRouter.address,
             providerOrSigner: owner
         })
-        expect(contractDAIxBalance).to.equal(ethers.utils.parseEther("100"))
+        expect(contractDAIxBalance).to.equal(ethers.utils.parseEther("100").toString())
     })
     it("Contract Receives Funds #2 - a flow is created into the contract", async function () {
         let authorizeContractOperation = sf.cfaV1.updateFlowOperatorPermissions(
