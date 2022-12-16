@@ -13,26 +13,20 @@ import {ERC1820RegistryCompiled} from "../lib/ethereum-contracts/packages/ethere
 import {TestToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol";
 import {SuperfluidFrameworkDeployer, TestGovernance, Superfluid, ConstantFlowAgreementV1, CFAv1Library, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
 
+
 contract MoneyRouterTest is Test {
-    //our money router contract we will interact with
     MoneyRouter public moneyRouter;
 
-    //superfluid protocol host
     ISuperfluid public host;
-    //superfluid protocol cfa
     IConstantFlowAgreementV1 public cfa;
-    //dai, daix
     TestToken public dai;
     ISuperToken public daix;
-    //accounts which will interact w contract
     address public account1;
     address public account2;
 
-    //CFA library which will be used to create, update, delete stremas
     using CFAv1Library for CFAv1Library.InitData;
     CFAv1Library.InitData public cfaV1;
 
-    //Superfluid Framework contracts
     struct Framework {
         TestGovernance governance;
         Superfluid host;
@@ -46,23 +40,17 @@ contract MoneyRouterTest is Test {
     SuperfluidFrameworkDeployer.Framework sf;
 
     function setUp() public {
-        //ERC20 registry - must exist in test environment before we deploy framework
         vm.etch(ERC1820RegistryCompiled.at, ERC1820RegistryCompiled.bin);
 
-        //deploying the framework
         SuperfluidFrameworkDeployer sfd = new SuperfluidFrameworkDeployer();
-        //calling get framework to get contracts & initialize sf variable
         sf = sfd.getFramework();
-        //initialize accounts and contract variables
         account1 = vm.addr(1);
         account2 = vm.addr(2);
         host = sf.host;
         cfa = sf.cfa;
         cfaV1 = CFAv1Library.InitData(host, cfa);
-        //deploying a new token using Superfluid Framework Deployer
         (, daix) = sfd.deployWrapperSuperToken("fake dai token", "DAI", 18, 1000000000000000000000);
 
-        //mint and upgrade tokens
         vm.startPrank(account1);
         dai = TestToken(daix.getUnderlyingToken());
         dai.mint(account1, 100000000000000000);
@@ -79,7 +67,7 @@ contract MoneyRouterTest is Test {
 contract MoneyRouterDeployment is MoneyRouterTest {
     function testDeployment() public {
         setUp();
-        //make sure contract was deployed properly
+
         assertEq(moneyRouter.owner(), account1, "wrong owner");
         assertEq(daix.balanceOf(account1), 50000000000000000);
         assertTrue(true);
@@ -87,7 +75,6 @@ contract MoneyRouterDeployment is MoneyRouterTest {
 }
 
 contract MoneyRouterFlowTests is MoneyRouterDeployment {
-    //tests the operation of create, update, and delete flow into contract
     function testCreateFlowsIntoContract() public {
         setUp();
 
@@ -107,7 +94,6 @@ contract MoneyRouterFlowTests is MoneyRouterDeployment {
         vm.stopPrank();
     }
 
-    //tests the operation of creating, updating, and deleting flows into contract
     function testCreateFlowsFromContract() public {
         setUp();
 
