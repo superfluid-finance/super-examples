@@ -1,7 +1,0 @@
-dist
-build
-coverage
-cache
-src/typechain
-src/abi
-**/*.generated.*
