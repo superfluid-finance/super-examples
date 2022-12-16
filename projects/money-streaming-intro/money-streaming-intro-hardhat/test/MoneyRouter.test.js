@@ -220,7 +220,8 @@ describe("Money Router", function () {
             sender: moneyRouter.address,
             receiver: account1.address,
             providerOrSigner: owner
-    });
+        });
 
-    expect(receiverContractFlowRate.flowRate).to.equal("0");
+        expect(receiverContractFlowRate.flowRate).to.equal("0");
+    });
 })
