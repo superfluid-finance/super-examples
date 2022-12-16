@@ -1,7 +1,7 @@
 const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { ethers } = require("hardhat")
-const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework");
+const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
 let sfDeployer
@@ -75,11 +75,10 @@ before(async function () {
     let MoneyRouter = await ethers.getContractFactory("MoneyRouter", owner)
 
     moneyRouter = await MoneyRouter.deploy(
-        sf.settings.config.hostAddress,
         owner.address
     )
     await moneyRouter.deployed()
-})
+});
 
 describe("Money Router", function () {
     it("Access Control #1 - Should deploy properly with the correct owner", async function () {
