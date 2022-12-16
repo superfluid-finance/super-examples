@@ -1,3 +1,0 @@
-/.yarn/releases/** binary
-/.yarn/plugins/** binary
-*.sol linguist-language=Solidity
