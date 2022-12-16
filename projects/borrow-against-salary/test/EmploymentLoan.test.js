@@ -2,7 +2,7 @@ const { Framework } = require("@superfluid-finance/sdk-core")
 const { ethers , network} = require("hardhat")
 const { assert } = require("chai")
 const LoanArtifact = require("../artifacts/contracts/EmploymentLoan.sol/EmploymentLoan.json")
-const frameworkDeployer = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework")
+const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
 
@@ -24,7 +24,7 @@ before(async function () {
     //get accounts from hardhat
     [admin, borrower, lender, employer] = await ethers.getSigners()
     
-    sfDeployer = await frameworkDeployer.deployTestFramework();
+    sfDeployer = await deployTestFramework();
     // deploy the framework locally
     contractsFramework = await sfDeployer.getFramework();
 
