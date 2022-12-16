@@ -1,0 +1,6 @@
+{
+    "exclude": [
+        "scripts/setup.ts"
+    ]
+}
+

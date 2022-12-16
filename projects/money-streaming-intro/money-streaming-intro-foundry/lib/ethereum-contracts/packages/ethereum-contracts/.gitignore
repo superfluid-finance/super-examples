@@ -1,0 +1,10 @@
+/coverage.json
+/coverage
+/.coverage_*
+/reports
+/artifacts
+/cache
+/docs/api
+/typechain-types
+/scripts/**/*.d.ts
+/scripts/**/*.d.ts.map

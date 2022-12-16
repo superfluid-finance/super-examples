@@ -1,0 +1,10 @@
+{
+    "ignorePatterns": [
+        "node_modules",
+        "build",
+        "coverage",
+        "coverage.json",
+        "typechain-types",
+        "utils"
+    ]
+}

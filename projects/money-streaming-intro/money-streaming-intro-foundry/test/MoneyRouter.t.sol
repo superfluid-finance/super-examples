@@ -6,12 +6,13 @@ import "forge-std/console.sol";
 import "ds-test/test.sol";
 
 import "../src/MoneyRouter.sol";
-import {ISuperfluid, ISuperToken, ISuperApp, ISuperfluidToken} from "protocol-monorepo/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import {IConstantFlowAgreementV1} from "protocol-monorepo/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import {ERC1820RegistryCompiled} from "protocol-monorepo/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
+import {ISuperfluid, ISuperToken, ISuperApp, ISuperfluidToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {IConstantFlowAgreementV1} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
+import {ERC1820RegistryCompiled} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
 
-import {TestToken} from "protocol-monorepo/packages/ethereum-contracts/contracts/utils/TestToken.sol";
-import {SuperfluidFrameworkDeployer, TestGovernance, Superfluid, ConstantFlowAgreementV1, CFAv1Library, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "protocol-monorepo/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
+import {TestToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol";
+import {SuperfluidFrameworkDeployer, TestGovernance, Superfluid, ConstantFlowAgreementV1, CFAv1Library, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
+
 
 contract MoneyRouterTest is Test {
     MoneyRouter public moneyRouter;
