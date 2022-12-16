@@ -1,7 +1,7 @@
 const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { ethers } = require("hardhat")
-const frameworkDeployer = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework")
+const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework");
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
 let sfDeployer
@@ -21,7 +21,6 @@ const thousandEther = ethers.utils.parseEther("10000")
 before(async function () {
     // get hardhat accounts
     [owner, account1, account2] = await ethers.getSigners();
-
     sfDeployer = await deployTestFramework();
 
     // GETTING SUPERFLUID FRAMEWORK SET UP
