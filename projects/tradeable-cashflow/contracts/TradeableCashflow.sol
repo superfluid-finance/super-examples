@@ -15,7 +15,7 @@ contract TradeableCashflow is ERC721, RedirectAll {
         ISuperfluid host,
         IConstantFlowAgreementV1 cfa,
         ISuperToken acceptedToken
-    ) ERC721(_name, _symbol) RedirectAll(acceptedToken, host, cfa,owner) {
+    ) ERC721(_name, _symbol) RedirectAll(acceptedToken, host, cfa, owner) {
         _mint(owner, 1);
     }
 
