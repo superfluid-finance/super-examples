@@ -1,7 +1,7 @@
 const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { ethers } = require("hardhat")
-const frameworkDeployer = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework")
+const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
 let sfDeployer;
@@ -25,7 +25,7 @@ before(async function () {
     // get hardhat accounts
     [admin, alice, bob] = await ethers.getSigners();
 
-    sfDeployer = await frameworkDeployer.deployTestFramework();
+    sfDeployer = await deployTestFramework();
 
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
@@ -76,7 +76,6 @@ before(async function () {
     );
 
     spreader = await spreaderContractFactory.deploy(
-        sf.settings.config.hostAddress,
         daix.address // Setting DAIx as spreader token
     );
 
