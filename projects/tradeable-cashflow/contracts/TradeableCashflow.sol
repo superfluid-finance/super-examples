@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.14;
 
-import {RedirectAll, ISuperToken, ISuperfluid} from "./RedirectAll.sol";
+import {RedirectAll, ISuperToken, ISuperfluid, IConstantFlowAgreementV1} from "./RedirectAll.sol";
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 /// @title Tradeable Cashflow NFT
@@ -13,8 +13,9 @@ contract TradeableCashflow is ERC721, RedirectAll {
         string memory _name,
         string memory _symbol,
         ISuperfluid host,
+        IConstantFlowAgreementV1 cfa,
         ISuperToken acceptedToken
-    ) ERC721(_name, _symbol) RedirectAll(host, acceptedToken, owner) {
+    ) ERC721(_name, _symbol) RedirectAll(acceptedToken, host, cfa,owner) {
         _mint(owner, 1);
     }
 

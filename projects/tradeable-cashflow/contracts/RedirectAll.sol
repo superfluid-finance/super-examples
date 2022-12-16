@@ -3,7 +3,7 @@ pragma solidity ^0.8.14;
 
 import {ISuperfluid, ISuperToken, ISuperApp, ISuperAgreement, SuperAppDefinitions} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
-import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol";
+import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
 import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 
@@ -30,32 +30,35 @@ error InvalidAgreement();
 /// @title Stream Redirection Contract
 /// @notice This contract is a registered super app, meaning it receives
 contract RedirectAll is SuperAppBase {
-    // CFA library setup
-    using CFAv1Library for CFAv1Library.InitData;
-    CFAv1Library.InitData public cfaV1Lib;
+    // SuperToken library setup
+    using SuperTokenV1Library for ISuperToken;
 
     /// @dev Super token that may be streamed to this contract
     ISuperToken internal immutable _acceptedToken;
+
+    ///@notice this is the superfluid host which is used in modifiers
+    ISuperfluid immutable host;
+
+    IConstantFlowAgreementV1 immutable cfa;
 
     /// @notice This is the current receiver that all streams will be redirected to.
     address public _receiver;
 
     constructor(
-        ISuperfluid host,
         ISuperToken acceptedToken,
+        ISuperfluid _host,
+        IConstantFlowAgreementV1 _cfa,
         address receiver
     ) {
-        assert(address(host) != address(0));
+        assert(address(_host) != address(0));
         assert(address(acceptedToken) != address(0));
         assert(receiver != address(0));
 
         _acceptedToken = acceptedToken;
         _receiver = receiver;
+        host = _host;
+        cfa = _cfa;
 
-        cfaV1Lib = CFAv1Library.InitData({
-            host: host,
-            cfa: IConstantFlowAgreementV1(address(host.getAgreementClass(CFA_ID)))
-        });
 
         // Registers Super App, indicating it is the final level (it cannot stream to other super
         // apps), and that the `before*` callbacks should not be called on this contract, only the
@@ -79,13 +82,13 @@ contract RedirectAll is SuperAppBase {
     // MODIFIERS
 
     modifier onlyHost() {
-        if (msg.sender != address(cfaV1Lib.host)) revert Unauthorized();
+        if (msg.sender != address(host)) revert Unauthorized();
         _;
     }
 
     modifier onlyExpected(ISuperToken superToken, address agreementClass) {
         if (superToken != _acceptedToken) revert InvalidToken();
-        if (agreementClass != address(cfaV1Lib.cfa)) revert InvalidAgreement();
+        if (agreementClass != address(cfa)) revert InvalidAgreement();
         _;
     }
 
@@ -106,8 +109,7 @@ contract RedirectAll is SuperAppBase {
         )
     {
         if (receiver != address(0)) {
-            (startTime, flowRate, , ) = cfaV1Lib.cfa.getFlow(
-                _acceptedToken,
+            (startTime, flowRate, , ) = _acceptedToken.getFlowInfo(
                 address(this),
                 _receiver
             );
@@ -162,7 +164,7 @@ contract RedirectAll is SuperAppBase {
         bytes calldata _ctx
     ) external override onlyHost returns (bytes memory newCtx) {
         // According to the app basic law, we should never revert in a termination callback
-        if (_superToken != _acceptedToken || _agreementClass != address(cfaV1Lib.cfa)) {
+        if (_superToken != _acceptedToken || _agreementClass != address(cfa)) {
             return _ctx;
         }
 
@@ -177,19 +179,18 @@ contract RedirectAll is SuperAppBase {
     function _changeReceiver(address newReceiver) internal {
         if (newReceiver == address(0)) revert InvalidReceiver();
 
-        if (cfaV1Lib.host.isApp(ISuperApp(newReceiver))) revert ReceiverIsSuperApp();
+        if (host.isApp(ISuperApp(newReceiver))) revert ReceiverIsSuperApp();
 
         if (newReceiver == _receiver) return;
 
-        (, int96 outFlowRate, , ) = cfaV1Lib.cfa.getFlow(_acceptedToken, address(this), _receiver);
+        int96 outFlowRate = _acceptedToken.getFlowRate(address(this), _receiver);
 
         if (outFlowRate > 0) {
-            cfaV1Lib.deleteFlow(address(this), _receiver, _acceptedToken);
+            _acceptedToken.deleteFlow(address(this), _receiver);
 
-            cfaV1Lib.createFlow(
+            _acceptedToken.createFlow(
                 newReceiver,
-                _acceptedToken,
-                cfaV1Lib.cfa.getNetFlow(_acceptedToken, address(this))
+                _acceptedToken.getNetFlowRate(address(this))
             );
         }
 
@@ -205,21 +206,21 @@ contract RedirectAll is SuperAppBase {
     function _updateOutflow(bytes calldata ctx) private returns (bytes memory newCtx) {
         newCtx = ctx;
 
-        int96 netFlowRate = cfaV1Lib.cfa.getNetFlow(_acceptedToken, address(this));
+        int96 netFlowRate = _acceptedToken.getNetFlowRate(address(this));
 
-        (, int96 outFlowRate, , ) = cfaV1Lib.cfa.getFlow(_acceptedToken, address(this), _receiver);
+        int96 outFlowRate = _acceptedToken.getFlowRate(address(this), _receiver);
 
         int96 inFlowRate = netFlowRate + outFlowRate;
 
         if (inFlowRate == 0) {
             // The flow does exist and should be deleted.
-            newCtx = cfaV1Lib.deleteFlowWithCtx(ctx, address(this), _receiver, _acceptedToken);
+            newCtx = _acceptedToken.deleteFlowWithCtx(address(this), _receiver, ctx);
         } else if (outFlowRate != 0) {
             // The flow does exist and needs to be updated.
-            newCtx = cfaV1Lib.updateFlowWithCtx(ctx, _receiver, _acceptedToken, inFlowRate);
+            newCtx = _acceptedToken.updateFlowWithCtx(_receiver, inFlowRate, ctx);
         } else {
             // The flow does not exist but should be created.
-            newCtx = cfaV1Lib.createFlowWithCtx(ctx, _receiver, _acceptedToken, inFlowRate);
+            newCtx = _acceptedToken.createFlowWithCtx(_receiver, inFlowRate, ctx);
         }
     }
 }
