@@ -1,9 +1,0 @@
-[submodule "projects/money-streaming-intro-foundry/lib/forge-std"]
-	path = projects/money-streaming-intro-foundry/lib/forge-std
-	url = https://github.com/foundry-rs/forge-std
-[submodule "projects/money-streaming-intro-foundry/lib/openzeppelin-contracts"]
-	path = projects/money-streaming-intro-foundry/lib/openzeppelin-contracts
-	url = https://github.com/openzeppelin/openzeppelin-contracts
-[submodule "projects/money-streaming-intro-foundry/lib/ethereum-contracts"]
-	path = projects/money-streaming-intro-foundry/lib/ethereum-contracts
-	url = https://github.com/superfluid-finance/ethereum-contracts
