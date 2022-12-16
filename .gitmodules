@@ -9,4 +9,4 @@
 	url = https://github.com/superfluid-finance/ethereum-contracts
 [submodule "projects/money-streaming-intro/money-streaming-intro-foundry/lib/ethereum-contracts"]
 	path = projects/money-streaming-intro/money-streaming-intro-foundry/lib/ethereum-contracts
-	url = https://github.com/superfluid-finance/ethereum-contracts
+	url = https://github.com/superfluid-finance/protocol-monorepo/tree/dev/packages/ethereum-contracts
