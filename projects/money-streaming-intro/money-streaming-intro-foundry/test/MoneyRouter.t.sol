@@ -29,7 +29,6 @@ contract MoneyRouterTest is Test {
         TestGovernance governance;
         Superfluid host;
         ConstantFlowAgreementV1 cfa;
-        CFAv1Library.InitData cfaLib;
         InstantDistributionAgreementV1 ida;
         IDAv1Library.InitData idaLib;
         SuperTokenFactory superTokenFactory;
