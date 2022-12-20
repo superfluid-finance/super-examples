@@ -12,7 +12,7 @@ import { SimpleACLCloseResolver } from "../typechain-types/src/SimpleACLCloseRes
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { Provider } from "@ethersproject/providers";
 import { TestToken } from "@superfluid-finance/sdk-core/dist/module/typechain";
-import { deployFrameworkAndTokens } from "../scripts/deployFrameworkAndTokens";
+import { deployTestFramework } from "@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework";
 
 // use chaiEthers for things like expectRevertedWith/expectRevert
 // and .to.emit(ContractObject, "EventName").withArgs(evArg1, evArg2, ...)
@@ -56,7 +56,8 @@ describe("SimpleACLCloseResolver", () => {
     };
 
     before(async () => {
-        await deployFrameworkAndTokens();
+        const sfDeployer = await deployTestFramework();
+        const contractsFramework = await sfDeployer.getFramework();
         const signers = await ethers.getSigners();
         Sender = signers[0];
         Receiver = signers[1];
@@ -66,11 +67,18 @@ describe("SimpleACLCloseResolver", () => {
 
         const frameworkClass = await Framework.create({
             chainId,
-            resolverAddress: RESOLVER_ADDRESS,
+            resolverAddress: contractsFramework.resolver,
             provider: provider as unknown as Provider,
             dataMode: "WEB3_ONLY",
             protocolReleaseVersion: "test",
         });
+
+        const tokenDeployment = await sfDeployer.deployWrapperSuperToken(
+            "Fake DAI Token",
+            "fDAI",
+            18,
+            ethers.utils.parseEther("100000000").toString()
+        )
 
         const superToken = (await frameworkClass.loadSuperToken(
             "fDAIx",
