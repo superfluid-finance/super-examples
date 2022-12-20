@@ -1,4 +1,3 @@
 @openzeppelin/=lib/openzeppelin-contracts/
-@superfluid-finance/=lib/ethereum-contracts
 ds-test/=lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/
