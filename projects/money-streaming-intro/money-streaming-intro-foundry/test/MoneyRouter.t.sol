@@ -6,15 +6,16 @@ import "forge-std/console.sol";
 import "ds-test/test.sol";
 
 import "../src/MoneyRouter.sol";
-import {ISuperfluid, ISuperToken, ISuperApp, ISuperfluidToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperToken, ISuperApp } from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {IConstantFlowAgreementV1} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 import {ERC1820RegistryCompiled} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
 
 import {TestToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol";
-import {SuperfluidFrameworkDeployer, TestGovernance, Superfluid, ConstantFlowAgreementV1, CFAv1Library, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
+import {SuperfluidFrameworkDeployer, TestGovernance, Superfluid, ConstantFlowAgreementV1, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
 
 
 contract MoneyRouterTest is Test {
+
     MoneyRouter public moneyRouter;
 
     ISuperfluid public host;
@@ -24,14 +25,10 @@ contract MoneyRouterTest is Test {
     address public account1;
     address public account2;
 
-    using CFAv1Library for CFAv1Library.InitData;
-    CFAv1Library.InitData public cfaV1;
-
     struct Framework {
         TestGovernance governance;
         Superfluid host;
         ConstantFlowAgreementV1 cfa;
-        CFAv1Library.InitData cfaLib;
         InstantDistributionAgreementV1 ida;
         IDAv1Library.InitData idaLib;
         SuperTokenFactory superTokenFactory;
@@ -48,7 +45,6 @@ contract MoneyRouterTest is Test {
         account2 = vm.addr(2);
         host = sf.host;
         cfa = sf.cfa;
-        cfaV1 = CFAv1Library.InitData(host, cfa);
         (, daix) = sfd.deployWrapperSuperToken("fake dai token", "DAI", 18, 1000000000000000000000);
 
         vm.startPrank(account1);
@@ -57,7 +53,7 @@ contract MoneyRouterTest is Test {
         dai.approve(address(daix), 100000000000000000);
         daix.upgrade(100000000000000000);
         vm.stopPrank();
-        moneyRouter = new MoneyRouter(host, account1);
+        moneyRouter = new MoneyRouter(account1);
 
         vm.prank(account1);
         daix.transfer(address(moneyRouter), 50000000000000000);

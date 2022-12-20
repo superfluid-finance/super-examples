@@ -42,8 +42,7 @@ async function main() {
 
     // View units that shareDeleter has
     const unitsHeld = (
-        await sf.idaV1.getSubscription({
-            superToken: daix.address,
+        await daix.getSubscription({
             publisher: tokenSpreader.address,
             indexId: await tokenSpreader.INDEX_ID(),
             subscriber: shareDeleter.address,
@@ -65,8 +64,7 @@ async function main() {
         console.log(
             `New ${shareDeleter.address} units held:`,
             (
-                await sf.idaV1.getSubscription({
-                    superToken: daix.address,
+                await daix.getSubscription({
                     publisher: tokenSpreader.address,
                     indexId: await tokenSpreader.INDEX_ID(),
                     subscriber: shareDeleter.address,

@@ -22,10 +22,9 @@ async function main() {
 
     const daix = await sf.loadSuperToken("fDAIx")
 
-    const employerFlowOperation = sf.cfaV1.createFlow({
+    const employerFlowOperation = daix.createFlow({
         receiver: loanAddress,
         flowRate: "3858024691358024", //10k per month
-        superToken: daix.address
     })
 
     console.log("running create flow script...")

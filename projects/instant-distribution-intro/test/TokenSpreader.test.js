@@ -1,7 +1,7 @@
 const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { ethers } = require("hardhat")
-const frameworkDeployer = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework")
+const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
 let sfDeployer;
@@ -25,7 +25,7 @@ before(async function () {
     // get hardhat accounts
     [admin, alice, bob] = await ethers.getSigners();
 
-    sfDeployer = await frameworkDeployer.deployTestFramework();
+    sfDeployer = await deployTestFramework();
 
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
@@ -76,16 +76,14 @@ before(async function () {
     );
 
     spreader = await spreaderContractFactory.deploy(
-        sf.settings.config.hostAddress,
         daix.address // Setting DAIx as spreader token
     );
 
     // SUBSCRIBING TO SPREADER CONTRACT'S IDA INDEX
 
     // subscribe to distribution (doesn't matter if this happens before or after distribution execution)
-    const approveSubscriptionOperation = await sf.idaV1.approveSubscription({
+    const approveSubscriptionOperation = await daix.approveSubscription({
         indexId: "0", 
-        superToken: daix.address,
         publisher: spreader.address
     });
     await approveSubscriptionOperation.exec(alice);
@@ -107,8 +105,7 @@ describe("TokenSpreader Test Sequence", async () => {
         // EXPECTATIONS
 
         // expect alice to have 1 distribution unit
-        let aliceSubscription = await sf.idaV1.getSubscription({
-            superToken: daix.address,
+        let aliceSubscription = await daix.getSubscription({
             publisher: spreader.address,
             indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
             subscriber: alice.address,
@@ -130,8 +127,7 @@ describe("TokenSpreader Test Sequence", async () => {
         // EXPECTATIONS
 
         // expect alice to have 1 distribution unit
-        let aliceSubscription = await sf.idaV1.getSubscription({
-            superToken: daix.address,
+        let aliceSubscription = await daix.getSubscription({
             publisher: spreader.address,
             indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
             subscriber: alice.address,
@@ -141,8 +137,7 @@ describe("TokenSpreader Test Sequence", async () => {
         await expect(aliceSubscription.units).to.equal("1");
 
         // expect bob to have 1 distribution unit
-        let bobSubscription = await sf.idaV1.getSubscription({
-            superToken: daix.address,
+        let bobSubscription = await daix.getSubscription({
             publisher: spreader.address,
             indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
             subscriber: bob.address,
@@ -216,8 +211,7 @@ describe("TokenSpreader Test Sequence", async () => {
         // EXPECTATIONS
 
         // expect bob to have 2 distribution units
-        let bobSubscription = await sf.idaV1.getSubscription({
-            superToken: daix.address,
+        let bobSubscription = await daix.getSubscription({
             publisher: spreader.address,
             indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
             subscriber: bob.address,
@@ -270,8 +264,7 @@ describe("TokenSpreader Test Sequence", async () => {
         // EXPECTATIONS
 
         // expect alice to have 0 distribution units
-        let aliceSubscription = await sf.idaV1.getSubscription({
-            superToken: daix.address,
+        let aliceSubscription = await daix.getSubscription({
             publisher: spreader.address,
             indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
             subscriber: alice.address,
@@ -320,8 +313,7 @@ describe("TokenSpreader Test Sequence", async () => {
         // EXPECTATIONS
 
         // expect bob to have 1 distribution unit
-        let bobSubscription = await sf.idaV1.getSubscription({
-            superToken: daix.address,
+        let bobSubscription = await daix.getSubscription({
             publisher: spreader.address,
             indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
             subscriber: bob.address,
@@ -370,8 +362,7 @@ describe("TokenSpreader Test Sequence", async () => {
         // EXPECTATIONS
 
         // expect bob to have no distribution units
-        let bobSubscription = await sf.idaV1.getSubscription({
-            superToken: daix.address,
+        let bobSubscription = await daix.getSubscription({
             publisher: spreader.address,
             indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
             subscriber: bob.address,

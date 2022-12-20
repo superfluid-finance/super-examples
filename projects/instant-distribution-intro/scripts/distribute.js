@@ -46,8 +46,7 @@ async function main() {
     )
 
     // Get outstanding units of tokenSpreader's IDA index
-    const indexDataTokenSpreader = await sf.idaV1.getIndex({
-        superToken: daix.address,
+    const indexDataTokenSpreader = await daix.getIndex({
         publisher: tokenSpreader.address,
         indexId: await tokenSpreader.INDEX_ID(),
         providerOrSigner: alice

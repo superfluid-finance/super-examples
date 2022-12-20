@@ -10,4 +10,4 @@ If you'd like to see a breakdown of the test file for this example, you can find
 2. `forge build` to compile contracts
 3. `forge test` to run the test suite.
 
-Note: you might see an issue related to git when running forge install. If you see this error, try adding the `--no-commit` flag.
+Note: you might see an issue related to git when running forge install. If you see this error, try adding the `--no-commit` flag

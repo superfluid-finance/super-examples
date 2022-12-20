@@ -1,7 +1,7 @@
 const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { ethers } = require("hardhat")
-const frameworkDeployer = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-framework")
+const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
 let provider;
@@ -23,7 +23,7 @@ before(async function () {
     //get accounts from hardhat
     accounts = await ethers.getSigners()
     provider = accounts[0].provider;
-    sfDeployer = await frameworkDeployer.deployTestFramework()
+    sfDeployer = await deployTestFramework()
 
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
@@ -77,6 +77,7 @@ before(async function () {
         "TradeableCashflow",
         "TCF",
         sf.settings.config.hostAddress,
+        sf.settings.config.cfaV1Address,
         daix.address
     )
 })
@@ -116,9 +117,8 @@ describe("sending flows", async function () {
             providerOrSigner: accounts[0]
         })
 
-        const createFlowOperation = sf.cfaV1.createFlow({
+        const createFlowOperation = daix.createFlow({
             receiver: TradeableCashflow.address,
-            superToken: daix.address,
             flowRate: "100000000"
         })
 
@@ -126,14 +126,12 @@ describe("sending flows", async function () {
 
         await txn.wait()
 
-        const appFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const appFlowRate = await daix.getNetFlow({
             account: TradeableCashflow.address,
             providerOrSigner: superSigner
         })
 
-        const ownerFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const ownerFlowRate = await daix.getNetFlow({
             account: accounts[1].address,
             providerOrSigner: superSigner
         })
@@ -164,22 +162,19 @@ describe("sending flows", async function () {
             providerOrSigner: accounts[0]
         })
 
-        const initialOwnerFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const initialOwnerFlowRate = await daix.getNetFlow({
             account: accounts[1].address,
             providerOrSigner: superSigner
         })
 
         console.log("initial owner flow rate: ", initialOwnerFlowRate)
 
-        const appFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const appFlowRate = await daix.getNetFlow({
             account: TradeableCashflow.address,
             providerOrSigner: superSigner
         })
 
-        const senderFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const senderFlowRate = await daix.getNetFlow({
             account: accounts[0].address,
             providerOrSigner: superSigner
         })
@@ -187,9 +182,8 @@ describe("sending flows", async function () {
         console.log("tcf address: ", TradeableCashflow.address)
         console.log("app flow rate: ", appFlowRate)
 
-        const updateFlowOperation = sf.cfaV1.updateFlow({
+        const updateFlowOperation = daix.updateFlow({
             receiver: TradeableCashflow.address,
-            superToken: daix.address,
             flowRate: "200000000"
         })
 
@@ -202,8 +196,7 @@ describe("sending flows", async function () {
             providerOrSigner: superSigner
         })
 
-        const updatedOwnerFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const updatedOwnerFlowRate = await daix.getNetFlow({
             account: accounts[1].address,
             providerOrSigner: superSigner
         })
@@ -229,8 +222,7 @@ describe("sending flows", async function () {
             providerOrSigner: accounts[0]
         })
 
-        const initialOwnerFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const initialOwnerFlowRate = await daix.getNetFlow({
             account: accounts[1].address,
             providerOrSigner: superSigner
         })
@@ -252,9 +244,8 @@ describe("sending flows", async function () {
         })
         console.log("account 2 balance ", account2Balance)
 
-        const createFlowOperation2 = sf.cfaV1.createFlow({
+        const createFlowOperation2 = daix.createFlow({
             receiver: TradeableCashflow.address,
-            superToken: daix.address,
             flowRate: "100000000"
         })
 
@@ -264,8 +255,7 @@ describe("sending flows", async function () {
 
         await createFlowOperation2Txn.wait()
 
-        const appFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const appFlowRate = await daix.getNetFlow({
             account: TradeableCashflow.address,
             providerOrSigner: superSigner
         })
@@ -275,8 +265,7 @@ describe("sending flows", async function () {
             providerOrSigner: superSigner
         })
 
-        const updatedOwnerFlowRate2 = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const updatedOwnerFlowRate2 = await daix.getNetFlow({
             account: accounts[1].address,
             providerOrSigner: superSigner
         })
@@ -301,7 +290,7 @@ describe("sending flows", async function () {
 
 describe("Changing owner", async function () {
     it("Case #5 - When the owner changes, the flow changes", async () => {
-        const initialOwnerFlowRate = await sf.cfaV1.getNetFlow({
+        const initialOwnerFlowRate = await daix.getNetFlow({
             superToken: daix.address,
             account: accounts[1].address,
             providerOrSigner: superSigner
@@ -310,8 +299,7 @@ describe("Changing owner", async function () {
         console.log("initial owner ", await TradeableCashflow.ownerOf(1))
         console.log("initial owner flowRate flowRate: ", initialOwnerFlowRate)
 
-        const newOwnerFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const newOwnerFlowRate = await daix.getNetFlow({
             account: accounts[3].address,
             providerOrSigner: superSigner
         })
@@ -327,8 +315,7 @@ describe("Changing owner", async function () {
 
         console.log("new owner, ", await TradeableCashflow.ownerOf(1))
 
-        const initialOwnerUpdatedFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const initialOwnerUpdatedFlowRate = await daix.getNetFlow({
             account: accounts[1].address,
             providerOrSigner: superSigner
         })
@@ -344,8 +331,7 @@ describe("Changing owner", async function () {
             "old owner should no longer be receiving flows"
         )
 
-        const newOwnerUpdatedFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const newOwnerUpdatedFlowRate = await daix.getNetFlow({
             account: accounts[3].address,
             providerOrSigner: superSigner
         })

@@ -1,0 +1,4601 @@
+{
+  "_format": "ethers-rs-sol-cache-3",
+  "paths": {
+    "artifacts": "out",
+    "build_infos": "out/build-info",
+    "sources": "src",
+    "tests": "test",
+    "scripts": "script",
+    "libraries": [
+      "lib"
+    ]
+  },
+  "files": {
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol": {
+      "lastModificationDate": 1671229351628,
+      "contentHash": "dc80ed7d31c9daede43434a4becaed96",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "AgreementBase": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "AgreementBase.sol/AgreementBase.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol": {
+      "lastModificationDate": 1671229351628,
+      "contentHash": "02df1fa3a993351aaccb55d03faf34bd",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "AgreementLibrary": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "AgreementLibrary.sol/AgreementLibrary.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/ConstantFlowAgreementV1.sol": {
+      "lastModificationDate": 1671229351628,
+      "contentHash": "5f38f592807839ef889e96fe553cbe0d",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/ConstantFlowAgreementV1.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementHook.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "ConstantFlowAgreementV1": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ConstantFlowAgreementV1.sol/ConstantFlowAgreementV1.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol": {
+      "lastModificationDate": 1671229351628,
+      "contentHash": "42c25ed35dccf1ed5f8cf57aea5572a7",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/SlotsBitmapLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "InstantDistributionAgreementV1": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "InstantDistributionAgreementV1.sol/InstantDistributionAgreementV1.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/CFAv1Library.sol": {
+      "lastModificationDate": 1671229351628,
+      "contentHash": "7f1c3c2756f57803911d753f3f4591c4",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/CFAv1Library.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "CFAv1Library": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "CFAv1Library.sol/CFAv1Library.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/IDAv1Library.sol": {
+      "lastModificationDate": 1671229351629,
+      "contentHash": "ac620fa3113afdb0a84b62b5b28a8e26",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/IDAv1Library.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "IDAv1Library": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IDAv1Library.sol/IDAv1Library.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol": {
+      "lastModificationDate": 1671229351629,
+      "contentHash": "e085b997d367140ccf777fbec59bc9ea",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "SuperTokenV1Library": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperTokenV1Library.sol/SuperTokenV1Library.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol": {
+      "lastModificationDate": 1671229351629,
+      "contentHash": "74a5316f9dbb8095d0374c89f6060b55",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "SuperfluidGovernanceBase": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidGovernanceBase.sol/SuperfluidGovernanceBase.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementHook.sol": {
+      "lastModificationDate": 1671229351629,
+      "contentHash": "2a774b18bf7379d6d96bb03ef2cee9ea",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementHook.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IConstantFlowAgreementHook": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IConstantFlowAgreementHook.sol/IConstantFlowAgreementHook.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol": {
+      "lastModificationDate": 1671229351629,
+      "contentHash": "cea469dcdeaa6e0992d7beea10698a81",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "IConstantFlowAgreementV1": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IConstantFlowAgreementV1.sol/IConstantFlowAgreementV1.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol": {
+      "lastModificationDate": 1671229351630,
+      "contentHash": "60042f78e0fa54a8547790c391ab27c1",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "IInstantDistributionAgreementV1": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IInstantDistributionAgreementV1.sol/IInstantDistributionAgreementV1.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/CustomSuperTokenBase.sol": {
+      "lastModificationDate": 1671229351630,
+      "contentHash": "702cc91c30c8686580eda5a7e66894d5",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/CustomSuperTokenBase.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "CustomSuperTokenBase": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "CustomSuperTokenBase.sol/CustomSuperTokenBase.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol": {
+      "lastModificationDate": 1671229351630,
+      "contentHash": "ad96cb2b9ffeb68f41a448eb2aeb58e3",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": null,
+      "artifacts": {
+        "BatchOperation": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Definitions.sol/BatchOperation.json"
+        },
+        "ContextDefinitions": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Definitions.sol/ContextDefinitions.json"
+        },
+        "FlowOperatorDefinitions": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Definitions.sol/FlowOperatorDefinitions.json"
+        },
+        "SuperAppDefinitions": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Definitions.sol/SuperAppDefinitions.json"
+        },
+        "SuperfluidGovernanceConfigs": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Definitions.sol/SuperfluidGovernanceConfigs.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol": {
+      "lastModificationDate": 1671229351630,
+      "contentHash": "49d978f06d4edeb5125a7152d6897e69",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ISuperAgreement": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISuperAgreement.sol/ISuperAgreement.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol": {
+      "lastModificationDate": 1671229351630,
+      "contentHash": "3b1a28352fc3ab7b2659bc3ab3c7bb92",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ISuperApp": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISuperApp.sol/ISuperApp.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol": {
+      "lastModificationDate": 1671229351630,
+      "contentHash": "1cd744c6b588e15a3c8b3115874340d6",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ISuperToken": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISuperToken.sol/ISuperToken.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol": {
+      "lastModificationDate": 1671229351630,
+      "contentHash": "696c26b081a411e4cf4ca86e40f85da8",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ISuperTokenFactory": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISuperTokenFactory.sol/ISuperTokenFactory.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol": {
+      "lastModificationDate": 1671229351630,
+      "contentHash": "923d8bee2334395f7ad909b8e98e07e9",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ISuperfluid": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISuperfluid.sol/ISuperfluid.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "f39a1c0568c38958f3c5c80b6fb1603c",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ISuperfluidGovernance": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISuperfluidGovernance.sol/ISuperfluidGovernance.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "095cd6cdf7df13a739649f8917862cb0",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ISuperfluidToken": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISuperfluidToken.sol/ISuperfluidToken.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "77968d7579793b9f87e33dec4d917f44",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ERC20WithTokenInfo": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ERC20WithTokenInfo.sol/ERC20WithTokenInfo.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/IPureSuperToken.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "f6d2a176133259c159452720113499e7",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/IPureSuperToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "IPureSuperToken": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IPureSuperToken.sol/IPureSuperToken.json"
+        },
+        "IPureSuperTokenCustom": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IPureSuperToken.sol/IPureSuperTokenCustom.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "726dc2a8154819f5dbf3820c1cd835b9",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "ISETH": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISETH.sol/ISETH.json"
+        },
+        "ISETHCustom": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ISETH.sol/ISETHCustom.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "6326411b7eb3d451fdffd149d821a7cb",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": null,
+      "artifacts": {
+        "TokenInfo": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "TokenInfo.sol/TokenInfo.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "e6bbdf34e893e434a94bdb3cde1a7fde",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": null,
+      "artifacts": {
+        "IRelayRecipient": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IRelayRecipient.sol/IRelayRecipient.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "78ec22d41ce67b56ddb31b6d6e908a34",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": null,
+      "artifacts": {
+        "IResolver": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IResolver.sol/IResolver.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "604a1a19692cb179a951c9c176bd6132",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "BaseRelayRecipient": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "BaseRelayRecipient.sol/BaseRelayRecipient.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "3a9b7a8811ba0f228e52ef932ed799ae",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "CallUtils": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "CallUtils.sol/CallUtils.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol": {
+      "lastModificationDate": 1671229351631,
+      "contentHash": "3f921d550df7d538db5acaee385243fb",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "ERC1820RegistryCompiled": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ERC1820RegistryCompiled.sol/ERC1820RegistryCompiled.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol": {
+      "lastModificationDate": 1671229351632,
+      "contentHash": "4e90bc423492becc11fee3357398172e",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "ERC777Helper": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ERC777Helper.sol/ERC777Helper.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol": {
+      "lastModificationDate": 1671229351632,
+      "contentHash": "81addb18e7bed9bf5b6240bff3cc2f15",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "EventsEmitter": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "EventsEmitter.sol/EventsEmitter.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol": {
+      "lastModificationDate": 1671229351632,
+      "contentHash": "0d578fc243fe6d78c7f524fb4cb5d43f",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "FixedSizeData": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "FixedSizeData.sol/FixedSizeData.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/SlotsBitmapLibrary.sol": {
+      "lastModificationDate": 1671229351632,
+      "contentHash": "9c05a78908a15d63bc80de5fb7e4ef13",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/SlotsBitmapLibrary.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "SlotsBitmapLibrary": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SlotsBitmapLibrary.sol/SlotsBitmapLibrary.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol": {
+      "lastModificationDate": 1671229351634,
+      "contentHash": "fb564f254f4bc37e3d63fefec5fd1300",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "FullUpgradableSuperTokenProxy": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "FullUpgradableSuperTokenProxy.sol/FullUpgradableSuperTokenProxy.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol": {
+      "lastModificationDate": 1671229351634,
+      "contentHash": "4d4f1f8972323537e850bc6a6cc162b0",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "SuperToken": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperToken.sol/SuperToken.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperTokenFactory.sol": {
+      "lastModificationDate": 1671229351634,
+      "contentHash": "5ec71a46466bc9e065ade3ad23a25bd0",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperTokenFactory.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "SuperTokenFactory": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperTokenFactory.sol/SuperTokenFactory.json"
+        },
+        "SuperTokenFactoryBase": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperTokenFactory.sol/SuperTokenFactoryBase.json"
+        },
+        "SuperTokenFactoryHelper": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperTokenFactory.sol/SuperTokenFactoryHelper.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol": {
+      "lastModificationDate": 1671229351634,
+      "contentHash": "1d45f911c76afb4a45edfcc35a3ef0cb",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "Superfluid": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Superfluid.sol/Superfluid.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol": {
+      "lastModificationDate": 1671229351634,
+      "contentHash": "a016e3ef00cb1e2e76617242397a6e8a",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "SuperfluidToken": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidToken.sol/SuperfluidToken.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/PureSuperToken.sol": {
+      "lastModificationDate": 1671229351634,
+      "contentHash": "2817c1301c2a392cd96590aac184589a",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/PureSuperToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/CustomSuperTokenBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/IPureSuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "PureSuperToken": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "PureSuperToken.sol/PureSuperToken.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/SETH.sol": {
+      "lastModificationDate": 1671229351634,
+      "contentHash": "f2c55e9a955f49e652152ad6ffa60f09",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/SETH.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/CustomSuperTokenBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "SETHProxy": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SETH.sol/SETHProxy.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "ba600ac351daf797312ce1b57b4bfa52",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "UUPSProxiable": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "UUPSProxiable.sol/UUPSProxiable.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "ca5bf75f505eddbcd3e2f7ee9f4b8625",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "UUPSProxy": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "UUPSProxy.sol/UUPSProxy.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "6d19c49baab60556bee9564fae70c64e",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "UUPSUtils": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "UUPSUtils.sol/UUPSUtils.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "81a5d1c9e2c241c40f7838c5ce91135f",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": null,
+      "artifacts": {
+        "CFAv1Forwarder": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "CFAv1Forwarder.sol/CFAv1Forwarder.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "aeaf88f78d914f12d9b6cbdccd730aa9",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+        "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "Resolver": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Resolver.sol/Resolver.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "0813ef9ae1bfa2826ad9b64021a5f69d",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/ConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/CFAv1Library.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/IDAv1Library.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementHook.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/CustomSuperTokenBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/IPureSuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/SlotsBitmapLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/PureSuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/SETH.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidLoader.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestResolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidCFAv1DeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidGovDeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidHostDeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidIDAv1DeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidPeripheryDeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidSuperTokenFactoryHelperDeployerLibrary.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
+        "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SuperfluidFrameworkDeployer": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidFrameworkDeployer.sol/SuperfluidFrameworkDeployer.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidLoader.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "962d0b13616a120fbe65cc8471c51069",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidLoader.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "SuperfluidLoader": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidLoader.sol/SuperfluidLoader.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "b8debf3ce067b25c0b116ced1e596f27",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "TestGovernance": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "TestGovernance.sol/TestGovernance.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestResolver.sol": {
+      "lastModificationDate": 1671229351635,
+      "contentHash": "3942e3bad4a842c8e27abac2ed75a65c",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestResolver.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+        "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "TestResolver": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "TestResolver.sol/TestResolver.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol": {
+      "lastModificationDate": 1671229351636,
+      "contentHash": "d8d07cd5229799e4abd5a42d1aa8b742",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol"
+      ],
+      "versionRequirement": "=0.8.16",
+      "artifacts": {
+        "TestToken": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "TestToken.sol/TestToken.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidCFAv1DeployerLibrary.sol": {
+      "lastModificationDate": 1671229351636,
+      "contentHash": "6fd43210a1cafdfa868bf476d161c650",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidCFAv1DeployerLibrary.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/ConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementHook.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SuperfluidCFAv1DeployerLibrary": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidCFAv1DeployerLibrary.sol/SuperfluidCFAv1DeployerLibrary.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidGovDeployerLibrary.sol": {
+      "lastModificationDate": 1671229351636,
+      "contentHash": "fc1a024e073db96c1c8a48ea1e28f0e6",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidGovDeployerLibrary.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SuperfluidGovDeployerLibrary": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidGovDeployerLibrary.sol/SuperfluidGovDeployerLibrary.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidHostDeployerLibrary.sol": {
+      "lastModificationDate": 1671229351636,
+      "contentHash": "886e2c9e0d8f6055698e587046a972fa",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidHostDeployerLibrary.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SuperfluidHostDeployerLibrary": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidHostDeployerLibrary.sol/SuperfluidHostDeployerLibrary.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidIDAv1DeployerLibrary.sol": {
+      "lastModificationDate": 1671229351636,
+      "contentHash": "ce43363a7860f87762404829d5ed0bca",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidIDAv1DeployerLibrary.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/SlotsBitmapLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SuperfluidIDAv1DeployerLibrary": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidIDAv1DeployerLibrary.sol/SuperfluidIDAv1DeployerLibrary.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidPeripheryDeployerLibrary.sol": {
+      "lastModificationDate": 1671229351636,
+      "contentHash": "b6b54aa449a5879d785010d0ce1f6982",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidPeripheryDeployerLibrary.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestResolver.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
+        "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SuperfluidPeripheryDeployerLibrary": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidPeripheryDeployerLibrary.sol/SuperfluidPeripheryDeployerLibrary.json"
+        }
+      }
+    },
+    "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidSuperTokenFactoryHelperDeployerLibrary.sol": {
+      "lastModificationDate": 1671229351636,
+      "contentHash": "9f8add3eb9f0b53488cd564821477ae7",
+      "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidSuperTokenFactoryHelperDeployerLibrary.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestResolver.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
+        "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SuperfluidSuperTokenFactoryHelperDeployerLibrary": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SuperfluidSuperTokenFactoryHelperDeployerLibrary.sol/SuperfluidSuperTokenFactoryHelperDeployerLibrary.json"
+        }
+      }
+    },
+    "lib/forge-std/lib/ds-test/src/test.sol": {
+      "lastModificationDate": 1671227130302,
+      "contentHash": "962996f0e05d5218857a538a62d7c47e",
+      "sourceName": "lib/forge-std/lib/ds-test/src/test.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.5.0",
+      "artifacts": {
+        "DSTest": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "test.sol/DSTest.json"
+        }
+      }
+    },
+    "lib/forge-std/src/Script.sol": {
+      "lastModificationDate": 1671227130302,
+      "contentHash": "571dde8775a6214a03d6772ee330ead5",
+      "sourceName": "lib/forge-std/src/Script.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol"
+      ],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "Script": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Script.sol/Script.json"
+        }
+      }
+    },
+    "lib/forge-std/src/StdJson.sol": {
+      "lastModificationDate": 1671227130302,
+      "contentHash": "75c782f20a301ab9827060a03da071e4",
+      "sourceName": "lib/forge-std/src/StdJson.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/src/Vm.sol"
+      ],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "stdJson": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "StdJson.sol/stdJson.json"
+        }
+      }
+    },
+    "lib/forge-std/src/Test.sol": {
+      "lastModificationDate": 1671227130302,
+      "contentHash": "6cab65c53a9548c2428a10697fd06dd1",
+      "sourceName": "lib/forge-std/src/Test.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol"
+      ],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "Test": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Test.sol/Test.json"
+        },
+        "stdError": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Test.sol/stdError.json"
+        },
+        "stdMath": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Test.sol/stdMath.json"
+        },
+        "stdStorage": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Test.sol/stdStorage.json"
+        }
+      }
+    },
+    "lib/forge-std/src/Vm.sol": {
+      "lastModificationDate": 1671227130302,
+      "contentHash": "bd4bde818b3c57b21e0601277b1d2dac",
+      "sourceName": "lib/forge-std/src/Vm.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "Vm": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Vm.sol/Vm.json"
+        }
+      }
+    },
+    "lib/forge-std/src/console.sol": {
+      "lastModificationDate": 1671227130302,
+      "contentHash": "100b8a33b917da1147740d7ab8b0ded3",
+      "sourceName": "lib/forge-std/src/console.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.4.22, <0.9.0",
+      "artifacts": {
+        "console": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "console.sol/console.json"
+        }
+      }
+    },
+    "lib/forge-std/src/console2.sol": {
+      "lastModificationDate": 1671227130305,
+      "contentHash": "5df91f8e93efbfcccf68973dc1b74a70",
+      "sourceName": "lib/forge-std/src/console2.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.4.22, <0.9.0",
+      "artifacts": {
+        "console2": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "console2.sol/console2.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/access/AccessControl.sol": {
+      "lastModificationDate": 1671227130313,
+      "contentHash": "bf161670e02cae699c719703be7ea955",
+      "sourceName": "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "AccessControl": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "AccessControl.sol/AccessControl.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol": {
+      "lastModificationDate": 1671227130313,
+      "contentHash": "b6d9b165dc57e9ad8153bdca05c783a4",
+      "sourceName": "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+        "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "AccessControlEnumerable": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "AccessControlEnumerable.sol/AccessControlEnumerable.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol": {
+      "lastModificationDate": 1671227130313,
+      "contentHash": "57c84298234411cea19c7c284d86be8b",
+      "sourceName": "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IAccessControl": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IAccessControl.sol/IAccessControl.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol": {
+      "lastModificationDate": 1671227130313,
+      "contentHash": "4e71cc90682e109e999ce2bd329f6572",
+      "sourceName": "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IAccessControlEnumerable": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IAccessControlEnumerable.sol/IAccessControlEnumerable.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1671227130313,
+      "contentHash": "e436cea06129be2c73cda4b1acc848b5",
+      "sourceName": "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "Ownable": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Ownable.sol/Ownable.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol": {
+      "lastModificationDate": 1671227130331,
+      "contentHash": "40b3d81a836d50ff47e03893dcaaf204",
+      "sourceName": "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "Proxy": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Proxy.sol/Proxy.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol": {
+      "lastModificationDate": 1671227130331,
+      "contentHash": "dc771bc7882c2e541f7eca5371139630",
+      "sourceName": "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol"
+      ],
+      "versionRequirement": "^0.8.2",
+      "artifacts": {
+        "Initializable": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Initializable.sol/Initializable.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol": {
+      "lastModificationDate": 1671227130333,
+      "contentHash": "92cc1aad41bdb18ca20f6e03f461de7d",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "ERC20": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ERC20.sol/ERC20.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1671227130333,
+      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC20": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC20.sol/IERC20.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "lastModificationDate": 1671227130334,
+      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC20Metadata": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC20Metadata.sol/IERC20Metadata.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol": {
+      "lastModificationDate": 1671227130334,
+      "contentHash": "fb77f144244b9ab12533aa6ce85ef8c5",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC20Permit": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "draft-IERC20Permit.sol/IERC20Permit.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol": {
+      "lastModificationDate": 1671227130334,
+      "contentHash": "c9167a97231512d4d7a3e7a4e32f1285",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SafeERC20": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SafeERC20.sol/SafeERC20.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol": {
+      "lastModificationDate": 1671227130339,
+      "contentHash": "77b3ed5863d62e92c912c2f1450e5deb",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC777": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC777.sol/IERC777.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol": {
+      "lastModificationDate": 1671227130339,
+      "contentHash": "268af1696d7a83a7e78a1a8f5ba1c685",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC777Recipient": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC777Recipient.sol/IERC777Recipient.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol": {
+      "lastModificationDate": 1671227130339,
+      "contentHash": "7c1ce5bc5bc5f57fe7106ba767063e08",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC777Sender": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC777Sender.sol/IERC777Sender.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+      "lastModificationDate": 1671227130339,
+      "contentHash": "1ded8fed2186fa6599c2aeb962009262",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.1",
+      "artifacts": {
+        "Address": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Address.sol/Address.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+      "lastModificationDate": 1671227130339,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "Context": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Context.sol/Context.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/Strings.sol": {
+      "lastModificationDate": 1671227130340,
+      "contentHash": "a0c595fbbddc5c8b4f45c5f496ad90ff",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "Strings": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Strings.sol/Strings.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol": {
+      "lastModificationDate": 1671227130341,
+      "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "ERC165": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "ERC165.sol/ERC165.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol": {
+      "lastModificationDate": 1671227130341,
+      "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC165": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC165.sol/IERC165.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol": {
+      "lastModificationDate": 1671227130341,
+      "contentHash": "d0257e86fc71ac993d663297b8d69361",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC1820Registry": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC1820Registry.sol/IERC1820Registry.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/math/Math.sol": {
+      "lastModificationDate": 1671227130341,
+      "contentHash": "44d60ce5beebff2e3958a41e4cfdb984",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "Math": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "Math.sol/Math.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol": {
+      "lastModificationDate": 1671227130341,
+      "contentHash": "eab579be35d146d4b8bee7a95723863f",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SafeCast": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SafeCast.sol/SafeCast.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol": {
+      "lastModificationDate": 1671227130341,
+      "contentHash": "2337f0279507b5edf14a07067adf0d05",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "SafeMath": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "SafeMath.sol/SafeMath.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol": {
+      "lastModificationDate": 1671227130342,
+      "contentHash": "57ef0c1fa9b58bf4e09f973b36e650ab",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "EnumerableSet": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "EnumerableSet.sol/EnumerableSet.json"
+        }
+      }
+    },
+    "src/MoneyRouter.sol": {
+      "lastModificationDate": 1671229519405,
+      "contentHash": "b7f1505ff843d10f9dd2819deaf51e7d",
+      "sourceName": "src/MoneyRouter.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionRequirement": "^0.8.14",
+      "artifacts": {
+        "MoneyRouter": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "MoneyRouter.sol/MoneyRouter.json"
+        }
+      }
+    },
+    "test/MoneyRouter.t.sol": {
+      "lastModificationDate": 1671229533259,
+      "contentHash": "7247671fc48f4c8c5cf6d2c345fbaeec",
+      "sourceName": "test/MoneyRouter.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/ConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/CFAv1Library.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/IDAv1Library.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementHook.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/CustomSuperTokenBase.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/IPureSuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/SlotsBitmapLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperTokenFactory.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/PureSuperToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/SETH.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidLoader.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestResolver.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidCFAv1DeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidGovDeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidHostDeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidIDAv1DeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidPeripheryDeployerLibrary.sol",
+        "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidSuperTokenFactoryHelperDeployerLibrary.sol",
+        "lib/forge-std/lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/Test.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
+        "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
+        "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol",
+        "src/MoneyRouter.sol"
+      ],
+      "versionRequirement": "^0.8.13",
+      "artifacts": {
+        "MoneyRouterDeployment": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "MoneyRouter.t.sol/MoneyRouterDeployment.json"
+        },
+        "MoneyRouterFlowTests": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "MoneyRouter.t.sol/MoneyRouterFlowTests.json"
+        },
+        "MoneyRouterTest": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "MoneyRouter.t.sol/MoneyRouterTest.json"
+        }
+      }
+    }
+  }
+}
