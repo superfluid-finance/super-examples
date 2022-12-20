@@ -22,10 +22,9 @@ async function main() {
 
   const daix = await sf.loadSuperToken("fDAIx");
 
-  const updateFlowOperation = sf.cfaV1.updateFlow({
+  const updateFlowOperation = daix.updateFlow({
     receiver: "ADDRESS", //tradeable cashflow address
-      superToken: daix.address,
-      flowRate: "2000000000000000"
+    flowRate: "2000000000000000"
   });
 
   const txn = await updateFlowOperation.exec(signer);

@@ -139,28 +139,24 @@ describe("employment loan deployment", async function () {
 
 describe("Loan is initialized properly", async function () {
     it("1 First flow into contract works correctly", async function () {
-        let employerFlowOperation = sf.cfaV1.createFlow({
-            superToken: daix.address,
+        let employerFlowOperation = daix.createFlow({
             receiver: employmentLoan.address,
             flowRate: "3215019290123456" // ~100k per year in usd
         })
 
         await employerFlowOperation.exec(employer)
 
-        let employerNetFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        let employerNetFlowRate = await daix.getNetFlow({
             account: employer.address,
             providerOrSigner: employer
         })
 
-        let borrowerNetFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        let borrowerNetFlowRate = await daix.getNetFlow({
             account: borrower.address,
             providerOrSigner: employer
         })
 
-        let contractNetFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        let contractNetFlowRate = await daix.getNetFlow({
             account: employmentLoan.address,
             providerOrSigner: employer
         })
@@ -175,30 +171,26 @@ describe("Loan is initialized properly", async function () {
     it("2 - Flow Reduction works correctly", async function () {
         //testing reduction in flow
 
-        const reduceFlowOperation = sf.cfaV1.updateFlow({
-            superToken: daix.address,
+        const reduceFlowOperation = daix.updateFlow({
             receiver: employmentLoan.address,
             flowRate: "1000000"
         })
 
         await reduceFlowOperation.exec(employer)
 
-        const newEmployerFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const newEmployerFlowRate = await daix.getFlow({
             sender: employer.address,
             receiver: employmentLoan.address,
             providerOrSigner: employer
         })
 
-        const newBorrowerFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const newBorrowerFlowRate = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: borrower.address,
             providerOrSigner: borrower
         })
 
-        const newContractFlowRate = await sf.cfaV1.getNetFlow({
-            superToken: daix.address,
+        const newContractFlowRate = await daix.getNetFlow({
             account: employmentLoan.address,
             providerOrSigner: employer
         })
@@ -227,8 +219,7 @@ describe("Loan is initialized properly", async function () {
         const daixApproval = daix.approve({receiver: employmentLoan.address, amount: borrowAmount});
         await daixApproval.exec(lender);
 
-        const employerUpdateFlowOperation = sf.cfaV1.updateFlow({
-            superToken: daix.address,
+        const employerUpdateFlowOperation = daix.updateFlow({
             receiver: employmentLoan.address,
             flowRate: "3215019290123456"
         })
@@ -239,8 +230,7 @@ describe("Loan is initialized properly", async function () {
 
         let lenderBalBefore = await daix.balanceOf({account: lender.address, providerOrSigner: admin});
 
-        let borrowerFlowRateBefore = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let borrowerFlowRateBefore = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: borrower.address,
             providerOrSigner: borrower
@@ -256,22 +246,19 @@ describe("Loan is initialized properly", async function () {
 
         let borrowerBalAfter = await daix.balanceOf({account: borrower.address, providerOrSigner: admin});
 
-        let borrowerFlowRateAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let borrowerFlowRateAfter = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: borrower.address,
             providerOrSigner: borrower
         })
 
-        let lenderFlowRateAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let lenderFlowRateAfter = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
 
-        let employerFlow = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let employerFlow = await daix.getFlow({
             sender: employer.address,
             receiver: employmentLoan.address,
             providerOrSigner: lender
@@ -326,23 +313,20 @@ describe("Loan is initialized properly", async function () {
     })
 
     it("4 - flow is reduced", async function () {
-        const updateFlowOp = await sf.cfaV1.updateFlow({
-            superToken: daix.address,
+        const updateFlowOp = await daix.updateFlow({
             receiver: employmentLoan.address,
             flowRate: "10000"
         })
 
         await updateFlowOp.exec(employer)
 
-        const borrowFlowToLender = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowFlowToLender = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
 
-        const borrowerNewFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowerNewFlowRate = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: borrower.address,
             providerOrSigner: borrower
@@ -362,31 +346,27 @@ describe("Loan is initialized properly", async function () {
     })
 
     it("5 - should allow a loan to become solvent again after a flow is reduced", async function () {
-        let employerFlowOperation = sf.cfaV1.updateFlow({
-            superToken: daix.address,
+        let employerFlowOperation = daix.updateFlow({
             receiver: employmentLoan.address,
             flowRate: "3215019290123456" // ~100k per year in usd
         })
 
         await employerFlowOperation.exec(employer)
 
-        const employerFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const employerFlowRate = await daix.getFlow({
             sender: employer.address,
             receiver: employmentLoan.address,
             providerOrSigner: lender
         })
 
-        const borrowTokenFlowToLenderAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowTokenFlowToLenderAfter = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
         //should be total inflow to contract from employer - flow to lender
 
-        const borrowTokenFlowToBorrowerAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowTokenFlowToBorrowerAfter = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: borrower.address,
             providerOrSigner: lender
@@ -416,30 +396,26 @@ describe("Loan is initialized properly", async function () {
     it("6 - flow is deleted", async function () {
         //delete flow
 
-        const deleteFlowOp = await sf.cfaV1.deleteFlow({
-            superToken: daix.address,
+        const deleteFlowOp = await daix.deleteFlow({
             sender: employer.address,
             receiver: employmentLoan.address
         })
 
         await deleteFlowOp.exec(employer)
 
-        const newEmployerFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const newEmployerFlowRate = await daix.getFlow({
             sender: employer.address,
             receiver: employmentLoan.address,
             providerOrSigner: employer
         })
 
-        const borrowFlowToLender = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowFlowToLender = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
 
-        const borrowerNewFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowerNewFlowRate = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: borrower.address,
             providerOrSigner: borrower
@@ -468,31 +444,27 @@ describe("Loan is initialized properly", async function () {
     it("7 - should allow loan to become solvent again after deletion ", async function () {
         //re start flow
 
-        let employerFlowOperation = sf.cfaV1.createFlow({
-            superToken: daix.address,
+        let employerFlowOperation = daix.createFlow({
             receiver: employmentLoan.address,
             flowRate: "3215019290123456" // ~100k per year in usd
         })
 
         await employerFlowOperation.exec(employer)
 
-        const employerFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const employerFlowRate = await daix.getFlow({
             sender: employer.address,
             receiver: employmentLoan.address,
             providerOrSigner: lender
         })
 
-        const borrowTokenFlowToLenderAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowTokenFlowToLenderAfter = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
         //should be total inflow to contract from employer - flow to lender
 
-        const borrowTokenFlowToBorrowerAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowTokenFlowToBorrowerAfter = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: borrower.address,
             providerOrSigner: lender
@@ -532,22 +504,19 @@ describe("Loan is initialized properly", async function () {
 
         await employmentLoan.connect(borrower).closeOpenLoan(amountLeft)
 
-        const lenderFlowRateAfterCompletion = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const lenderFlowRateAfterCompletion = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
 
-        const borrowerFlowRateAfterCompletion = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowerFlowRateAfterCompletion = await daix.getFlow({
             sender: employmentLoan.address,
             receiver: borrower.address,
             providerOrSigner: borrower
         })
 
-        const employerFlowRateAfterCompletion = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const employerFlowRateAfterCompletion = await daix.getFlow({
             sender: employer.address,
             receiver: employmentLoan.address,
             providerOrSigner: employer
@@ -604,8 +573,7 @@ describe("Loan is initialized properly", async function () {
 
         //create flow
             
-        const createFlowOperation = sf.cfaV1.createFlow({
-            superToken: daix.address,
+        const createFlowOperation = daix.createFlow({
             receiver: employmentLoan2.address,
             flowRate: "3215019290123456"
         })
@@ -622,22 +590,19 @@ describe("Loan is initialized properly", async function () {
         await employmentLoan2.connect(lender).lend()
 
         //make sure it worked
-        const borrowerFlow = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowerFlow = await daix.getFlow({
             sender: employmentLoan2.address,
             receiver: borrower.address,
             providerOrSigner: borrower
         })
 
-        const lenderFlow = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const lenderFlow = await daix.getFlow({
             sender: employmentLoan2.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
 
-        const employerFlow = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const employerFlow = await daix.getFlow({
             sender: employer.address,
             receiver: employmentLoan2.address,
             providerOrSigner: employer
@@ -650,15 +615,13 @@ describe("Loan is initialized properly", async function () {
         //close loan before it ends
         await employmentLoan2.connect(lender).closeOpenLoan(0)
 
-        const borrowerFlowAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowerFlowAfter = await daix.getFlow({
             sender: employmentLoan2.address,
             receiver: borrower.address,
             providerOrSigner: borrower
         })
 
-        const lenderFlowAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const lenderFlowAfter = await daix.getFlow({
             sender: employmentLoan2.address,
             receiver: lender.address,
             providerOrSigner: lender
@@ -721,8 +684,7 @@ describe("Loan is initialized properly", async function () {
 
         //create flow
 
-        const createLoan3FlowOperation = sf.cfaV1.createFlow({
-            superToken: daix.address,
+        const createLoan3FlowOperation = daix.createFlow({
             receiver: employmentLoan3.address,
             flowRate: "3215019290123456"
         })
@@ -739,22 +701,19 @@ describe("Loan is initialized properly", async function () {
         await employmentLoan3.connect(lender).lend()
 
         //make sure it worked
-        const borrowerFlow = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowerFlow = await daix.getFlow({
             sender: employmentLoan3.address,
             receiver: borrower.address,
             providerOrSigner: borrower
         })
 
-        const lenderFlow = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const lenderFlow = await daix.getFlow({
             sender: employmentLoan3.address,
             receiver: lender.address,
             providerOrSigner: lender
         })
 
-        const employerFlow = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const employerFlow = await daix.getFlow({
             sender: employer.address,
             receiver: employmentLoan3.address,
             providerOrSigner: employer
@@ -768,15 +727,13 @@ describe("Loan is initialized properly", async function () {
         //close loan before it ends
         await employmentLoan3.connect(borrower).closeCompletedLoan()
 
-        const borrowerFlowAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const borrowerFlowAfter = await daix.getFlow({
             sender: employmentLoan3.address,
             receiver: borrower.address,
             providerOrSigner: borrower
         })
 
-        const lenderFlowAfter = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        const lenderFlowAfter = await daix.getFlow({
             sender: employmentLoan3.address,
             receiver: lender.address,
             providerOrSigner: lender

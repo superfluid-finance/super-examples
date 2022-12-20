@@ -44,8 +44,7 @@ async function main() {
     console.log(
         `Original ${shareGainer.address} units held:`,
         (
-            await sf.idaV1.getSubscription({
-                superToken: daix.address,
+            await daix.getSubscription({
                 publisher: tokenSpreader.address,
                 indexId: await tokenSpreader.INDEX_ID(),
                 subscriber: shareGainer.address,
@@ -57,9 +56,8 @@ async function main() {
     try {
         // shareGainer will subscribe to tokenSpreader's index so that tokens will successfully go through to them
         // NOTE: if an account is not subscribed, but receives a distribution, its tokens will essentially “hang in limbo” until the account subscribes, after which they will go through
-        const subscribeOperation = sf.idaV1.approveSubscription({
+        const subscribeOperation = daix.approveSubscription({
             indexId: await tokenSpreader.INDEX_ID(),
-            superToken: daix.address,
             publisher: tokenSpreader.address
         })
         await subscribeOperation.exec(shareGainer)
@@ -85,8 +83,7 @@ async function main() {
     console.log(
         `New ${shareGainer.address} units held:`,
         (
-            await sf.idaV1.getSubscription({
-                superToken: daix.address,
+            await daix.getSubscription({
                 publisher: tokenSpreader.address,
                 indexId: await tokenSpreader.INDEX_ID(),
                 subscriber: shareGainer.address,

@@ -42,9 +42,8 @@ async function main() {
     const daix = await sf.loadSuperToken("fDAIx")
 
     //approve contract to spend 1000 daix
-    const aclApproval = sf.cfaV1.updateFlowOperatorPermissions({
+    const aclApproval = daix.updateFlowOperatorPermissions({
         flowOperator: moneyRouter.address,
-        superToken: daix.address,
         flowRateAllowance: "3858024691358024", //10k tokens per month in flowRateAllowanace
         permissions: 7 //NOTE: this allows for full create, update, and delete permissions. Change this if you want more granular permissioning
     })

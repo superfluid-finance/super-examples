@@ -114,9 +114,8 @@ describe("Money Router", function () {
         expect(contractDAIxBalance, ethers.utils.parseEther("100"));
     })
     it("Contract Receives Funds #2 - a flow is created into the contract", async function () {
-        let authorizeContractOperation = sf.cfaV1.updateFlowOperatorPermissions(
+        let authorizeContractOperation = daix.updateFlowOperatorPermissions(
             {
-                superToken: daix.address,
                 flowOperator: moneyRouter.address,
                 permissions: "7", //full control
                 flowRateAllowance: "1000000000000000" // ~2500 per month
@@ -129,8 +128,7 @@ describe("Money Router", function () {
             "100000000000000"
         ) //about 250 daix per month
 
-        let ownerContractFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let ownerContractFlowRate = await daix.getFlow({
             sender: owner.address,
             receiver: moneyRouter.address,
             providerOrSigner: owner
@@ -144,8 +142,7 @@ describe("Money Router", function () {
             "200000000000000"
         ) // about 250 daix per month
 
-        let ownerContractFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let ownerContractFlowRate = await daix.getFlow({
             sender: owner.address,
             receiver: moneyRouter.address,
             providerOrSigner: owner
@@ -156,8 +153,7 @@ describe("Money Router", function () {
     it("Contract Receives Funds #4 - a flow into the contract is deleted", async function () {
         await moneyRouter.deleteFlowIntoContract(daix.address)
 
-        let ownerContractFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let ownerContractFlowRate = await daix.getFlow({
             sender: owner.address,
             receiver: moneyRouter.address,
             providerOrSigner: owner
@@ -185,8 +181,7 @@ describe("Money Router", function () {
             "100000000000000"
         ) //about 250 per month
 
-        let receiverContractFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let receiverContractFlowRate = await daix.getFlow({
             sender: moneyRouter.address,
             receiver: account1.address,
             providerOrSigner: owner
@@ -201,8 +196,7 @@ describe("Money Router", function () {
             "200000000000000"
         ) //about 500 per month
 
-        let receiverContractFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let receiverContractFlowRate = await daix.getFlow({
             sender: moneyRouter.address,
             receiver: account1.address,
             providerOrSigner: owner
@@ -213,8 +207,7 @@ describe("Money Router", function () {
     it("Contract sends funds #4 - deleting a flow from the contract", async function () {
         await moneyRouter.deleteFlowFromContract(daix.address, account1.address) //about 500 per month
 
-        let receiverContractFlowRate = await sf.cfaV1.getFlow({
-            superToken: daix.address,
+        let receiverContractFlowRate = await daix.getFlow({
             sender: moneyRouter.address,
             receiver: account1.address,
             providerOrSigner: owner

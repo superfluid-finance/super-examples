@@ -42,8 +42,7 @@ async function main() {
     for (let i = 0; i < userList.length; i++) {
         // Getting rid of units held
         let unitsHeld = (
-            await sf.idaV1.getSubscription({
-                superToken: daix.address,
+            await daix.getSubscription({
                 publisher: tokenSpreader.address,
                 indexId: await tokenSpreader.INDEX_ID(),
                 subscriber: userList[i].address,

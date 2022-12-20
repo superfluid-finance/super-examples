@@ -22,10 +22,9 @@ async function main() {
 
     const daix = await sf.loadSuperToken("fDAIx")
 
-    const employerFlowOperation = sf.cfaV1.deleteFlow({
+    const employerFlowOperation = daix.deleteFlow({
         sender: employer.address,
         receiver: loanAddress,
-        superToken: daix.address
     })
 
     console.log("running delete flow script...")

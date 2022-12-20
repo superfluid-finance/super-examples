@@ -22,10 +22,9 @@ async function main() {
 
   const daix = await sf.loadSuperToken("fDAIx");
 
-  const deleteFlowOperation = sf.cfaV1.deleteFlow({
+  const deleteFlowOperation = daix.deleteFlow({
       sender: signer.address,
       receiver: "ADDRESS", //tradeable cashflow address
-      superToken: daix.address,
   });
 
   const txn = await deleteFlowOperation.exec(signer);
