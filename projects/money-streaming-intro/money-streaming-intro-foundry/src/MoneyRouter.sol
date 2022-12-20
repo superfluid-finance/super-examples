@@ -13,7 +13,7 @@ error Unauthorized();
 
 contract MoneyRouter {
     // ---------------------------------------------------------------------------------------------
-    // STATE VARIABLES
+    // STATE VARS
 
     /// @notice Owner.
     address public owner;
