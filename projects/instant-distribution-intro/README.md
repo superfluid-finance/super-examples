@@ -38,13 +38,11 @@ The Token Spreader will be a ultra-simple contract that takes tokens transferred
 ## Imports
 
 ```solidity
-pragma solidity 0.8.13;
+pragma solidity ^0.8.14;
 
-import { ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import { ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
 
-import { IInstantDistributionAgreementV1 } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-
-import { IDAv1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/IDAv1Library.sol";
+import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
 ```
 
@@ -54,42 +52,28 @@ import { IDAv1Library } from "@superfluid-finance/ethereum-contracts/contracts/a
 
 Allows us to use Super Tokens within our contract
 
-**`ISuperfluid`**
+**`SuperTokenV1Library`**
 
-The [Superfluid Host Contract](https://docs.superfluid.finance/superfluid/protocol-overview/in-depth-overview/superfluid-host)
-
-**`IInstantDistributionAgreementV1`**
-
-The IDA Super Agreement interface that will facilitate instant distributions
-
-**`IDAv1Library`**
-
-A helper library that will allow us to easily interact with and manage the contract’s distributions
+A helper library that will allow us to easily interact with the Instant Distribution Agreement through our Super Tokens.
 
 ## State Variables
 
 ```solidity
 contract TokenSpreader {
 
-    ISuperToken public spreaderToken;                  // Token to be distributed to unit holders by distribute() function
+    ISuperToken public spreaderToken;                  // Token to be distributed to unit holders with distribute() function
 
-    using IDAv1Library for IDAv1Library.InitData;      // Creating idaV1 object for easy use of IDA functions
-    IDAv1Library.InitData public idaV1;
+    /// @notice SuperToken Library
+    using SuperTokenV1Library for ISuperToken;
 
     uint32 public constant INDEX_ID = 0;               // The IDA Index. Since this contract will only use one index, we'll hardcode it to "0".
 
 ...
 ```
 
-**Terms and Snippets**
-
 **`spreaderToken`**
 
 This is the Super Token that will be supported for the TokenSpreader’s distribution index. Remember, each distribution index can only support one Super Token.
-
-**`idaV1`**
-
-This is the object with which the contract can interact in order to call Instant Distribution functions.
 
 **`INDEX_ID`**
 
@@ -98,82 +82,44 @@ An account or contract may have multiple IDA Indices. Each IDA Index has it’s 
 ## Constructor
 
 ```solidity
-constructor(ISuperfluid _host, ISuperToken _spreaderToken) {
-    // Ensure _spreaderToken is indeed a super token
-    require(address(_host) == _spreaderToken.getHost(), "!superToken");
-
+constructor(ISuperToken _spreaderToken) {
     spreaderToken = _spreaderToken;
 
-    // Initializing the host and agreement type in the idaV1 object so the object can have them on hand for enacting IDA functions
-    // Read more on initialization: https://docs.superfluid.finance/superfluid/developers/solidity-examples/solidity-libraries/idav1-library#importing-and-initialization
-    idaV1 = IDAv1Library.InitData(
-        _host,
-        IInstantDistributionAgreementV1(
-            address(
-                _host.getAgreementClass(
-                    keccak256(
-                        "org.superfluid-finance.agreements.InstantDistributionAgreement.v1"
-                    )
-                )
-            )
-        )
-    );
-
     // Creates the IDA Index through which tokens will be distributed
-    idaV1.createIndex(_spreaderToken, INDEX_ID);
+    _spreaderToken.createIndex(INDEX_ID);
 }
 
 ```
 
 **Terms and Snippets**
 
-**`_host`**
-
-The address of the [Superfluid Host Contract](https://docs.superfluid.finance/superfluid/protocol-overview/in-depth-overview/superfluid-host) which is in turn used to instantiate the `IDAv1Library`
-
 **`_spreaderToken`**
 
 The supported Super Token
 
-**`idaV1.createIndex(_spreaderToken, INDEX_ID);`**
+**`_spreaderToken.createIndex(INDEX_ID);`**
 
 Now the contract has an IDA Index for `spreaderToken` identified with `INDEX_ID`. It can use this Index to start doing cool Instant Distribution stuff.
-
-**`require(address(_host) == _spreaderToken.getHost(),"!superToken");`**
-
-Every Super Token gets registered with the Host contract upon deployment. If no address or the wrong address is returned when getting the host from the `spreaderToken` passed in, we know we don’t have a proper Super Token on our hands and our contract won’t function properly. Hence, we verify it with this require statement.
-
-```solidity
-idaV1 = IDAv1Library.InitData(
-      _host,
-      IInstantDistributionAgreementV1(
-          address(_host.getAgreementClass(keccak256("org.superfluid-finance.agreements.InstantDistributionAgreement.v1")))
-      )
-);
-```
-
-The code where we use host.getAgreementClass and pass in the hash of that link to the constant flow agreement allows us to get the address of the currently deployed IDA on our network without needing to pass it in as a variable to the constructor. We recommend using this pattern as well.
 
 ## Distribute Function
 
 This function will take its entire `spreaderToken` Super Token balance and distribute it out to unit holders.
 
 -   Notice the use of `calculateDistribution()`. This allows us to get an amount to distribute that will avoid any rounding errors.
--   By default of `idaV1.distribute`, this function will revert if there have been no units issued.
+-   By default of `spreaderToken.distribute`, this function will revert if there have been no units issued.
 
 ```solidity
 /// @notice Takes the entire balance of the designated spreaderToken in the contract and distributes it out to unit holders w/ IDA
 function distribute() public {
     uint256 spreaderTokenBalance = spreaderToken.balanceOf(address(this));
 
-    (uint256 actualDistributionAmount, ) = idaV1.ida.calculateDistribution(
-        spreaderToken,
+    (uint256 actualDistributionAmount, ) = spreaderToken.calculateDistribution(
         address(this),
         INDEX_ID,
         spreaderTokenBalance
     );
 
-    idaV1.distribute(spreaderToken, INDEX_ID, actualDistributionAmount);
+    spreaderToken.distribute(INDEX_ID, actualDistributionAmount);
 }
 
 ```
@@ -187,16 +133,14 @@ Here is the functionality we introduce where accounts can work with their shares
 /// @param subscriber subscriber address whose units are to be incremented
 function gainShare(address subscriber) public {
     // Get current units subscriber holds
-    (, , uint256 currentUnitsHeld, ) = idaV1.getSubscription(
-        spreaderToken,
+    (, , uint256 currentUnitsHeld, ) = spreaderToken.getSubscription(
         address(this),
         INDEX_ID,
         subscriber
     );
 
     // Update to current amount + 1
-    idaV1.updateSubscriptionUnits(
-        spreaderToken,
+    spreaderToken.updateSubscriptionUnits(
         INDEX_ID,
         subscriber,
         uint128(currentUnitsHeld + 1)
@@ -207,16 +151,14 @@ function gainShare(address subscriber) public {
 /// @param subscriber subscriber address whose units are to be decremented
 function loseShare(address subscriber) public {
     // Get current units subscriber holds
-    (, , uint256 currentUnitsHeld, ) = idaV1.getSubscription(
-        spreaderToken,
+    (, , uint256 currentUnitsHeld, ) = spreaderToken.getSubscription(
         address(this),
         INDEX_ID,
         subscriber
     );
 
     // Update to current amount - 1 (reverts if currentUnitsHeld - 1 < 0, so basically if currentUnitsHeld = 0)
-    idaV1.updateSubscriptionUnits(
-        spreaderToken,
+    spreaderToken.updateSubscriptionUnits(
         INDEX_ID,
         subscriber,
         uint128(currentUnitsHeld - 1)
@@ -226,12 +168,7 @@ function loseShare(address subscriber) public {
 /// @notice allows an account to delete its entire subscription this contract
 /// @param subscriber subscriber address whose subscription is to be deleted
 function deleteShares(address subscriber) public {
-    idaV1.deleteSubscription(
-        spreaderToken,
-        address(this),
-        INDEX_ID,
-        subscriber
-    );
+    spreaderToken.deleteSubscription(address(this), INDEX_ID, subscriber);
 }
 
 ```
@@ -310,16 +247,12 @@ Run the below to install the needed Superfluid dependencies.
 At the top of our test file, we’ll include our imports and also set up several state variables which will be modified throughout our test suite. We’ve also imported the `deployFramework`, `deployFramework`, and `deployFramework` scripts which will help us kick off Superfluid testing locally.
 
 ```jsx
-const { assert, expect } = require("chai");
+const { expect } = require("chai");
 
 const { Framework } = require("@superfluid-finance/sdk-core");
-const TestTokenABI =  require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json");
+const TestToken =  require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json");
 
-const { ethers, web3 } = require("hardhat");
-
-const deployFramework = require("@superfluid-finance/ethereum-contracts/scripts/deploy-framework");
-const deployTestToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-test-token");
-const deploySuperToken = require("@superfluid-finance/ethereum-contracts/scripts/deploy-super-token");
+const { ethers } = require("hardhat");
 
 // Instances
 let sf;                          // Superfluid framework API object
@@ -354,22 +287,19 @@ before(async function () {
     // get hardhat accounts
     [admin, alice, bob] = await ethers.getSigners();
 
-    //// GETTING SUPERFLUID FRAMEWORK SET UP
+    sfDeployer = await deployTestFramework();
+
+    // GETTING SUPERFLUID FRAMEWORK SET UP
 
     // deploy the framework locally
-    await deployFramework(errorHandler, {
-        web3: web3,
-        from: admin.address,
-        // newTestResolver:true
-    });
+    contractsFramework = await sfDeployer.getFramework();
 
     // initialize framework
     sf = await Framework.create({
-        networkName: "custom",
-        provider: web3,
-        dataMode: "WEB3_ONLY",
-        resolverAddress: process.env.RESOLVER_ADDRESS, // (empty)
-        protocolReleaseVersion: "test",
+        chainId: 31337,
+        provider: admin.provider,
+        resolverAddress: contractsFramework.resolver, // needed as placeholder
+        protocolReleaseVersion: "test"
     });
 
 ...
@@ -380,28 +310,21 @@ before(async function () {
 ```jsx
 
 ...
-    //// DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
+    // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
 
-    // deploy a fake erc20 token
-    await deployTestToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: admin.address,
-    });
+    // Deploy a fake erc20 test token
+    await sfDeployer.deployWrapperSuperToken(
+        "Fake DAI Token",
+        "fDAI",
+        18,
+        ethers.utils.parseEther("100000000").toString()
+    );
 
-    // deploy a fake erc20 wrapper super token around the DAI token
-    await deploySuperToken(errorHandler, [":", "fDAI"], {
-        web3,
-        from: admin.address,
-    });
-
-    // deploy a fake erc20 wrapper super token around the DAI token
+    // create a fake erc20 wrapper super token around the DAI token
     daix = await sf.loadSuperToken("fDAIx");
 
-    dai = new ethers.Contract(
-        daix.underlyingToken.address,
-        TestTokenABI.abi,
-        admin
-    );
+    // get the ethers contract object for the fake erc20 test token
+    dai = new ethers.Contract(daix.underlyingToken.address, TestToken.abi, admin);
 ...
 ```
 
@@ -414,22 +337,20 @@ Notice that the upgrade transactions (which wrap the DAI into DAIx) **are not Et
 		//// SETTING UP NON-ADMIN ACCOUNTS WITH DAIx
 
     // minting test DAI
-    await dai.connect(admin).mint(admin.address, ethers.utils.parseEther("10000"));
-    await dai.connect(alice).mint(alice.address, ethers.utils.parseEther("10000"));
-    await dai.connect(bob).mint(bob.address, ethers.utils.parseEther("10000"));
+    await dai.connect(admin).mint(admin.address, thousandEther);
+    await dai.connect(alice).mint(alice.address, thousandEther);
+    await dai.connect(bob).mint(bob.address, thousandEther);
 
-    // approving DAIx to spend DAI (Super Token object is not an ethers contract object and has different operation syntax)
+    // approving DAIx to spend DAI
     await dai.connect(admin).approve(daix.address, ethers.constants.MaxInt256);
     await dai.connect(alice).approve(daix.address, ethers.constants.MaxInt256);
     await dai.connect(bob).approve(daix.address, ethers.constants.MaxInt256);
 
-    // Wrapping all DAI into DAIx
-    const daiXUpgradeOperation = daix.upgrade({
-      amount: ethers.utils.parseEther("10000").toString(),
-    })
-    await daiXUpgradeOperation.exec(admin);
-    await daiXUpgradeOperation.exec(alice);
-    await daiXUpgradeOperation.exec(bob);
+    // Upgrading all DAI to DAIx
+    const wrapOperation = daix.upgrade({amount: thousandEther});
+    await wrapOperation.exec(admin);
+    await wrapOperation.exec(alice);
+    await wrapOperation.exec(bob);
 ...
 ```
 
@@ -445,8 +366,7 @@ Notice that the upgrade transactions (which wrap the DAI into DAIx) **are not Et
     );
 
     spreader = await spreaderContractFactory.deploy(
-        sf.settings.config.hostAddress,
-        daix.address, // Setting DAIx as spreader token
+        daix.address // Setting DAIx as spreader token
     );
 ...
 ```
@@ -460,15 +380,12 @@ This way the Super Tokens that TokenSpreader distributes actually show up in eac
 		//// SUBSCRIBING TO SPREADER CONTRACT'S IDA INDEX
 
     // subscribe to distribution (doesn't matter if this happens before or after distribution execution)
-    const approveSubscriptionOperation = await sf.idaV1.approveSubscription({
-      indexId: "0",
-      superToken: daix.address,
-      publisher: spreader.address
-    })
+    const approveSubscriptionOperation = await daix.approveSubscription({
+        indexId: "0",
+        publisher: spreader.address
+    });
     await approveSubscriptionOperation.exec(alice);
     await approveSubscriptionOperation.exec(bob);
-
-    console.log("Set Up Complete! - TokenSpreader Contract Address:", spreader.address);
 });
 ```
 
@@ -496,12 +413,10 @@ it("Distribution with [ 3 units issued to different accounts ] and [ 100 spreade
     await spreader.connect(bob).gainShare(bob.address);
 
     // Admin gives spreader 100 DAIx
-    const daiXTransferOperation = daix.transfer({
-      receiver: spreader.address,
-      amount: distributionAmount,
-      providerOrSigner: admin
-    })
-    await daiXTransferOperation.exec(admin);
+    await daix.transfer({
+        receiver: spreader.address,
+        amount: distributionAmount
+    }).exec(admin);
 ...
 ```
 
@@ -510,8 +425,8 @@ it("Distribution with [ 3 units issued to different accounts ] and [ 100 spreade
 ```jsx
 		...
 			// (snapshot balances)
-		  let aliceInitialBlance = await daix.balanceOf({account: alice.address, providerOrSigner: admin});
-		  let bobInitialBlance = await daix.balanceOf({account: bob.address, providerOrSigner: admin});
+      let aliceInitialBlance = await daix.balanceOf({account: alice.address, providerOrSigner: admin});
+      let bobInitialBlance = await daix.balanceOf({account: bob.address, providerOrSigner: admin});
 ```
 
 3. Run distribution
@@ -519,7 +434,7 @@ it("Distribution with [ 3 units issued to different accounts ] and [ 100 spreade
 ```jsx
 		...
 			// Distribution executed
-			await expect( spreader.connect(admin).distribute() ).to.be.not.reverted;
+      await expect( spreader.connect(admin).distribute() ).to.be.not.reverted;
 		...
 ```
 
@@ -530,42 +445,35 @@ it("Distribution with [ 3 units issued to different accounts ] and [ 100 spreade
 		//// EXPECTATIONS
 
     // expect bob to have 2 distribution units
-    let bobSubscription = await sf.idaV1.getSubscription({
-      superToken: daix.address,
-      publisher: spreader.address,
-      indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
-      subscriber: bob.address,
-      providerOrSigner: bob
-    })
+    let bobSubscription = await daix.getSubscription({
+        publisher: spreader.address,
+        indexId: "0", // recall this was `INDEX_ID` in TokenSpreader.sol
+        subscriber: bob.address,
+        providerOrSigner: bob
+    });
 
-    await expect(
-      bobSubscription.units
-    ).to.equal(
-      "2"
-    );
+    await expect(bobSubscription.units).to.equal("2");
 
     // expect alice to receive 1/3 of distribution
-    await expect(
-      await daix.balanceOf({account: alice.address, providerOrSigner: admin})
-    ).to.closeTo(
-      ethers.BigNumber.from(aliceInitialBlance).add( distributionAmount.div("3") ), // expect original balance + distribution amount * 1/2
-      expecationDiffLimit
+    await expect(await daix.balanceOf({account: alice.address, providerOrSigner: admin})).to.closeTo(
+        ethers.BigNumber.from(aliceInitialBlance).add(
+            distributionAmount.div("3")
+        ), // expect original balance + distribution amount * 1/2
+        expecationDiffLimit
     );
 
     // expect bob to receive 2/3 of distribution
-    await expect(
-      await daix.balanceOf({account: bob.address, providerOrSigner: admin})
-    ).to.closeTo(
-      ethers.BigNumber.from(bobInitialBlance).add( (distributionAmount.div("3")).mul("2") ), // expect original balance + distribution amount * 2/3
-      expecationDiffLimit
+    await expect(await daix.balanceOf({account: bob.address, providerOrSigner: admin})).to.closeTo(
+        ethers.BigNumber.from(bobInitialBlance).add(
+            distributionAmount.div("3").mul("2")
+        ), // expect original balance + distribution amount * 2/3
+        expecationDiffLimit
     );
 
     // expect balance of spreader contract to be zeroed out
-    await expect(
-      await daix.balanceOf({account: spreader.address, providerOrSigner: admin})
-    ).to.closeTo(
-      ethers.BigNumber.from("0"),
-      expecationDiffLimit
+    await expect(await daix.balanceOf({account: spreader.address, providerOrSigner: admin})).to.closeTo(
+        ethers.BigNumber.from("0"),
+        expecationDiffLimit
     );
 });
 ```
