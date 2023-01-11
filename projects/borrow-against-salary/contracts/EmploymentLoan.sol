@@ -52,6 +52,9 @@ contract EmploymentLoan is SuperAppBase {
     /// @notice Timestamp of the loan start time.
     uint256 public loanStartTime;
 
+    /// @notice boolean flag to track whether the loan was closed. In contrary to @loanOpen, this variable changes state only once. 
+    bool public isClosed;
+
     // ---------------------------------------------------------------------------------------------
     //MODIFIERS
 
@@ -100,6 +103,7 @@ contract EmploymentLoan is SuperAppBase {
         borrowToken = _borrowToken;
         host = _host;
         loanOpen = false;
+        isClosed = false;
 
         // CFA lib initialization
         IConstantFlowAgreementV1 cfa = IConstantFlowAgreementV1(
@@ -127,6 +131,7 @@ contract EmploymentLoan is SuperAppBase {
             int96(
                 ((borrowAmount + ((borrowAmount * int256(interestRate)) / int256(100))) /
                     paybackMonths) / ((365 / 12) * 86400)
+                    //365/12 = average days in a month; 86400 = seconds in a day (24 hours); -> 365/12 * 86400 average seconds in a month
             )
         );
     }
@@ -155,6 +160,7 @@ contract EmploymentLoan is SuperAppBase {
     function lend() external {
         int96 employerFlowRate = borrowToken.getFlowRate(employer, address(this));
 
+        require(!isClosed, "Loan already closed");
         require(employerFlowRate >= getPaymentFlowRate(), "insufficient flowRate");
 
         //lender must approve contract before running next line
@@ -338,6 +344,7 @@ contract EmploymentLoan is SuperAppBase {
         int96 currentFlowRate = borrowToken.getFlowRate(address(this), borrower);
         borrowToken.updateFlow(borrower, currentFlowRate + currentLenderFlowRate);
         loanOpen = false;
+        isClosed = true;
     }
 
     ///@notice allows lender or borrower to close a loan that is not yet finished
@@ -353,6 +360,7 @@ contract EmploymentLoan is SuperAppBase {
             borrowToken.deleteFlow(address(this), lender);
             borrowToken.updateFlow(borrower, currentFlowRate + currentLenderFlowRate);
             loanOpen = false;
+            isClosed = true;
         } else {
             require(amountForPayoff >= (getTotalAmountRemaining()), "insuf funds");
             require(getTotalAmountRemaining() > 0, "you should call closeOpenLoan() instead");
@@ -362,6 +370,7 @@ contract EmploymentLoan is SuperAppBase {
 
             borrowToken.updateFlow(borrower, currentFlowRate + currentLenderFlowRate);
             loanOpen = false;
+            isClosed = true;
         }
     }
 

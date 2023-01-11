@@ -210,7 +210,17 @@ describe("Loan is initialized properly", async function () {
         assert.equal(newContractFlowRate, 0, "contract is not balanced")
     })
 
-    it("3 Lend Function works correctly", async function () {
+    it("3 - should show that a loan is not closed (anyone can become a lender)", async function () {
+        //before the lend function is called, both isClosed and loanOpen are false
+
+        const loanOpen = await employmentLoan.loanOpen()
+        assert.equal(loanOpen, false);
+
+        const isClosed = await employmentLoan.isClosed()
+        assert.equal(isClosed, false);
+    })
+
+    it("4 Lend Function works correctly", async function () {
         //should reduce flow rate, test to ensure failure, then test update flow rate
         //try calling lend - should revert
 
@@ -312,7 +322,7 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("4 - flow is reduced", async function () {
+    it("5 - flow is reduced", async function () {
         const updateFlowOp = await daix.updateFlow({
             receiver: employmentLoan.address,
             flowRate: "10000"
@@ -345,7 +355,7 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("5 - should allow a loan to become solvent again after a flow is reduced", async function () {
+    it("6 - should allow a loan to become solvent again after a flow is reduced", async function () {
         let employerFlowOperation = daix.updateFlow({
             receiver: employmentLoan.address,
             flowRate: "3215019290123456" // ~100k per year in usd
@@ -393,7 +403,7 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("6 - flow is deleted", async function () {
+    it("7 - flow is deleted", async function () {
         //delete flow
 
         const deleteFlowOp = await daix.deleteFlow({
@@ -441,7 +451,7 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("7 - should allow loan to become solvent again after deletion ", async function () {
+    it("8 - should allow loan to become solvent again after deletion ", async function () {
         //re start flow
 
         let employerFlowOperation = daix.createFlow({
@@ -490,7 +500,7 @@ describe("Loan is initialized properly", async function () {
     })
 
     //todo fix - looks like transfer and approve opp don't work here
-    it("8 closing the loan early with payment from borrower", async function () {
+    it("9 closing the loan early with payment from borrower", async function () {
         //borrower sends payment to pay off loan
         const amountLeft = await employmentLoan
             .connect(borrower)
@@ -525,6 +535,12 @@ describe("Loan is initialized properly", async function () {
         const loanStatus = await employmentLoan.loanOpen()
 
         assert.equal(loanStatus, false)
+
+        //This is exactly why there is a need for another variable besides @loanOpen - to differentiate between loans before and after being paid off.
+        //It's impossible to do that with just @loanOpen.
+        const isClosed = await employmentLoan.isClosed()
+        assert.equal(isClosed, true);
+
         assert.equal(
             lenderFlowRateAfterCompletion.flowRate,
             0,
@@ -542,7 +558,7 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("9 closing the loan early from lender", async function () {
+    it("10 closing the loan early from lender", async function () {
         //other party sends payment to pay off loan
         let borrowAmount = ethers.utils.parseEther("1000")
         let interest = 10
@@ -628,8 +644,11 @@ describe("Loan is initialized properly", async function () {
         })
 
         const loanStatus = await employmentLoan2.loanOpen()
-
         assert.equal(loanStatus, false)
+
+        const isClosed = await employmentLoan2.isClosed()
+        assert.equal(isClosed, true);
+
         assert.isBelow(
             Number(borrowerFlow.flowRate),
             Number(employerFlow.flowRate),
@@ -652,7 +671,7 @@ describe("Loan is initialized properly", async function () {
         )
     })
 
-    it("10 borrower closing the loan once completed", async function () {
+    it("11 borrower closing the loan once completed", async function () {
         //borrower closes loan once complete
         let borrowAmount = ethers.utils.parseEther("1000")
         let interest = 10
@@ -740,8 +759,11 @@ describe("Loan is initialized properly", async function () {
         })
 
         const loanStatus = await employmentLoan3.loanOpen();
-
         assert.equal(loanStatus, false);
+
+        const isClosed = await employmentLoan3.isClosed()
+        assert.equal(isClosed, true);
+
         assert.isBelow(
             Number(borrowerFlow.flowRate),
             Number(employerFlow.flowRate),
