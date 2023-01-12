@@ -28,6 +28,6 @@ on each to see their local README file.
 
 -   [Borrow Against Salary](./projects/borrow-against-salary/README.md)
 -   [Instant Distribution Intro](./projects/instant-distribution-intro/README.md)
--   [Money Streaming Intro](./projects/money-streaming-intro/README.md)
+-   [Money Streaming Intro](./projects/money-streaming-intro)
 -   [Tradeable Cashflow NFT](./projects/tradeable-cashflow/README.md)
 -   [Gelato ACL Automation](./projects/superfluid-gelato-automation/)
