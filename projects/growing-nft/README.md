@@ -6,7 +6,7 @@ The [Flower NFT Contract](./contracts/Flower.sol) is an ERC721 contract that is 
 
 Skip to 14:20 for the bulk of the Flower NFT logic/code walk-through
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/sFsMmeNovgU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![Build an evolving NFT with Superfluid](https://img.youtube.com/vi/sFsMmeNovgU/0.jpg)](http://www.youtube.com/watch?v=sFsMmeNovgU "Build an evolving NFT with Superfluid")
 
 ## Technical Explainer
 
