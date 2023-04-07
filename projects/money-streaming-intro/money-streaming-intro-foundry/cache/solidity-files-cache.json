@@ -12,7 +12,7 @@
   },
   "files": {
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol": {
-      "lastModificationDate": 1671229351628,
+      "lastModificationDate": 1680882787309,
       "contentHash": "dc80ed7d31c9daede43434a4becaed96",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementBase.sol",
       "solcConfig": {
@@ -59,7 +59,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol": {
-      "lastModificationDate": 1671229351628,
+      "lastModificationDate": 1680882787309,
       "contentHash": "02df1fa3a993351aaccb55d03faf34bd",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/AgreementLibrary.sol",
       "solcConfig": {
@@ -113,7 +113,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/ConstantFlowAgreementV1.sol": {
-      "lastModificationDate": 1671229351628,
+      "lastModificationDate": 1680882787309,
       "contentHash": "5f38f592807839ef889e96fe553cbe0d",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/ConstantFlowAgreementV1.sol",
       "solcConfig": {
@@ -175,7 +175,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol": {
-      "lastModificationDate": 1671229351628,
+      "lastModificationDate": 1680882787310,
       "contentHash": "42c25ed35dccf1ed5f8cf57aea5572a7",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/agreements/InstantDistributionAgreementV1.sol",
       "solcConfig": {
@@ -237,7 +237,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/CFAv1Library.sol": {
-      "lastModificationDate": 1671229351628,
+      "lastModificationDate": 1680882689249,
       "contentHash": "7f1c3c2756f57803911d753f3f4591c4",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/CFAv1Library.sol",
       "solcConfig": {
@@ -291,7 +291,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/IDAv1Library.sol": {
-      "lastModificationDate": 1671229351629,
+      "lastModificationDate": 1680882787310,
       "contentHash": "ac620fa3113afdb0a84b62b5b28a8e26",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/IDAv1Library.sol",
       "solcConfig": {
@@ -345,7 +345,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol": {
-      "lastModificationDate": 1671229351629,
+      "lastModificationDate": 1680882787310,
       "contentHash": "e085b997d367140ccf777fbec59bc9ea",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
       "solcConfig": {
@@ -400,7 +400,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol": {
-      "lastModificationDate": 1671229351629,
+      "lastModificationDate": 1680882787311,
       "contentHash": "74a5316f9dbb8095d0374c89f6060b55",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/gov/SuperfluidGovernanceBase.sol",
       "solcConfig": {
@@ -457,7 +457,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementHook.sol": {
-      "lastModificationDate": 1671229351629,
+      "lastModificationDate": 1680882689250,
       "contentHash": "2a774b18bf7379d6d96bb03ef2cee9ea",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementHook.sol",
       "solcConfig": {
@@ -500,7 +500,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol": {
-      "lastModificationDate": 1671229351629,
+      "lastModificationDate": 1680882787311,
       "contentHash": "cea469dcdeaa6e0992d7beea10698a81",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
       "solcConfig": {
@@ -543,7 +543,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol": {
-      "lastModificationDate": 1671229351630,
+      "lastModificationDate": 1680882689250,
       "contentHash": "60042f78e0fa54a8547790c391ab27c1",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
       "solcConfig": {
@@ -586,7 +586,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/CustomSuperTokenBase.sol": {
-      "lastModificationDate": 1671229351630,
+      "lastModificationDate": 1680882689250,
       "contentHash": "702cc91c30c8686580eda5a7e66894d5",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/CustomSuperTokenBase.sol",
       "solcConfig": {
@@ -639,7 +639,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol": {
-      "lastModificationDate": 1671229351630,
+      "lastModificationDate": 1680882787311,
       "contentHash": "ad96cb2b9ffeb68f41a448eb2aeb58e3",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
       "solcConfig": {
@@ -691,7 +691,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol": {
-      "lastModificationDate": 1671229351630,
+      "lastModificationDate": 1680882689251,
       "contentHash": "49d978f06d4edeb5125a7152d6897e69",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
       "solcConfig": {
@@ -734,7 +734,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol": {
-      "lastModificationDate": 1671229351630,
+      "lastModificationDate": 1680882787311,
       "contentHash": "3b1a28352fc3ab7b2659bc3ab3c7bb92",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
       "solcConfig": {
@@ -787,7 +787,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol": {
-      "lastModificationDate": 1671229351630,
+      "lastModificationDate": 1680882787312,
       "contentHash": "1cd744c6b588e15a3c8b3115874340d6",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
       "solcConfig": {
@@ -840,7 +840,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol": {
-      "lastModificationDate": 1671229351630,
+      "lastModificationDate": 1680882787312,
       "contentHash": "696c26b081a411e4cf4ca86e40f85da8",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
       "solcConfig": {
@@ -893,7 +893,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol": {
-      "lastModificationDate": 1671229351630,
+      "lastModificationDate": 1680882689251,
       "contentHash": "923d8bee2334395f7ad909b8e98e07e9",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
       "solcConfig": {
@@ -946,7 +946,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882689251,
       "contentHash": "f39a1c0568c38958f3c5c80b6fb1603c",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
       "solcConfig": {
@@ -999,7 +999,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882689251,
       "contentHash": "095cd6cdf7df13a739649f8917862cb0",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
       "solcConfig": {
@@ -1042,7 +1042,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882689251,
       "contentHash": "77968d7579793b9f87e33dec4d917f44",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
       "solcConfig": {
@@ -1085,7 +1085,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/IPureSuperToken.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882787312,
       "contentHash": "f6d2a176133259c159452720113499e7",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/IPureSuperToken.sol",
       "solcConfig": {
@@ -1141,7 +1141,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882689251,
       "contentHash": "726dc2a8154819f5dbf3820c1cd835b9",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol",
       "solcConfig": {
@@ -1197,7 +1197,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882689251,
       "contentHash": "6326411b7eb3d451fdffd149d821a7cb",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
       "solcConfig": {
@@ -1237,7 +1237,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882689252,
       "contentHash": "e6bbdf34e893e434a94bdb3cde1a7fde",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IRelayRecipient.sol",
       "solcConfig": {
@@ -1277,7 +1277,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882689252,
       "contentHash": "78ec22d41ce67b56ddb31b6d6e908a34",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/utils/IResolver.sol",
       "solcConfig": {
@@ -1317,7 +1317,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882787312,
       "contentHash": "604a1a19692cb179a951c9c176bd6132",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/BaseRelayRecipient.sol",
       "solcConfig": {
@@ -1359,7 +1359,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882787312,
       "contentHash": "3a9b7a8811ba0f228e52ef932ed799ae",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/CallUtils.sol",
       "solcConfig": {
@@ -1399,7 +1399,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol": {
-      "lastModificationDate": 1671229351631,
+      "lastModificationDate": 1680882787312,
       "contentHash": "3f921d550df7d538db5acaee385243fb",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol",
       "solcConfig": {
@@ -1439,7 +1439,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol": {
-      "lastModificationDate": 1671229351632,
+      "lastModificationDate": 1680882787313,
       "contentHash": "4e90bc423492becc11fee3357398172e",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC777Helper.sol",
       "solcConfig": {
@@ -1481,7 +1481,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol": {
-      "lastModificationDate": 1671229351632,
+      "lastModificationDate": 1680882787313,
       "contentHash": "81addb18e7bed9bf5b6240bff3cc2f15",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/EventsEmitter.sol",
       "solcConfig": {
@@ -1521,7 +1521,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol": {
-      "lastModificationDate": 1671229351632,
+      "lastModificationDate": 1680882787313,
       "contentHash": "0d578fc243fe6d78c7f524fb4cb5d43f",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/FixedSizeData.sol",
       "solcConfig": {
@@ -1561,7 +1561,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/SlotsBitmapLibrary.sol": {
-      "lastModificationDate": 1671229351632,
+      "lastModificationDate": 1680882787313,
       "contentHash": "9c05a78908a15d63bc80de5fb7e4ef13",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/SlotsBitmapLibrary.sol",
       "solcConfig": {
@@ -1604,7 +1604,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol": {
-      "lastModificationDate": 1671229351634,
+      "lastModificationDate": 1680882787319,
       "contentHash": "fb564f254f4bc37e3d63fefec5fd1300",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/FullUpgradableSuperTokenProxy.sol",
       "solcConfig": {
@@ -1658,7 +1658,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol": {
-      "lastModificationDate": 1671229351634,
+      "lastModificationDate": 1680882787319,
       "contentHash": "4d4f1f8972323537e850bc6a6cc162b0",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperToken.sol",
       "solcConfig": {
@@ -1726,7 +1726,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperTokenFactory.sol": {
-      "lastModificationDate": 1671229351634,
+      "lastModificationDate": 1680882787319,
       "contentHash": "5ec71a46466bc9e065ade3ad23a25bd0",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperTokenFactory.sol",
       "solcConfig": {
@@ -1806,7 +1806,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol": {
-      "lastModificationDate": 1671229351634,
+      "lastModificationDate": 1680882787319,
       "contentHash": "1d45f911c76afb4a45edfcc35a3ef0cb",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/Superfluid.sol",
       "solcConfig": {
@@ -1869,7 +1869,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol": {
-      "lastModificationDate": 1671229351634,
+      "lastModificationDate": 1680882787319,
       "contentHash": "a016e3ef00cb1e2e76617242397a6e8a",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol",
       "solcConfig": {
@@ -1925,7 +1925,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/PureSuperToken.sol": {
-      "lastModificationDate": 1671229351634,
+      "lastModificationDate": 1680882787320,
       "contentHash": "2817c1301c2a392cd96590aac184589a",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/PureSuperToken.sol",
       "solcConfig": {
@@ -1983,7 +1983,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/SETH.sol": {
-      "lastModificationDate": 1671229351634,
+      "lastModificationDate": 1680882787320,
       "contentHash": "f2c55e9a955f49e652152ad6ffa60f09",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/tokens/SETH.sol",
       "solcConfig": {
@@ -2041,7 +2041,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882787320,
       "contentHash": "ba600ac351daf797312ce1b57b4bfa52",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol",
       "solcConfig": {
@@ -2085,7 +2085,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882787320,
       "contentHash": "ca5bf75f505eddbcd3e2f7ee9f4b8625",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSProxy.sol",
       "solcConfig": {
@@ -2128,7 +2128,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882787320,
       "contentHash": "6d19c49baab60556bee9564fae70c64e",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/upgradability/UUPSUtils.sol",
       "solcConfig": {
@@ -2168,7 +2168,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882689257,
       "contentHash": "81a5d1c9e2c241c40f7838c5ce91135f",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/CFAv1Forwarder.sol",
       "solcConfig": {
@@ -2223,7 +2223,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882787320,
       "contentHash": "aeaf88f78d914f12d9b6cbdccd730aa9",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/Resolver.sol",
       "solcConfig": {
@@ -2275,7 +2275,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882787321,
       "contentHash": "0813ef9ae1bfa2826ad9b64021a5f69d",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol",
       "solcConfig": {
@@ -2394,7 +2394,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidLoader.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882787321,
       "contentHash": "962d0b13616a120fbe65cc8471c51069",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidLoader.sol",
       "solcConfig": {
@@ -2448,7 +2448,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882787321,
       "contentHash": "b8debf3ce067b25c0b116ced1e596f27",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestGovernance.sol",
       "solcConfig": {
@@ -2508,7 +2508,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestResolver.sol": {
-      "lastModificationDate": 1671229351635,
+      "lastModificationDate": 1680882787321,
       "contentHash": "3942e3bad4a842c8e27abac2ed75a65c",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestResolver.sol",
       "solcConfig": {
@@ -2561,7 +2561,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol": {
-      "lastModificationDate": 1671229351636,
+      "lastModificationDate": 1680882787321,
       "contentHash": "d8d07cd5229799e4abd5a42d1aa8b742",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol",
       "solcConfig": {
@@ -2606,7 +2606,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidCFAv1DeployerLibrary.sol": {
-      "lastModificationDate": 1671229351636,
+      "lastModificationDate": 1680882787322,
       "contentHash": "6fd43210a1cafdfa868bf476d161c650",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidCFAv1DeployerLibrary.sol",
       "solcConfig": {
@@ -2679,7 +2679,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidGovDeployerLibrary.sol": {
-      "lastModificationDate": 1671229351636,
+      "lastModificationDate": 1680882787322,
       "contentHash": "fc1a024e073db96c1c8a48ea1e28f0e6",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidGovDeployerLibrary.sol",
       "solcConfig": {
@@ -2747,7 +2747,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidHostDeployerLibrary.sol": {
-      "lastModificationDate": 1671229351636,
+      "lastModificationDate": 1680882787322,
       "contentHash": "886e2c9e0d8f6055698e587046a972fa",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidHostDeployerLibrary.sol",
       "solcConfig": {
@@ -2815,7 +2815,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidIDAv1DeployerLibrary.sol": {
-      "lastModificationDate": 1671229351636,
+      "lastModificationDate": 1680882787322,
       "contentHash": "ce43363a7860f87762404829d5ed0bca",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidIDAv1DeployerLibrary.sol",
       "solcConfig": {
@@ -2884,7 +2884,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidPeripheryDeployerLibrary.sol": {
-      "lastModificationDate": 1671229351636,
+      "lastModificationDate": 1680882787322,
       "contentHash": "b6b54aa449a5879d785010d0ce1f6982",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidPeripheryDeployerLibrary.sol",
       "solcConfig": {
@@ -2975,7 +2975,7 @@
       }
     },
     "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidSuperTokenFactoryHelperDeployerLibrary.sol": {
-      "lastModificationDate": 1671229351636,
+      "lastModificationDate": 1680882787322,
       "contentHash": "9f8add3eb9f0b53488cd564821477ae7",
       "sourceName": "lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/deployers/SuperfluidSuperTokenFactoryHelperDeployerLibrary.sol",
       "solcConfig": {
@@ -3066,7 +3066,7 @@
       }
     },
     "lib/forge-std/lib/ds-test/src/test.sol": {
-      "lastModificationDate": 1671227130302,
+      "lastModificationDate": 1680882474399,
       "contentHash": "962996f0e05d5218857a538a62d7c47e",
       "sourceName": "lib/forge-std/lib/ds-test/src/test.sol",
       "solcConfig": {
@@ -3106,7 +3106,7 @@
       }
     },
     "lib/forge-std/src/Script.sol": {
-      "lastModificationDate": 1671227130302,
+      "lastModificationDate": 1680882474399,
       "contentHash": "571dde8775a6214a03d6772ee330ead5",
       "sourceName": "lib/forge-std/src/Script.sol",
       "solcConfig": {
@@ -3151,7 +3151,7 @@
       }
     },
     "lib/forge-std/src/StdJson.sol": {
-      "lastModificationDate": 1671227130302,
+      "lastModificationDate": 1680882474399,
       "contentHash": "75c782f20a301ab9827060a03da071e4",
       "sourceName": "lib/forge-std/src/StdJson.sol",
       "solcConfig": {
@@ -3193,7 +3193,7 @@
       }
     },
     "lib/forge-std/src/Test.sol": {
-      "lastModificationDate": 1671227130302,
+      "lastModificationDate": 1680882474400,
       "contentHash": "6cab65c53a9548c2428a10697fd06dd1",
       "sourceName": "lib/forge-std/src/Test.sol",
       "solcConfig": {
@@ -3249,7 +3249,7 @@
       }
     },
     "lib/forge-std/src/Vm.sol": {
-      "lastModificationDate": 1671227130302,
+      "lastModificationDate": 1680882474400,
       "contentHash": "bd4bde818b3c57b21e0601277b1d2dac",
       "sourceName": "lib/forge-std/src/Vm.sol",
       "solcConfig": {
@@ -3289,7 +3289,7 @@
       }
     },
     "lib/forge-std/src/console.sol": {
-      "lastModificationDate": 1671227130302,
+      "lastModificationDate": 1680882474400,
       "contentHash": "100b8a33b917da1147740d7ab8b0ded3",
       "sourceName": "lib/forge-std/src/console.sol",
       "solcConfig": {
@@ -3329,7 +3329,7 @@
       }
     },
     "lib/forge-std/src/console2.sol": {
-      "lastModificationDate": 1671227130305,
+      "lastModificationDate": 1680882474400,
       "contentHash": "5df91f8e93efbfcccf68973dc1b74a70",
       "sourceName": "lib/forge-std/src/console2.sol",
       "solcConfig": {
@@ -3369,7 +3369,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/access/AccessControl.sol": {
-      "lastModificationDate": 1671227130313,
+      "lastModificationDate": 1680882474409,
       "contentHash": "bf161670e02cae699c719703be7ea955",
       "sourceName": "lib/openzeppelin-contracts/contracts/access/AccessControl.sol",
       "solcConfig": {
@@ -3416,7 +3416,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol": {
-      "lastModificationDate": 1671227130313,
+      "lastModificationDate": 1680882474409,
       "contentHash": "b6d9b165dc57e9ad8153bdca05c783a4",
       "sourceName": "lib/openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol",
       "solcConfig": {
@@ -3466,7 +3466,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol": {
-      "lastModificationDate": 1671227130313,
+      "lastModificationDate": 1680882474409,
       "contentHash": "57c84298234411cea19c7c284d86be8b",
       "sourceName": "lib/openzeppelin-contracts/contracts/access/IAccessControl.sol",
       "solcConfig": {
@@ -3506,7 +3506,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol": {
-      "lastModificationDate": 1671227130313,
+      "lastModificationDate": 1680882474409,
       "contentHash": "4e71cc90682e109e999ce2bd329f6572",
       "sourceName": "lib/openzeppelin-contracts/contracts/access/IAccessControlEnumerable.sol",
       "solcConfig": {
@@ -3548,7 +3548,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1671227130313,
+      "lastModificationDate": 1680882474409,
       "contentHash": "e436cea06129be2c73cda4b1acc848b5",
       "sourceName": "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -3590,7 +3590,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol": {
-      "lastModificationDate": 1671227130331,
+      "lastModificationDate": 1680882474424,
       "contentHash": "40b3d81a836d50ff47e03893dcaaf204",
       "sourceName": "lib/openzeppelin-contracts/contracts/proxy/Proxy.sol",
       "solcConfig": {
@@ -3630,7 +3630,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol": {
-      "lastModificationDate": 1671227130331,
+      "lastModificationDate": 1680882474424,
       "contentHash": "dc771bc7882c2e541f7eca5371139630",
       "sourceName": "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
       "solcConfig": {
@@ -3672,7 +3672,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1671227130333,
+      "lastModificationDate": 1680882474426,
       "contentHash": "92cc1aad41bdb18ca20f6e03f461de7d",
       "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
@@ -3716,7 +3716,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1671227130333,
+      "lastModificationDate": 1680882474426,
       "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
       "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -3756,7 +3756,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1671227130334,
+      "lastModificationDate": 1680882474427,
       "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
       "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
@@ -3798,7 +3798,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol": {
-      "lastModificationDate": 1671227130334,
+      "lastModificationDate": 1680882474427,
       "contentHash": "fb77f144244b9ab12533aa6ce85ef8c5",
       "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
       "solcConfig": {
@@ -3838,7 +3838,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol": {
-      "lastModificationDate": 1671227130334,
+      "lastModificationDate": 1680882474427,
       "contentHash": "c9167a97231512d4d7a3e7a4e32f1285",
       "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
       "solcConfig": {
@@ -3882,7 +3882,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol": {
-      "lastModificationDate": 1671227130339,
+      "lastModificationDate": 1680882474429,
       "contentHash": "77b3ed5863d62e92c912c2f1450e5deb",
       "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777.sol",
       "solcConfig": {
@@ -3922,7 +3922,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol": {
-      "lastModificationDate": 1671227130339,
+      "lastModificationDate": 1680882474429,
       "contentHash": "268af1696d7a83a7e78a1a8f5ba1c685",
       "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Recipient.sol",
       "solcConfig": {
@@ -3962,7 +3962,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol": {
-      "lastModificationDate": 1671227130339,
+      "lastModificationDate": 1680882474429,
       "contentHash": "7c1ce5bc5bc5f57fe7106ba767063e08",
       "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC777/IERC777Sender.sol",
       "solcConfig": {
@@ -4002,7 +4002,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
-      "lastModificationDate": 1671227130339,
+      "lastModificationDate": 1680882474430,
       "contentHash": "1ded8fed2186fa6599c2aeb962009262",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/Address.sol",
       "solcConfig": {
@@ -4042,7 +4042,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
-      "lastModificationDate": 1671227130339,
+      "lastModificationDate": 1680882474430,
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/Context.sol",
       "solcConfig": {
@@ -4082,7 +4082,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/Strings.sol": {
-      "lastModificationDate": 1671227130340,
+      "lastModificationDate": 1680882474430,
       "contentHash": "a0c595fbbddc5c8b4f45c5f496ad90ff",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/Strings.sol",
       "solcConfig": {
@@ -4124,7 +4124,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1671227130341,
+      "lastModificationDate": 1680882474431,
       "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
@@ -4166,7 +4166,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1671227130341,
+      "lastModificationDate": 1680882474432,
       "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
@@ -4206,7 +4206,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol": {
-      "lastModificationDate": 1671227130341,
+      "lastModificationDate": 1680882474432,
       "contentHash": "d0257e86fc71ac993d663297b8d69361",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/introspection/IERC1820Registry.sol",
       "solcConfig": {
@@ -4246,7 +4246,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/math/Math.sol": {
-      "lastModificationDate": 1671227130341,
+      "lastModificationDate": 1680882474432,
       "contentHash": "44d60ce5beebff2e3958a41e4cfdb984",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/math/Math.sol",
       "solcConfig": {
@@ -4286,7 +4286,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol": {
-      "lastModificationDate": 1671227130341,
+      "lastModificationDate": 1680882474432,
       "contentHash": "eab579be35d146d4b8bee7a95723863f",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol",
       "solcConfig": {
@@ -4326,7 +4326,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol": {
-      "lastModificationDate": 1671227130341,
+      "lastModificationDate": 1680882474432,
       "contentHash": "2337f0279507b5edf14a07067adf0d05",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
       "solcConfig": {
@@ -4366,7 +4366,7 @@
       }
     },
     "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol": {
-      "lastModificationDate": 1671227130342,
+      "lastModificationDate": 1680882474433,
       "contentHash": "57ef0c1fa9b58bf4e09f973b36e650ab",
       "sourceName": "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol",
       "solcConfig": {
@@ -4406,8 +4406,8 @@
       }
     },
     "src/MoneyRouter.sol": {
-      "lastModificationDate": 1671229519405,
-      "contentHash": "b7f1505ff843d10f9dd2819deaf51e7d",
+      "lastModificationDate": 1680882474457,
+      "contentHash": "112a050dde54c2cc300d164a63bd5eba",
       "sourceName": "src/MoneyRouter.sol",
       "solcConfig": {
         "settings": {
@@ -4462,7 +4462,7 @@
       }
     },
     "test/MoneyRouter.t.sol": {
-      "lastModificationDate": 1671229533259,
+      "lastModificationDate": 1680882474457,
       "contentHash": "7247671fc48f4c8c5cf6d2c345fbaeec",
       "sourceName": "test/MoneyRouter.t.sol",
       "solcConfig": {
