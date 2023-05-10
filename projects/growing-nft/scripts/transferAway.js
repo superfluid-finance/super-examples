@@ -14,7 +14,7 @@ async function main() {
 
     let flower = await hre.ethers.getContractAt( flowerABI.abi, deployedContracts.flower.address );
     
-    let signerFlowerTokenId = await flower.flowerOwned(signer.address));
+    let signerFlowerTokenId = await flower.flowerOwned(signer.address);
 
 
     // if you don't have an NFT, say and stop
