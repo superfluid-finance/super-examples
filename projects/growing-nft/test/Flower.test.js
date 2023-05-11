@@ -89,7 +89,8 @@ before(async function () {
             "ipfs://QmYUXy3JjoCjx1Fji71v9pPAWs3kAdrhBtUvVJw6m89g4A/plant2.json",
             "ipfs://QmYUXy3JjoCjx1Fji71v9pPAWs3kAdrhBtUvVJw6m89g4A/plant3.json"
         ],
-        daix.address
+        daix.address,
+        sf.settings.config.hostAddress
     )
     await flower.deployed()
 })
