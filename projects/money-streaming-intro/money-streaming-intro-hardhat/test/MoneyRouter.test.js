@@ -19,6 +19,7 @@ let account2
 const thousandEther = ethers.utils.parseEther("10000")
 
 before(async function () {
+    
     // get hardhat accounts
     [owner, account1, account2] = await ethers.getSigners();
     sfDeployer = await deployTestFramework();

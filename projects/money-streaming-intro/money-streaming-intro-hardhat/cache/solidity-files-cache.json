@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/contracts/MoneyRouter.sol": {
-      "lastModificationDate": 1680882474458,
-      "contentHash": "a00f53f0ee7e9b9dbb5e19afde5cfa8d",
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/contracts/MoneyRouter.sol": {
+      "lastModificationDate": 1683831358094,
+      "contentHash": "4f1c9c48f31c731a8e584fd553c33020",
       "sourceName": "contracts/MoneyRouter.sol",
       "solcConfig": {
         "version": "0.8.14",
@@ -39,8 +39,47 @@
         "MoneyRouter"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol": {
-      "lastModificationDate": 1680882954802,
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol": {
+      "lastModificationDate": 1683813375603,
+      "contentHash": "0c86e0e3f51e35daf4d0927725367c4a",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/superfluid/ISuperfluid.sol",
+        "../interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "../interfaces/agreements/IInstantDistributionAgreementV1.sol"
+      ],
+      "versionPragmas": [
+        ">= 0.8.0"
+      ],
+      "artifacts": [
+        "SuperTokenV1Library"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol": {
+      "lastModificationDate": 1683813375563,
       "contentHash": "923d8bee2334395f7ad909b8e98e07e9",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
       "solcConfig": {
@@ -85,10 +124,10 @@
         "ISuperfluid"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol": {
-      "lastModificationDate": 1680882954832,
-      "contentHash": "e085b997d367140ccf777fbec59bc9ea",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol": {
+      "lastModificationDate": 1683813375541,
+      "contentHash": "253f76f0473cf1297607b03447c4b53e",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -113,62 +152,20 @@
         }
       },
       "imports": [
-        "../interfaces/superfluid/ISuperfluid.sol",
-        "../interfaces/agreements/IConstantFlowAgreementV1.sol",
-        "../interfaces/agreements/IInstantDistributionAgreementV1.sol"
-      ],
-      "versionPragmas": [
-        ">= 0.8.0"
-      ],
-      "artifacts": [
-        "SuperTokenV1Library"
-      ]
-    },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol": {
-      "lastModificationDate": 1680882954803,
-      "contentHash": "013ebf846bf7079b1aaee07a4bd5dd7e",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
-      "solcConfig": {
-        "version": "0.8.14",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ISuperfluid.sol",
-        "./ISuperfluidToken.sol",
-        "../tokens/TokenInfo.sol",
-        "@openzeppelin/contracts/token/ERC777/IERC777.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+        "../superfluid/ISuperAgreement.sol",
+        "../superfluid/ISuperfluidToken.sol"
       ],
       "versionPragmas": [
         ">= 0.8.4"
       ],
       "artifacts": [
-        "ISuperToken"
+        "IConstantFlowAgreementV1"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol": {
-      "lastModificationDate": 1680882954803,
-      "contentHash": "449ec5f0a35b1c86a9fd5b8bb0d3bd90",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol": {
+      "lastModificationDate": 1683813375542,
+      "contentHash": "60042f78e0fa54a8547790c391ab27c1",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -193,92 +190,18 @@
         }
       },
       "imports": [
-        "./ISuperToken.sol",
-        "../tokens/ERC20WithTokenInfo.sol"
+        "../superfluid/ISuperAgreement.sol",
+        "../superfluid/ISuperfluidToken.sol"
       ],
       "versionPragmas": [
         ">= 0.8.4"
       ],
       "artifacts": [
-        "ISuperTokenFactory"
+        "IInstantDistributionAgreementV1"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol": {
-      "lastModificationDate": 1680882954802,
-      "contentHash": "095cd6cdf7df13a739649f8917862cb0",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
-      "solcConfig": {
-        "version": "0.8.14",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ISuperAgreement.sol"
-      ],
-      "versionPragmas": [
-        ">= 0.8.4"
-      ],
-      "artifacts": [
-        "ISuperfluidToken"
-      ]
-    },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol": {
-      "lastModificationDate": 1680882954802,
-      "contentHash": "3b1a28352fc3ab7b2659bc3ab3c7bb92",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
-      "solcConfig": {
-        "version": "0.8.14",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ISuperToken.sol"
-      ],
-      "versionPragmas": [
-        ">= 0.8.4"
-      ],
-      "artifacts": [
-        "ISuperApp"
-      ]
-    },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol": {
-      "lastModificationDate": 1680882954802,
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol": {
+      "lastModificationDate": 1683813375563,
       "contentHash": "f39a1c0568c38958f3c5c80b6fb1603c",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
       "solcConfig": {
@@ -317,8 +240,8 @@
         "ISuperfluidGovernance"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol": {
-      "lastModificationDate": 1680882954801,
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol": {
+      "lastModificationDate": 1683813375562,
       "contentHash": "49d978f06d4edeb5125a7152d6897e69",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
       "solcConfig": {
@@ -354,9 +277,83 @@
         "ISuperAgreement"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol": {
-      "lastModificationDate": 1680882954798,
-      "contentHash": "c118221a38683150d24833eadb9c8b37",
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol": {
+      "lastModificationDate": 1683813375564,
+      "contentHash": "095cd6cdf7df13a739649f8917862cb0",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperAgreement.sol"
+      ],
+      "versionPragmas": [
+        ">= 0.8.4"
+      ],
+      "artifacts": [
+        "ISuperfluidToken"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol": {
+      "lastModificationDate": 1683813375562,
+      "contentHash": "5057526e30b17d708447527cb6485d6f",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperToken.sol"
+      ],
+      "versionPragmas": [
+        ">= 0.8.4"
+      ],
+      "artifacts": [
+        "ISuperApp"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol": {
+      "lastModificationDate": 1683813375530,
+      "contentHash": "d6576f4814532782fca96c1bd26db384",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
       "solcConfig": {
         "version": "0.8.14",
@@ -393,10 +390,10 @@
         "SuperfluidGovernanceConfigs"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol": {
-      "lastModificationDate": 1680882954837,
-      "contentHash": "6326411b7eb3d451fdffd149d821a7cb",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol": {
+      "lastModificationDate": 1683813375565,
+      "contentHash": "e49894d55d38f583c443600c4c99f8c6",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -420,18 +417,21 @@
           }
         }
       },
-      "imports": [],
+      "imports": [
+        "./ISuperToken.sol",
+        "../tokens/ERC20WithTokenInfo.sol"
+      ],
       "versionPragmas": [
         ">= 0.8.4"
       ],
       "artifacts": [
-        "TokenInfo"
+        "ISuperTokenFactory"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1680882952071,
-      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol": {
+      "lastModificationDate": 1683813375564,
+      "contentHash": "61469de32bea27827319123c4a735dab",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -455,16 +455,26 @@
           }
         }
       },
-      "imports": [],
+      "imports": [
+        "./ISuperfluid.sol",
+        "./ISuperfluidToken.sol",
+        "../tokens/TokenInfo.sol",
+        "@openzeppelin/contracts/token/ERC777/IERC777.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "./IConstantOutflowNFT.sol",
+        "./IConstantInflowNFT.sol",
+        "./IPoolAdminNFT.sol",
+        "./IPoolMemberNFT.sol"
+      ],
       "versionPragmas": [
-        "^0.8.0"
+        ">= 0.8.4"
       ],
       "artifacts": [
-        "IERC20"
+        "ISuperToken"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@openzeppelin/contracts/token/ERC777/IERC777.sol": {
-      "lastModificationDate": 1680882952120,
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@openzeppelin/contracts/token/ERC777/IERC777.sol": {
+      "lastModificationDate": 1683813364591,
       "contentHash": "35b56a00de0fb16f9e6a8d7464d31b0b",
       "sourceName": "@openzeppelin/contracts/token/ERC777/IERC777.sol",
       "solcConfig": {
@@ -498,8 +508,371 @@
         "IERC777"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol": {
-      "lastModificationDate": 1680882954798,
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1683813364588,
+      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol": {
+      "lastModificationDate": 1683813375626,
+      "contentHash": "6326411b7eb3d451fdffd149d821a7cb",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">= 0.8.4"
+      ],
+      "artifacts": [
+        "TokenInfo"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IConstantOutflowNFT.sol": {
+      "lastModificationDate": 1683813375542,
+      "contentHash": "d68a7fe94e12d2277eedd4054fc59a6b",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IConstantOutflowNFT.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperfluidToken.sol",
+        "./IFlowNFTBase.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "IConstantOutflowNFT"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IConstantInflowNFT.sol": {
+      "lastModificationDate": 1683813375541,
+      "contentHash": "50e7ff0bc0e1235a45c52de2eae4df43",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IConstantInflowNFT.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperToken.sol",
+        "./IFlowNFTBase.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "IConstantInflowNFT"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IPoolAdminNFT.sol": {
+      "lastModificationDate": 1683813375543,
+      "contentHash": "6a5ee5e8ea02a99a32948c3ba8f750a8",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IPoolAdminNFT.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "IPoolAdminNFT"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IPoolMemberNFT.sol": {
+      "lastModificationDate": 1683813375543,
+      "contentHash": "71ace2838abebb46b969d54537e4458d",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IPoolMemberNFT.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "IPoolMemberNFT"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IFlowNFTBase.sol": {
+      "lastModificationDate": 1683813375542,
+      "contentHash": "10e54273c5b21ca0b88131952611bf26",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IFlowNFTBase.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+        "./ISuperToken.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "IFlowNFTBase"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
+      "lastModificationDate": 1683813364590,
+      "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Metadata"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+      "lastModificationDate": 1683813364590,
+      "contentHash": "eb7e61db29f31d88b3c1cef1b063d338",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+      "lastModificationDate": 1683813364587,
+      "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
+      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC165"
+      ]
+    },
+    "/Users/sam_flamini/devPortfolio/fix-example-tests/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol": {
+      "lastModificationDate": 1683813375531,
       "contentHash": "77968d7579793b9f87e33dec4d917f44",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
       "solcConfig": {
@@ -534,82 +907,6 @@
       ],
       "artifacts": [
         "ERC20WithTokenInfo"
-      ]
-    },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol": {
-      "lastModificationDate": 1680882954799,
-      "contentHash": "253f76f0473cf1297607b03447c4b53e",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
-      "solcConfig": {
-        "version": "0.8.14",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../superfluid/ISuperAgreement.sol",
-        "../superfluid/ISuperfluidToken.sol"
-      ],
-      "versionPragmas": [
-        ">= 0.8.4"
-      ],
-      "artifacts": [
-        "IConstantFlowAgreementV1"
-      ]
-    },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/money-streaming-intro/money-streaming-intro-hardhat/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol": {
-      "lastModificationDate": 1680882954800,
-      "contentHash": "60042f78e0fa54a8547790c391ab27c1",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
-      "solcConfig": {
-        "version": "0.8.14",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../superfluid/ISuperAgreement.sol",
-        "../superfluid/ISuperfluidToken.sol"
-      ],
-      "versionPragmas": [
-        ">= 0.8.4"
-      ],
-      "artifacts": [
-        "IInstantDistributionAgreementV1"
       ]
     }
   }
