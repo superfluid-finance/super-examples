@@ -19,6 +19,7 @@ let account2
 const thousandEther = ethers.utils.parseEther("10000")
 
 before(async function () {
+    
     // get hardhat accounts
     [owner, account1, account2] = await ethers.getSigners();
     sfDeployer = await deployTestFramework();
@@ -26,7 +27,7 @@ before(async function () {
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
     // deploy the framework locally
-    contractsFramework = await sfDeployer.getFramework()
+    contractsFramework = await sfDeployer.frameworkDeployer.getFramework()
 
     // initialize framework
     sf = await Framework.create({
@@ -37,7 +38,7 @@ before(async function () {
     })
 
     // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
-    tokenDeployment = await sfDeployer.deployWrapperSuperToken(
+    tokenDeployment = await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
         "Fake DAI Token",
         "fDAI",
         18,

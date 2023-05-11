@@ -26,7 +26,7 @@ before(async function () {
     
     sfDeployer = await deployTestFramework();
     // deploy the framework locally
-    contractsFramework = await sfDeployer.getFramework();
+    contractsFramework = await sfDeployer.frameworkDeployer.getFramework();
 
     // initialize framework
     sf = await Framework.create({
@@ -37,7 +37,7 @@ before(async function () {
     });
     
     // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
-    tokenDeployment = await sfDeployer.deployWrapperSuperToken(
+    tokenDeployment = await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
         "Fake DAI Token",
         "fDAI",
         18,
