@@ -1,6 +1,7 @@
 // Deploys Flower NFT contract
 
 const hre = require("hardhat");
+const deployedContracts = require("./utils/deployedContracts");
 
 async function main() {
 
@@ -16,7 +17,8 @@ async function main() {
       hre.ethers.utils.parseEther("10"),
       hre.ethers.utils.parseEther("10")
     ],
-    "0x875Fa8aCaAe9fD57De678f9e52dF324B6279FF58" // WATERx address
+    deployedContracts.superWater.address, // WATERx address
+    "0xEB796bdb90fFA0f28255275e16936D25d3418603" // Superfluid Host address
   );
 
   await flower.deployed();

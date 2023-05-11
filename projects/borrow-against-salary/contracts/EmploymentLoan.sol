@@ -1,26 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import {ISuperfluid, ISuperToken, ISuperApp, ISuperAgreement, SuperAppDefinitions} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
 import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
-import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-
-import {SuperAppBase} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
+import {SuperAppBaseCFA} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol";
 
 /// @title Employment Loan Contract
 /// @author Superfluid
-contract EmploymentLoan is SuperAppBase {
+contract EmploymentLoan is SuperAppBaseCFA {
 
     /// @notice Importing the SuperToken Library to make working with streams easy.
     using SuperTokenV1Library for ISuperToken;
     // ---------------------------------------------------------------------------------------------
     // STORAGE & IMMUTABLES
-
-    /// @notice Constant used for initialization of CFAv1 and for callback modifiers.
-    bytes32 public constant CFA_ID =
-        keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1");
 
     /// @notice Total amount borrowed.
     int256 public immutable borrowAmount;
@@ -36,9 +30,6 @@ contract EmploymentLoan is SuperAppBase {
 
     /// @notice Borrower address.
     address public immutable borrower;
-
-    /// @notice Superfluid Host.
-    ISuperfluid public immutable host;
 
     /// @notice Token being borrowed.
     ISuperToken public immutable borrowToken;
@@ -58,32 +49,10 @@ contract EmploymentLoan is SuperAppBase {
     // ---------------------------------------------------------------------------------------------
     //MODIFIERS
 
-    /// @dev checks that only the CFA is being used
-    ///@param agreementClass the address of the agreement which triggers callback
-    function _isCFAv1(address agreementClass) private view returns (bool) {
-        return ISuperAgreement(agreementClass).agreementType() == CFA_ID;
-    }
-
     ///@dev checks that only the borrowToken is used when sending streams into this contract
     ///@param superToken the token being streamed into the contract
-    function _isSameToken(ISuperToken superToken) private view returns (bool) {
+    function isAcceptedSuperToken(ISuperToken superToken) public view override returns (bool) {
         return address(superToken) == address(borrowToken);
-    }
-
-    ///@dev ensures that only the host can call functions where this is implemented
-    //for usage in callbacks only
-    modifier onlyHost() {
-        require(msg.sender == address(host), "Only host can call callback");
-        _;
-    }
-
-    ///@dev used to implement _isSameToken and _isCFAv1 modifiers
-    ///@param superToken used when sending streams into contract to trigger callbacks
-    ///@param agreementClass the address of the agreement which triggers callback
-    modifier onlyExpected(ISuperToken superToken, address agreementClass) {
-        require(_isSameToken(superToken), "RedirectAll: not accepted token");
-        require(_isCFAv1(agreementClass), "RedirectAll: only CFAv1 supported");
-        _;
     }
 
     constructor(
@@ -94,6 +63,11 @@ contract EmploymentLoan is SuperAppBase {
         address _borrower, // borrower address
         ISuperToken _borrowToken, // super token to be used in borrowing
         ISuperfluid _host // address of SF host
+    ) SuperAppBaseCFA(
+        _host,
+        true,
+        true,
+        true
     ) {
         borrowAmount = _borrowAmount;
         interestRate = _interestRate;
@@ -104,24 +78,6 @@ contract EmploymentLoan is SuperAppBase {
         host = _host;
         loanOpen = false;
         isClosed = false;
-
-        // CFA lib initialization
-        IConstantFlowAgreementV1 cfa = IConstantFlowAgreementV1(
-            address(_host.getAgreementClass(CFA_ID))
-        );
-
-
-        // super app registration
-        uint256 configWord = SuperAppDefinitions.APP_LEVEL_FINAL |
-            SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
-            SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
-            SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP;
-
-        // Using host.registerApp because we are using testnet. If you would like to deploy to
-        // mainnet, this process will work differently. You'll need to use registerAppWithKey or
-        // registerAppByFactory.
-        // https://github.com/superfluid-finance/protocol-monorepo/wiki/Super-App-White-listing-Guide
-        _host.registerApp(configWord);
     }
 
     /// @dev Calculates the flow rate to be sent to the lender to repay the stream.
@@ -377,54 +333,47 @@ contract EmploymentLoan is SuperAppBase {
     // ---------------------------------------------------------------------------------------------
     // SUPER APP CALLBACKS
 
-    /// @dev super app after agreement created callback
-    function afterAgreementCreated(
-        ISuperToken _superToken,
-        address _agreementClass,
-        bytes32, // _agreementId,
-        bytes calldata, /*_agreementData*/
-        bytes calldata, // _cbdata,
+    /// @dev super app after flow created callback
+    function onFlowCreated(
+        ISuperToken /*superToken*/,
+        address /*sender*/,
         bytes calldata ctx
     )
-        external
+        internal
         override
-        onlyExpected(_superToken, _agreementClass)
-        onlyHost
         returns (bytes memory newCtx)
     {
         newCtx = _updateOutflow(ctx);
     }
 
-    /// @dev super app after agreement updated callback
-    function afterAgreementUpdated(
-        ISuperToken _superToken,
-        address _agreementClass,
-        bytes32, // _agreementId,
-        bytes calldata, /*_agreementData*/
-        bytes calldata, // _cbdata,
+    /// @dev super app after flow updated callback
+    function onFlowUpdated(
+        ISuperToken /*superToken*/,
+        address /*sender*/,
+        int96 /*previousFlowRate*/,
+        uint256 /*lastUpdated*/,
         bytes calldata ctx
     )
-        external
+        internal
         override
-        onlyExpected(_superToken, _agreementClass)
-        onlyHost
         returns (bytes memory newCtx)
     {
         newCtx = _updateOutflow(ctx);
     }
 
-    /// @dev super app after agreement terminated callback
-    function afterAgreementTerminated(
-        ISuperToken _superToken,
-        address _agreementClass,
-        bytes32, // _agreementId,
-        bytes calldata, /*_agreementData*/
-        bytes calldata, // _cbdata,
+    /// @dev super app after flow deleted callback
+    function onFlowDeleted(
+        ISuperToken /*superToken*/,
+        address /*sender*/,
+        address /*receiver*/,
+        int96 /*previousFlowRate*/,
+        uint256 /*lastUpdated*/,
         bytes calldata ctx
-    ) external override onlyHost returns (bytes memory newCtx) {
-        if (!_isCFAv1(_agreementClass) || !_isSameToken(_superToken)) {
-            return ctx;
-        }
-        return _updateOutflow(ctx);
+    ) 
+        internal
+        override 
+        returns (bytes memory newCtx)
+    {
+        newCtx = _updateOutflow(ctx);
     }
 }

@@ -28,8 +28,6 @@ before(async function () {
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
     // deploy the framework locally
-    console.log("sfDeployer", sfDeployer.frameworkDeployer)
-
     contractsFramework = await sfDeployer.frameworkDeployer.getFramework()
 
     //initialize the superfluid framework...put custom and web3 only bc we are usinghardhat locally
@@ -79,7 +77,6 @@ before(async function () {
         "TradeableCashflow",
         "TCF",
         sf.settings.config.hostAddress,
-        sf.settings.config.cfaV1Address,
         daix.address
     )
 })

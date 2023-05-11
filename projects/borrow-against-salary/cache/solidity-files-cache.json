@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/contracts/EmploymentLoan.sol": {
-      "lastModificationDate": 1680882474265,
-      "contentHash": "b82464d1469305773a015d96e00f0c44",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\contracts\\EmploymentLoan.sol": {
+      "lastModificationDate": 1683836703927,
+      "contentHash": "8feac0cbf4bf69f79000262d7e467a53",
       "sourceName": "contracts/EmploymentLoan.sol",
       "solcConfig": {
         "version": "0.8.14",
@@ -31,8 +31,7 @@
       "imports": [
         "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
         "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
-        "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
-        "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol"
+        "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol"
       ],
       "versionPragmas": [
         ">=0.8.0"
@@ -41,10 +40,10 @@
         "EmploymentLoan"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol": {
-      "lastModificationDate": 1680883778583,
-      "contentHash": "cea469dcdeaa6e0992d7beea10698a81",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\apps\\SuperTokenV1Library.sol": {
+      "lastModificationDate": 1683730720817,
+      "contentHash": "0c86e0e3f51e35daf4d0927725367c4a",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -69,55 +68,57 @@
         }
       },
       "imports": [
-        "../superfluid/ISuperAgreement.sol",
-        "../superfluid/ISuperfluidToken.sol"
-      ],
-      "versionPragmas": [
-        ">= 0.8.4"
-      ],
-      "artifacts": [
-        "IConstantFlowAgreementV1"
-      ]
-    },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol": {
-      "lastModificationDate": 1680883778588,
-      "contentHash": "4ad2109d5a8003eca4b9a792c863bc87",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol",
-      "solcConfig": {
-        "version": "0.8.14",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/superfluid/ISuperfluid.sol"
+        "../interfaces/superfluid/ISuperfluid.sol",
+        "../interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "../interfaces/agreements/IInstantDistributionAgreementV1.sol"
       ],
       "versionPragmas": [
         ">= 0.8.0"
       ],
       "artifacts": [
-        "SuperAppBase"
+        "SuperTokenV1Library"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol": {
-      "lastModificationDate": 1680883778586,
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\apps\\SuperAppBaseCFA.sol": {
+      "lastModificationDate": 1683818648884,
+      "contentHash": "afb644e24e5605d732849c1ee2d83312",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/superfluid/ISuperfluid.sol",
+        "./SuperTokenV1Library.sol"
+      ],
+      "versionPragmas": [
+        ">= 0.8.0"
+      ],
+      "artifacts": [
+        "SuperAppBaseCFA"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\ISuperfluid.sol": {
+      "lastModificationDate": 1683730720732,
       "contentHash": "923d8bee2334395f7ad909b8e98e07e9",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
       "solcConfig": {
@@ -162,10 +163,10 @@
         "ISuperfluid"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol": {
-      "lastModificationDate": 1680883778594,
-      "contentHash": "e085b997d367140ccf777fbec59bc9ea",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\agreements\\IConstantFlowAgreementV1.sol": {
+      "lastModificationDate": 1683730720677,
+      "contentHash": "253f76f0473cf1297607b03447c4b53e",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -190,58 +191,20 @@
         }
       },
       "imports": [
-        "../interfaces/superfluid/ISuperfluid.sol",
-        "../interfaces/agreements/IConstantFlowAgreementV1.sol",
-        "../interfaces/agreements/IInstantDistributionAgreementV1.sol"
-      ],
-      "versionPragmas": [
-        ">= 0.8.0"
-      ],
-      "artifacts": [
-        "SuperTokenV1Library"
-      ]
-    },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol": {
-      "lastModificationDate": 1680883778585,
-      "contentHash": "49d978f06d4edeb5125a7152d6897e69",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
-      "solcConfig": {
-        "version": "0.8.14",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ISuperfluidToken.sol"
+        "../superfluid/ISuperAgreement.sol",
+        "../superfluid/ISuperfluidToken.sol"
       ],
       "versionPragmas": [
         ">= 0.8.4"
       ],
       "artifacts": [
-        "ISuperAgreement"
+        "IConstantFlowAgreementV1"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol": {
-      "lastModificationDate": 1680883778586,
-      "contentHash": "095cd6cdf7df13a739649f8917862cb0",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\agreements\\IInstantDistributionAgreementV1.sol": {
+      "lastModificationDate": 1683730720693,
+      "contentHash": "60042f78e0fa54a8547790c391ab27c1",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -266,17 +229,18 @@
         }
       },
       "imports": [
-        "./ISuperAgreement.sol"
+        "../superfluid/ISuperAgreement.sol",
+        "../superfluid/ISuperfluidToken.sol"
       ],
       "versionPragmas": [
         ">= 0.8.4"
       ],
       "artifacts": [
-        "ISuperfluidToken"
+        "IInstantDistributionAgreementV1"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol": {
-      "lastModificationDate": 1680883778586,
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\ISuperfluidGovernance.sol": {
+      "lastModificationDate": 1683730720736,
       "contentHash": "f39a1c0568c38958f3c5c80b6fb1603c",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
       "solcConfig": {
@@ -315,10 +279,10 @@
         "ISuperfluidGovernance"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol": {
-      "lastModificationDate": 1680883778585,
-      "contentHash": "3b1a28352fc3ab7b2659bc3ab3c7bb92",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@openzeppelin\\contracts\\token\\ERC777\\IERC777.sol": {
+      "lastModificationDate": 1682695447813,
+      "contentHash": "35b56a00de0fb16f9e6a8d7464d31b0b",
+      "sourceName": "@openzeppelin/contracts/token/ERC777/IERC777.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -342,19 +306,17 @@
           }
         }
       },
-      "imports": [
-        "./ISuperToken.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
-        ">= 0.8.4"
+        "^0.8.0"
       ],
       "artifacts": [
-        "ISuperApp"
+        "IERC777"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol": {
-      "lastModificationDate": 1680883778587,
-      "contentHash": "696c26b081a411e4cf4ca86e40f85da8",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\ISuperTokenFactory.sol": {
+      "lastModificationDate": 1683730720758,
+      "contentHash": "e49894d55d38f583c443600c4c99f8c6",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
       "solcConfig": {
         "version": "0.8.14",
@@ -390,9 +352,46 @@
         "ISuperTokenFactory"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol": {
-      "lastModificationDate": 1680883778586,
-      "contentHash": "1cd744c6b588e15a3c8b3115874340d6",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\ISuperfluidToken.sol": {
+      "lastModificationDate": 1683730720752,
+      "contentHash": "095cd6cdf7df13a739649f8917862cb0",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperAgreement.sol"
+      ],
+      "versionPragmas": [
+        ">= 0.8.4"
+      ],
+      "artifacts": [
+        "ISuperfluidToken"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\ISuperToken.sol": {
+      "lastModificationDate": 1683730720758,
+      "contentHash": "61469de32bea27827319123c4a735dab",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
       "solcConfig": {
         "version": "0.8.14",
@@ -422,7 +421,11 @@
         "./ISuperfluidToken.sol",
         "../tokens/TokenInfo.sol",
         "@openzeppelin/contracts/token/ERC777/IERC777.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "./IConstantOutflowNFT.sol",
+        "./IConstantInflowNFT.sol",
+        "./IPoolAdminNFT.sol",
+        "./IPoolMemberNFT.sol"
       ],
       "versionPragmas": [
         ">= 0.8.4"
@@ -431,8 +434,8 @@
         "ISuperToken"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol": {
-      "lastModificationDate": 1680883778595,
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\tokens\\TokenInfo.sol": {
+      "lastModificationDate": 1683730720838,
       "contentHash": "6326411b7eb3d451fdffd149d821a7cb",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
       "solcConfig": {
@@ -466,9 +469,118 @@
         "TokenInfo"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol": {
-      "lastModificationDate": 1680883778580,
-      "contentHash": "ad96cb2b9ffeb68f41a448eb2aeb58e3",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1682695447813,
+      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\ISuperApp.sol": {
+      "lastModificationDate": 1683730720726,
+      "contentHash": "5057526e30b17d708447527cb6485d6f",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperToken.sol"
+      ],
+      "versionPragmas": [
+        ">= 0.8.4"
+      ],
+      "artifacts": [
+        "ISuperApp"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\ISuperAgreement.sol": {
+      "lastModificationDate": 1683730720718,
+      "contentHash": "49d978f06d4edeb5125a7152d6897e69",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperfluidToken.sol"
+      ],
+      "versionPragmas": [
+        ">= 0.8.4"
+      ],
+      "artifacts": [
+        "ISuperAgreement"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\Definitions.sol": {
+      "lastModificationDate": 1683730720644,
+      "contentHash": "d6576f4814532782fca96c1bd26db384",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
       "solcConfig": {
         "version": "0.8.14",
@@ -505,10 +617,48 @@
         "SuperfluidGovernanceConfigs"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1680883776367,
-      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\IConstantOutflowNFT.sol": {
+      "lastModificationDate": 1683730720677,
+      "contentHash": "d68a7fe94e12d2277eedd4054fc59a6b",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IConstantOutflowNFT.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperfluidToken.sol",
+        "./IFlowNFTBase.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "IConstantOutflowNFT"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\IPoolAdminNFT.sol": {
+      "lastModificationDate": 1683730720702,
+      "contentHash": "6a5ee5e8ea02a99a32948c3ba8f750a8",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IPoolAdminNFT.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -534,16 +684,54 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        ">=0.8.4"
       ],
       "artifacts": [
-        "IERC20"
+        "IPoolAdminNFT"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@openzeppelin/contracts/token/ERC777/IERC777.sol": {
-      "lastModificationDate": 1680883776421,
-      "contentHash": "35b56a00de0fb16f9e6a8d7464d31b0b",
-      "sourceName": "@openzeppelin/contracts/token/ERC777/IERC777.sol",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\IConstantInflowNFT.sol": {
+      "lastModificationDate": 1683730720677,
+      "contentHash": "50e7ff0bc0e1235a45c52de2eae4df43",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IConstantInflowNFT.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperToken.sol",
+        "./IFlowNFTBase.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "IConstantInflowNFT"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\IPoolMemberNFT.sol": {
+      "lastModificationDate": 1683730720702,
+      "contentHash": "71ace2838abebb46b969d54537e4458d",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IPoolMemberNFT.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -569,14 +757,14 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        ">=0.8.4"
       ],
       "artifacts": [
-        "IERC777"
+        "IPoolMemberNFT"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol": {
-      "lastModificationDate": 1680883778581,
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\tokens\\ERC20WithTokenInfo.sol": {
+      "lastModificationDate": 1683730720654,
       "contentHash": "77968d7579793b9f87e33dec4d917f44",
       "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
       "solcConfig": {
@@ -613,10 +801,10 @@
         "ERC20WithTokenInfo"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol": {
-      "lastModificationDate": 1680883778584,
-      "contentHash": "60042f78e0fa54a8547790c391ab27c1",
-      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol",
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@superfluid-finance\\ethereum-contracts\\contracts\\interfaces\\superfluid\\IFlowNFTBase.sol": {
+      "lastModificationDate": 1683730720687,
+      "contentHash": "10e54273c5b21ca0b88131952611bf26",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/IFlowNFTBase.sol",
       "solcConfig": {
         "version": "0.8.14",
         "settings": {
@@ -641,18 +829,127 @@
         }
       },
       "imports": [
-        "../superfluid/ISuperAgreement.sol",
-        "../superfluid/ISuperfluidToken.sol"
+        "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+        "./ISuperToken.sol"
       ],
       "versionPragmas": [
-        ">= 0.8.4"
+        ">=0.8.4"
       ],
       "artifacts": [
-        "IInstantDistributionAgreementV1"
+        "IFlowNFTBase"
       ]
     },
-    "/Users/sam_flamini/devPortfolio/fix-money-router-foundry/super-examples/projects/borrow-against-salary/contracts/LoanFactory.sol": {
-      "lastModificationDate": 1680882474266,
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@openzeppelin\\contracts\\token\\ERC721\\extensions\\IERC721Metadata.sol": {
+      "lastModificationDate": 1682695447813,
+      "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Metadata"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@openzeppelin\\contracts\\token\\ERC721\\IERC721.sol": {
+      "lastModificationDate": 1682695447813,
+      "contentHash": "eb7e61db29f31d88b3c1cef1b063d338",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\node_modules\\@openzeppelin\\contracts\\utils\\introspection\\IERC165.sol": {
+      "lastModificationDate": 1682695447797,
+      "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
+      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
+      "solcConfig": {
+        "version": "0.8.14",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC165"
+      ]
+    },
+    "C:\\Users\\Joel Jesudason\\Documents\\Superfluid\\main\\super-examples\\projects\\borrow-against-salary\\contracts\\LoanFactory.sol": {
+      "lastModificationDate": 1683813275785,
       "contentHash": "8cb81f60a1a10e3635d86eb606c68233",
       "sourceName": "contracts/LoanFactory.sol",
       "solcConfig": {

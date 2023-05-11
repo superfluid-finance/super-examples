@@ -1,16 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.14;
 
-import {ISuperfluid, ISuperToken, ISuperApp, ISuperAgreement, SuperAppDefinitions} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
 import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
-import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-
-import {SuperAppBase} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
-
-/// @dev Constant Flow Agreement registration key, used to get the address from the host.
-bytes32 constant CFA_ID = keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1");
+import {SuperAppBaseCFA} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol";
 
 /// @dev Thrown when the receiver is the zero adress.
 error InvalidReceiver();
@@ -18,28 +13,14 @@ error InvalidReceiver();
 /// @dev Thrown when receiver is also a super app.
 error ReceiverIsSuperApp();
 
-/// @dev Thrown when the callback caller is not the host.
-error Unauthorized();
-
-/// @dev Thrown when the token being streamed to this contract is invalid
-error InvalidToken();
-
-/// @dev Thrown when the agreement is other than the Constant Flow Agreement V1
-error InvalidAgreement();
-
 /// @title Stream Redirection Contract
 /// @notice This contract is a registered super app, meaning it receives
-contract RedirectAll is SuperAppBase {
+contract RedirectAll is SuperAppBaseCFA {
     // SuperToken library setup
     using SuperTokenV1Library for ISuperToken;
 
     /// @dev Super token that may be streamed to this contract
     ISuperToken internal immutable _acceptedToken;
-
-    ///@notice this is the superfluid host which is used in modifiers
-    ISuperfluid immutable host;
-
-    IConstantFlowAgreementV1 immutable cfa;
 
     /// @notice This is the current receiver that all streams will be redirected to.
     address public _receiver;
@@ -47,28 +28,18 @@ contract RedirectAll is SuperAppBase {
     constructor(
         ISuperToken acceptedToken,
         ISuperfluid _host,
-        IConstantFlowAgreementV1 _cfa,
         address receiver
+    ) SuperAppBaseCFA(
+      _host,
+      true,
+      true,
+      true  
     ) {
-        assert(address(_host) != address(0));
-        assert(address(acceptedToken) != address(0));
-        assert(receiver != address(0));
 
         _acceptedToken = acceptedToken;
-        _receiver = receiver;
         host = _host;
-        cfa = _cfa;
+        _receiver = receiver;
 
-
-        // Registers Super App, indicating it is the final level (it cannot stream to other super
-        // apps), and that the `before*` callbacks should not be called on this contract, only the
-        // `after*` callbacks.
-        host.registerApp(
-            SuperAppDefinitions.APP_LEVEL_FINAL |
-                SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
-                SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
-                SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP
-        );
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -81,15 +52,10 @@ contract RedirectAll is SuperAppBase {
     // ---------------------------------------------------------------------------------------------
     // MODIFIERS
 
-    modifier onlyHost() {
-        if (msg.sender != address(host)) revert Unauthorized();
-        _;
-    }
-
-    modifier onlyExpected(ISuperToken superToken, address agreementClass) {
-        if (superToken != _acceptedToken) revert InvalidToken();
-        if (agreementClass != address(cfa)) revert InvalidAgreement();
-        _;
+    ///@dev checks that only the borrowToken is used when sending streams into this contract
+    ///@param superToken the token being streamed into the contract
+    function isAcceptedSuperToken(ISuperToken superToken) public view override returns (bool) {
+        return superToken == _acceptedToken;
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -121,54 +87,45 @@ contract RedirectAll is SuperAppBase {
     // ---------------------------------------------------------------------------------------------
     // SUPER APP CALLBACKS
 
-    function afterAgreementCreated(
-        ISuperToken _superToken,
-        address _agreementClass,
-        bytes32, //_agreementId
-        bytes calldata, //_agreementData
-        bytes calldata, //_cbdata
-        bytes calldata _ctx
+    function onFlowCreated(
+        ISuperToken /*superToken*/,
+        address /*sender*/,
+        bytes calldata ctx
     )
-        external
+        internal
         override
-        onlyExpected(_superToken, _agreementClass)
-        onlyHost
-        returns (bytes memory newCtx)
+        returns (bytes memory)
     {
-        return _updateOutflow(_ctx);
+        return _updateOutflow(ctx);
     }
 
-    function afterAgreementUpdated(
-        ISuperToken _superToken,
-        address _agreementClass,
-        bytes32, // _agreementId,
-        bytes calldata, // _agreementData,
-        bytes calldata, // _cbdata,
-        bytes calldata _ctx
+    function onFlowUpdated(
+        ISuperToken /*superToken*/,
+        address /*sender*/,
+        int96 /*previousFlowRate*/,
+        uint256 /*lastUpdated*/,
+        bytes calldata ctx
     )
-        external
+        internal
         override
-        onlyExpected(_superToken, _agreementClass)
-        onlyHost
-        returns (bytes memory newCtx)
+        returns (bytes memory)
     {
-        return _updateOutflow(_ctx);
+        return _updateOutflow(ctx);
     }
 
-    function afterAgreementTerminated(
-        ISuperToken _superToken,
-        address _agreementClass,
-        bytes32, // _agreementId,
-        bytes calldata, // _agreementData
-        bytes calldata, // _cbdata,
-        bytes calldata _ctx
-    ) external override onlyHost returns (bytes memory newCtx) {
-        // According to the app basic law, we should never revert in a termination callback
-        if (_superToken != _acceptedToken || _agreementClass != address(cfa)) {
-            return _ctx;
-        }
-
-        return _updateOutflow(_ctx);
+    function onFlowDeleted(
+        ISuperToken /*superToken*/,
+        address /*sender*/,
+        address /*receiver*/,
+        int96 /*previousFlowRate*/,
+        uint256 /*lastUpdated*/,
+        bytes calldata ctx
+    ) 
+        internal
+        override
+        returns (bytes memory newCtx) 
+    {
+        return _updateOutflow(ctx);
     }
 
     // ---------------------------------------------------------------------------------------------
