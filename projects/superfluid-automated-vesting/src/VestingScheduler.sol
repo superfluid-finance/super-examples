@@ -20,6 +20,7 @@ contract VestingScheduler is IVestingScheduler, SuperAppBase {
     uint32 public constant MIN_VESTING_DURATION = 7 days;
     uint32 public constant START_DATE_VALID_AFTER = 3 days;
     uint32 public constant END_DATE_VALID_BEFORE = 1 days;
+//string memory registrationKey = "";
 
     constructor(ISuperfluid host, string memory registrationKey) {
         cfaV1 = CFAv1Library.InitData(
