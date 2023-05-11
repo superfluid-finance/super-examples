@@ -11,6 +11,11 @@ import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/cont
 
 error Unauthorized();
 
+// OVERVIEW
+// This contract allows you to send money streams into and out of it.
+// You can call 'createFlowIntoContract' to create a stream into the contract. But before you do this you must grant the contract an approval to create streams on your behalf with the Superfluid access control list. More on this here: https://docs.superfluid.finance/superfluid/developers/constant-flow-agreement-cfa/cfa-access-control-list-acl/acl-features
+// Once the contract has tokens, you can call createFlowFromContract to create a stream from the contract to another address.
+
 contract MoneyRouter {
     // ---------------------------------------------------------------------------------------------
     // STATE VARIABLES
