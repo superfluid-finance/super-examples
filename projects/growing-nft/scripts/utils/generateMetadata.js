@@ -7,7 +7,7 @@ const path = require('path');
 async function main() {
 
     // 1. Pin the plant-stages folder (see: resources/img/plant-stages) with your progressive flower images on Pinata 
-    // 2. Paste the base link of the folder for the baseIpfs variable
+    // 2. Paste the base link of the folder for the baseIpfs variable (replace below)
     const baseIpfs = "ipfs://Qmd4Sp9oSFMzFEuzwUQdihFMd3sYKQpoy4D8ckYd6bPVeC/"
 
     // Get array of image file names

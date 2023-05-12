@@ -30,7 +30,7 @@ before(async function () {
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
     // deploy the framework locally
-    contractsFramework = await sfDeployer.getFramework()
+    contractsFramework = await sfDeployer.frameworkDeployer.getFramework()
 
     // initialize framework
     sf = await Framework.create({
@@ -41,7 +41,7 @@ before(async function () {
     })
 
     // DEPLOYING DAI and DAI wrapper super token
-    tokenDeployment = await sfDeployer.deployWrapperSuperToken(
+    tokenDeployment = await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
         "Fake DAI Token",
         "fDAI",
         18,
@@ -89,7 +89,8 @@ before(async function () {
             "ipfs://QmYUXy3JjoCjx1Fji71v9pPAWs3kAdrhBtUvVJw6m89g4A/plant2.json",
             "ipfs://QmYUXy3JjoCjx1Fji71v9pPAWs3kAdrhBtUvVJw6m89g4A/plant3.json"
         ],
-        daix.address
+        daix.address,
+        sf.settings.config.hostAddress
     )
     await flower.deployed()
 })

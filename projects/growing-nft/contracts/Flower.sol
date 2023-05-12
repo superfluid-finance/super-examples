@@ -3,20 +3,13 @@ pragma solidity 0.8.19;
 
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
-import { SuperAppBase } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
-import { ISuperfluid, ISuperToken, SuperAppDefinitions } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import { IConstantFlowAgreementV1 } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
+import { SuperAppBaseCFA } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol";
+import { ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
-/// @dev Constant Flow Agreement registration key, used to get the address from the host.
-bytes32 constant CFA_ID = keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1");
+contract Flower is ERC721, SuperAppBaseCFA {
 
-contract Flower is ERC721, SuperAppBase {
-
-    error InvalidToken();
-    error InvalidAgreement();
     error InvalidTransfer();
     error InvalidStages();
-    error Unauthorized();
 
     /// @dev super token library
     using SuperTokenV1Library for ISuperToken;
@@ -51,10 +44,16 @@ contract Flower is ERC721, SuperAppBase {
     constructor(
         uint256[] memory _stageAmounts,
         string[] memory _stageMetadatas,
-        ISuperToken _acceptedToken
+        ISuperToken _acceptedToken,
+        ISuperfluid host
     ) ERC721(
         "Flower",
         "FLWR"  
+    ) SuperAppBaseCFA(
+        host,
+        true,
+        true,
+        true
     ) {
 
         // need stage amounts for every stage except the final one
@@ -64,126 +63,89 @@ contract Flower is ERC721, SuperAppBase {
         stageMetadatas = _stageMetadatas;
         acceptedToken = _acceptedToken;
 
-        // Registers Super App, indicating it is the final level (it cannot stream to other super
-        // apps), and that the `before*` callbacks should not be called on this contract, only the
-        // `after*` callbacks.
-        ISuperfluid(acceptedToken.getHost()).registerApp(
-            SuperAppDefinitions.APP_LEVEL_FINAL |
-            SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
-            SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
-            SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP
-        );
-
     }
 
     // ---------------------------------------------------------------------------------------------
     // MODIFIERS
 
-    /// @dev Revert if callback msg.sender is not Superfluid Host
-    modifier onlyHost() {
-        //can call getHost() on super token to get address of host
-        if ( msg.sender != acceptedToken.getHost()) revert Unauthorized();
-        _;
-    }
-
-    /// @dev Revert if Super Token triggering callback is not accepted one
-    ///      and if Super Agreement is not Constant Flow Agreement (streaming)
-    /// @param superToken Super Token that's triggering callback
-    /// @param agreementClass Super Agreement involved in callback
-    modifier onlyExpected(ISuperToken superToken, address agreementClass) {
-        if ( superToken != acceptedToken ) revert InvalidToken();
-        IConstantFlowAgreementV1 _cfa = IConstantFlowAgreementV1(address(ISuperfluid(acceptedToken.getHost()).getAgreementClass(CFA_ID)));
-        if ( agreementClass != address(_cfa) ) revert InvalidAgreement();
-        _;
+    ///@dev checks that only the acceptedToken is used when sending streams into this contract
+    ///@param superToken the token being streamed into the contract
+    function isAcceptedSuperToken(ISuperToken superToken) public view override returns (bool) {
+        return superToken == acceptedToken;
     }
 
     // ---------------------------------------------------------------------------------------------
     // CALLBACK LOGIC
 
-    function afterAgreementCreated(
-        ISuperToken superToken,
-        address agreementClass,
-        bytes32 /*agreementId*/,
-        bytes calldata agreementData,
-        bytes calldata /*cbdata*/,
+    function onFlowCreated(
+        ISuperToken /*superToken*/,
+        address sender,
         bytes calldata ctx
     )
-        external
+        internal
         override
-        onlyHost()
-        onlyExpected(superToken, agreementClass)
         returns (bytes memory /*newCtx*/)
     {
-        // get flow sender
-        (address flowSender, ) = abi.decode(agreementData, (address, address));
 
         // if the flow sender DOESN'T already have a flower
-        if ( flowerOwned[flowSender] == 0 ) {
+        if ( flowerOwned[sender] == 0 ) {
 
             tokenId++;
 
             // mint flower to flow sender
-            _mint(flowSender, tokenId);
+            _mint(sender, tokenId);
 
             // set the token id for the flow sender
-            flowerOwned[flowSender] = tokenId;
+            flowerOwned[sender] = tokenId;
 
         }
 
         // update the info for the flow sender's flower
-        flowerUpdate(flowSender, tokenId);   
+        flowerUpdate(sender, tokenId);   
 
         return ctx;  
+
     }
 
-    function afterAgreementUpdated(
-        ISuperToken superToken,
-        address agreementClass,
-        bytes32 /*agreementId*/,
-        bytes calldata agreementData,
-        bytes calldata /*cbdata*/,
+    function onFlowUpdated(
+        ISuperToken /*superToken*/,
+        address sender,
+        int96 /*previousFlowRate*/,
+        uint256 /*lastUpdated*/,
         bytes calldata ctx
     )
-        external
+        internal
         override
-        onlyHost()
-        onlyExpected(superToken, agreementClass)
         returns (bytes memory /*newCtx*/)
     {
-        // get flow sender
-        (address flowSender, ) = abi.decode(agreementData, (address, address));
 
         // get token id for flow sender
-        uint256 tokenId = flowerOwned[flowSender];
+        uint256 tokenId = flowerOwned[sender];
 
         // update the info for the flow sender's flower
-        flowerUpdate(flowSender, tokenId); 
+        flowerUpdate(sender, tokenId); 
 
         return ctx;
     }
 
-    function afterAgreementTerminated(
-        ISuperToken superToken,
-        address agreementClass,
-        bytes32 /*agreementId*/,
-        bytes calldata agreementData,
-        bytes calldata /*cbdata*/,
+    function onFlowDeleted(
+        ISuperToken /*superToken*/,
+        address sender,
+        address /*receiver*/,
+        int96 /*previousFlowRate*/,
+        uint256 /*lastUpdated*/,
         bytes calldata ctx
     )
-        external
+        internal
         override
-        onlyHost()
-        onlyExpected(superToken, agreementClass)
         returns (bytes memory /*newCtx*/)
     {
-        // get flow sender
-        (address flowSender, ) = abi.decode(agreementData, (address, address));
 
         // get token id for flow sender
-        uint256 tokenId = flowerOwned[flowSender];
+        uint256 tokenId = flowerOwned[sender];
 
         // update the info for the flow sender's flower
-        flowerUpdate(flowSender, tokenId); 
+        flowerUpdate(sender, tokenId); 
 
         return ctx;
     }

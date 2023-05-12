@@ -57,7 +57,7 @@ describe("SimpleACLCloseResolver", () => {
 
     before(async () => {
         const sfDeployer = await deployTestFramework();
-        const contractsFramework = await sfDeployer.getFramework();
+        const contractsFramework = await sfDeployer.frameworkDeployer.getFramework();
         const signers = await ethers.getSigners();
         Sender = signers[0];
         Receiver = signers[1];
@@ -73,7 +73,7 @@ describe("SimpleACLCloseResolver", () => {
             protocolReleaseVersion: "test",
         });
 
-        const tokenDeployment = await sfDeployer.deployWrapperSuperToken(
+        const tokenDeployment = await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
             "Fake DAI Token",
             "fDAI",
             18,

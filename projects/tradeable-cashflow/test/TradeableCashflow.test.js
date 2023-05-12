@@ -28,7 +28,7 @@ before(async function () {
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
     // deploy the framework locally
-    contractsFramework = await sfDeployer.getFramework()
+    contractsFramework = await sfDeployer.frameworkDeployer.getFramework()
 
     //initialize the superfluid framework...put custom and web3 only bc we are usinghardhat locally
     sf = await Framework.create({
@@ -39,7 +39,7 @@ before(async function () {
     })
 
     // DEPLOYING DAI and DAI wrapper super token
-    tokenDeployment = await sfDeployer.deployWrapperSuperToken(
+    tokenDeployment = await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
         "Fake DAI Token",
         "fDAI",
         18,
@@ -77,7 +77,6 @@ before(async function () {
         "TradeableCashflow",
         "TCF",
         sf.settings.config.hostAddress,
-        sf.settings.config.cfaV1Address,
         daix.address
     )
 })
