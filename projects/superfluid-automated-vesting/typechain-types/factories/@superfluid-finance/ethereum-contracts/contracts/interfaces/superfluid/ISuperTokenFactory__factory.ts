@@ -22,11 +22,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "SUPER_TOKEN_FACTORY_NON_UPGRADEABLE_IS_DEPRECATED",
-    type: "error",
-  },
-  {
-    inputs: [],
     name: "SUPER_TOKEN_FACTORY_ONLY_HOST",
     type: "error",
   },

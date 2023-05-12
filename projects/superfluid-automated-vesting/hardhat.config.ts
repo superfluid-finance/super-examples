@@ -4,12 +4,11 @@ import "hardhat-prettier";
 import "@nomiclabs/hardhat-etherscan";
 import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from "hardhat/builtin-tasks/task-names";
 import "@typechain/hardhat";
-import "@nomiclabs/hardhat-web3";
+import "@nomiclabs/hardhat-web3"; 
 import { verifyContract } from "./scripts/verify";
 import "@nomiclabs/hardhat-ethers";
 import "solidity-coverage";
 import "hardhat-gas-reporter";
-
 
 try {
     dotenvConfig();
@@ -19,10 +18,7 @@ try {
     );
 }
 
-
 const INFURA_ID =   process.env.INFURA_ID;
-
-
 // hardhat mixin magic: https://github.com/NomicFoundation/hardhat/issues/2306#issuecomment-1039452928
 // filter out foundry test codes
 subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS).setAction(
@@ -36,10 +32,11 @@ subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS).setAction(
  * Verify Contract task
  * Run: `npx verifyContract --address <ADDRESS> --args '["0x..", 123, "0x..."]'`
  */
-
+ 
 const config: HardhatUserConfig = {
     solidity: {
-        version: "0.8.17",
+        version: "0.8.16",
+        
         settings: {
             optimizer: {
                 enabled: true,
@@ -50,19 +47,11 @@ const config: HardhatUserConfig = {
     networks: {
         localhost: {
             url: "http://0.0.0.0:8545/",
-            chainId: 1337,
+            chainId: 31337,
         },
-        hardhat: {
-            allowUnlimitedContractSize: true,
-            forking: {
-              url: `https://goerli.infura.io/v3/${INFURA_ID}`,
-              blockNumber: 7850256
-              },  
-              chainId: 1337
-          },
-        mumbai : {
-            url: `${process.env.MUMBAI_URL}` ,
-            chainId: 80001,
+        goerli: {
+            url: process.env.PROVIDER_URL || "",
+            chainId: 5,
             accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
         },
     },
@@ -74,7 +63,8 @@ const config: HardhatUserConfig = {
     },
     gasReporter: {
         enabled: (process.env.REPORT_GAS) ? true : false
-    }
+    },
+    
 };
 
 export default config;

@@ -33,7 +33,6 @@ export interface IConstantFlowAgreementV1Interface extends utils.Interface {
     "authorizeFlowOperatorWithFullControl(address,address,bytes)": FunctionFragment;
     "createFlow(address,address,int96,bytes)": FunctionFragment;
     "createFlowByOperator(address,address,address,int96,bytes)": FunctionFragment;
-    "decreaseFlowRateAllowance(address,address,int96,bytes)": FunctionFragment;
     "deleteFlow(address,address,address,bytes)": FunctionFragment;
     "deleteFlowByOperator(address,address,address,bytes)": FunctionFragment;
     "getAccountFlowInfo(address,address)": FunctionFragment;
@@ -44,7 +43,6 @@ export interface IConstantFlowAgreementV1Interface extends utils.Interface {
     "getFlowOperatorDataByID(address,bytes32)": FunctionFragment;
     "getMaximumFlowRateFromDeposit(address,uint256)": FunctionFragment;
     "getNetFlow(address,address)": FunctionFragment;
-    "increaseFlowRateAllowance(address,address,int96,bytes)": FunctionFragment;
     "isPatricianPeriod(address,address,uint256)": FunctionFragment;
     "isPatricianPeriodNow(address,address)": FunctionFragment;
     "realtimeBalanceOf(address,address,uint256)": FunctionFragment;
@@ -60,7 +58,6 @@ export interface IConstantFlowAgreementV1Interface extends utils.Interface {
       | "authorizeFlowOperatorWithFullControl"
       | "createFlow"
       | "createFlowByOperator"
-      | "decreaseFlowRateAllowance"
       | "deleteFlow"
       | "deleteFlowByOperator"
       | "getAccountFlowInfo"
@@ -71,7 +68,6 @@ export interface IConstantFlowAgreementV1Interface extends utils.Interface {
       | "getFlowOperatorDataByID"
       | "getMaximumFlowRateFromDeposit"
       | "getNetFlow"
-      | "increaseFlowRateAllowance"
       | "isPatricianPeriod"
       | "isPatricianPeriodNow"
       | "realtimeBalanceOf"
@@ -106,15 +102,6 @@ export interface IConstantFlowAgreementV1Interface extends utils.Interface {
     functionFragment: "createFlowByOperator",
     values: [
       PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "decreaseFlowRateAllowance",
-    values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -178,15 +165,6 @@ export interface IConstantFlowAgreementV1Interface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getNetFlow",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "increaseFlowRateAllowance",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
   ): string;
   encodeFunctionData(
     functionFragment: "isPatricianPeriod",
@@ -259,10 +237,6 @@ export interface IConstantFlowAgreementV1Interface extends utils.Interface {
     functionFragment: "createFlowByOperator",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "decreaseFlowRateAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "deleteFlow", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "deleteFlowByOperator",
@@ -294,10 +268,6 @@ export interface IConstantFlowAgreementV1Interface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getNetFlow", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseFlowRateAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "isPatricianPeriod",
     data: BytesLike
@@ -431,14 +401,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    decreaseFlowRateAllowance(
-      token: PromiseOrValue<string>,
-      flowOperator: PromiseOrValue<string>,
-      subtractedFlowRateAllowance: PromiseOrValue<BigNumberish>,
-      ctx: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     deleteFlow(
       token: PromiseOrValue<string>,
       sender: PromiseOrValue<string>,
@@ -537,14 +499,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { flowRate: BigNumber }>;
 
-    increaseFlowRateAllowance(
-      token: PromiseOrValue<string>,
-      flowOperator: PromiseOrValue<string>,
-      addedFlowRateAllowance: PromiseOrValue<BigNumberish>,
-      ctx: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     isPatricianPeriod(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
@@ -632,14 +586,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
     sender: PromiseOrValue<string>,
     receiver: PromiseOrValue<string>,
     flowRate: PromiseOrValue<BigNumberish>,
-    ctx: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  decreaseFlowRateAllowance(
-    token: PromiseOrValue<string>,
-    flowOperator: PromiseOrValue<string>,
-    subtractedFlowRateAllowance: PromiseOrValue<BigNumberish>,
     ctx: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -739,14 +685,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  increaseFlowRateAllowance(
-    token: PromiseOrValue<string>,
-    flowOperator: PromiseOrValue<string>,
-    addedFlowRateAllowance: PromiseOrValue<BigNumberish>,
-    ctx: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   isPatricianPeriod(
     token: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
@@ -834,14 +772,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
       sender: PromiseOrValue<string>,
       receiver: PromiseOrValue<string>,
       flowRate: PromiseOrValue<BigNumberish>,
-      ctx: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    decreaseFlowRateAllowance(
-      token: PromiseOrValue<string>,
-      flowOperator: PromiseOrValue<string>,
-      subtractedFlowRateAllowance: PromiseOrValue<BigNumberish>,
       ctx: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
@@ -943,14 +873,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    increaseFlowRateAllowance(
-      token: PromiseOrValue<string>,
-      flowOperator: PromiseOrValue<string>,
-      addedFlowRateAllowance: PromiseOrValue<BigNumberish>,
-      ctx: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     isPatricianPeriod(
       token: PromiseOrValue<string>,
@@ -1089,14 +1011,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    decreaseFlowRateAllowance(
-      token: PromiseOrValue<string>,
-      flowOperator: PromiseOrValue<string>,
-      subtractedFlowRateAllowance: PromiseOrValue<BigNumberish>,
-      ctx: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     deleteFlow(
       token: PromiseOrValue<string>,
       sender: PromiseOrValue<string>,
@@ -1161,14 +1075,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    increaseFlowRateAllowance(
-      token: PromiseOrValue<string>,
-      flowOperator: PromiseOrValue<string>,
-      addedFlowRateAllowance: PromiseOrValue<BigNumberish>,
-      ctx: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isPatricianPeriod(
@@ -1252,14 +1158,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    decreaseFlowRateAllowance(
-      token: PromiseOrValue<string>,
-      flowOperator: PromiseOrValue<string>,
-      subtractedFlowRateAllowance: PromiseOrValue<BigNumberish>,
-      ctx: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     deleteFlow(
       token: PromiseOrValue<string>,
       sender: PromiseOrValue<string>,
@@ -1324,14 +1222,6 @@ export interface IConstantFlowAgreementV1 extends BaseContract {
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    increaseFlowRateAllowance(
-      token: PromiseOrValue<string>,
-      flowOperator: PromiseOrValue<string>,
-      addedFlowRateAllowance: PromiseOrValue<BigNumberish>,
-      ctx: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isPatricianPeriod(

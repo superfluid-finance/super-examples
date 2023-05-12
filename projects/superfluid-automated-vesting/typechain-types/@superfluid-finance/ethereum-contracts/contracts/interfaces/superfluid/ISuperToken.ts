@@ -56,9 +56,7 @@ export interface ISuperTokenInterface extends utils.Interface {
     "makeLiquidationPayoutsV2(bytes32,bytes,address,bool,address,uint256,int256)": FunctionFragment;
     "name()": FunctionFragment;
     "operationApprove(address,address,uint256)": FunctionFragment;
-    "operationDecreaseAllowance(address,address,uint256)": FunctionFragment;
     "operationDowngrade(address,uint256)": FunctionFragment;
-    "operationIncreaseAllowance(address,address,uint256)": FunctionFragment;
     "operationSend(address,address,uint256,bytes)": FunctionFragment;
     "operationTransferFrom(address,address,address,uint256)": FunctionFragment;
     "operationUpgrade(address,uint256)": FunctionFragment;
@@ -114,9 +112,7 @@ export interface ISuperTokenInterface extends utils.Interface {
       | "makeLiquidationPayoutsV2"
       | "name"
       | "operationApprove"
-      | "operationDecreaseAllowance"
       | "operationDowngrade"
-      | "operationIncreaseAllowance"
       | "operationSend"
       | "operationTransferFrom"
       | "operationUpgrade"
@@ -269,24 +265,8 @@ export interface ISuperTokenInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "operationDecreaseAllowance",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
     functionFragment: "operationDowngrade",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "operationIncreaseAllowance",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
   ): string;
   encodeFunctionData(
     functionFragment: "operationSend",
@@ -518,15 +498,7 @@ export interface ISuperTokenInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "operationDecreaseAllowance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "operationDowngrade",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "operationIncreaseAllowance",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1037,23 +1009,9 @@ export interface ISuperToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    operationDecreaseAllowance(
-      account: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     operationDowngrade(
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    operationIncreaseAllowance(
-      account: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1364,23 +1322,9 @@ export interface ISuperToken extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  operationDecreaseAllowance(
-    account: PromiseOrValue<string>,
-    spender: PromiseOrValue<string>,
-    subtractedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   operationDowngrade(
     account: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  operationIncreaseAllowance(
-    account: PromiseOrValue<string>,
-    spender: PromiseOrValue<string>,
-    addedValue: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1691,23 +1635,9 @@ export interface ISuperToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    operationDecreaseAllowance(
-      account: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     operationDowngrade(
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    operationIncreaseAllowance(
-      account: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2232,23 +2162,9 @@ export interface ISuperToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    operationDecreaseAllowance(
-      account: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     operationDowngrade(
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    operationIncreaseAllowance(
-      account: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2549,23 +2465,9 @@ export interface ISuperToken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    operationDecreaseAllowance(
-      account: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     operationDowngrade(
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    operationIncreaseAllowance(
-      account: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

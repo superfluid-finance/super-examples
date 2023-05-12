@@ -1,10 +1,6 @@
 [profile.default]
 out = 'out'
 libs = ['lib']
-remappings = [
-    'forge-std/=lib/forge-std/src/',
-    '@superfluid-finance/=node_modules/@superfluid-finance',
-    '@openzeppelin/=node_modules/@openzeppelin']
-gas_reports = ["SimpleACLCloseResolver"]
+solc_version="0.8.16"
 
 # See more config options https://github.com/gakonst/foundry/tree/master/config

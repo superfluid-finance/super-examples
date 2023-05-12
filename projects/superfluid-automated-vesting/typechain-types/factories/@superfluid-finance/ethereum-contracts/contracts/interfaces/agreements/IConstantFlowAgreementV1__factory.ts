@@ -339,40 +339,6 @@ const _abi = [
       },
       {
         internalType: "address",
-        name: "flowOperator",
-        type: "address",
-      },
-      {
-        internalType: "int96",
-        name: "subtractedFlowRateAllowance",
-        type: "int96",
-      },
-      {
-        internalType: "bytes",
-        name: "ctx",
-        type: "bytes",
-      },
-    ],
-    name: "decreaseFlowRateAllowance",
-    outputs: [
-      {
-        internalType: "bytes",
-        name: "newCtx",
-        type: "bytes",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "contract ISuperfluidToken",
-        name: "token",
-        type: "address",
-      },
-      {
-        internalType: "address",
         name: "sender",
         type: "address",
       },
@@ -692,40 +658,6 @@ const _abi = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "contract ISuperfluidToken",
-        name: "token",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "flowOperator",
-        type: "address",
-      },
-      {
-        internalType: "int96",
-        name: "addedFlowRateAllowance",
-        type: "int96",
-      },
-      {
-        internalType: "bytes",
-        name: "ctx",
-        type: "bytes",
-      },
-    ],
-    name: "increaseFlowRateAllowance",
-    outputs: [
-      {
-        internalType: "bytes",
-        name: "newCtx",
-        type: "bytes",
-      },
-    ],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {

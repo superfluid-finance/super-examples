@@ -1,8 +1,6 @@
-// SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
-
-import "hardhat/console.sol";
-
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity 0.8.16;
+ 
 import {AutomateTaskCreator} from './gelato/AutomateTaskCreator.sol';
 import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import "./gelato/Types.sol";
@@ -193,7 +191,7 @@ contract VestingAutomation is AutomateTaskCreator {
     ///@dev this function will receive native asset for gas payments
     ///note that this contract must have enough of the native asset tokens to pay for the gas fees of executing vesting tasks
     receive() external payable {
-        console.log("----- receive:", msg.value);
+       
     }
 
     ///@dev this function will allow the current contract owner to change ownership
