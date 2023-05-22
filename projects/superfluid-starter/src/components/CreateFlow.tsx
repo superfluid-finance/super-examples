@@ -6,7 +6,7 @@ import { CFAv1Forwarder__factory } from '@superfluid-finance/ethereum-contracts/
 import { useContractWrite, usePrepareContractWrite } from 'wagmi'
 import { client } from '../wagmi';
 
-//should pass token props from parent
+//specific to mumbai, but would be quite easy to make gen purpose
 export function CreateFlow( clientRpc: any ) {
     const { address } = useAccount()
     const [flowRate, setFlowRate] = useState<ethers.BigNumber>(ethers.BigNumber.from(0))
