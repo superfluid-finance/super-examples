@@ -1,0 +1,3 @@
+[submodule "superfluid-finance/protocol-monorepo"]] 
+  path = superfluid-finance/protocol-monorepo
+  url = git://superfluid-finance/protocol-monorepo.git

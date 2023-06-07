@@ -12,3 +12,8 @@
 	url = https://github.com/superfluid-finance/ethereum-contracts
 [submodule "/Users/sam_flamini/devPortfolio/tci-examples/super-examples/projects/money-streaming-intro/money-streaming-intro-foundry/lib/ethereum-contracts"]
 	branch = dev
+[submodule "projects/money-streaming-intro/money-streaming-intro-foundry/lib/protocol-monorepo"]
+	path = projects/money-streaming-intro/money-streaming-intro-foundry/lib/protocol-monorepo
+	url = https://github.com/superfluid-finance/protocol-monorepo
+[submodule "/Users/sam_flamini/devPortfolio/foundry_help/super-examples/projects/money-streaming-intro/money-streaming-intro-foundry/lib/protocol-monorepo"]
+	branch = dev
