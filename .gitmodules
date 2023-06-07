@@ -23,4 +23,4 @@
 	path = projects/money-streaming-intro/money-streaming-intro-foundry/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
 [submodule "/Users/sam_flamini/devPortfolio/foundry_help/super-examples/projects/money-streaming-intro/money-streaming-intro-foundry/lib/openzeppelin-contracts"]
-	branch = docs-v4.x
+	branch = release-v4.9
