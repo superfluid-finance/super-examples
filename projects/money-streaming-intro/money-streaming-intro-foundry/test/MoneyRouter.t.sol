@@ -6,16 +6,15 @@ import "forge-std/console.sol";
 import "ds-test/test.sol";
 
 import "../src/MoneyRouter.sol";
-import {ISuperfluid, ISuperToken, ISuperApp } from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import {IConstantFlowAgreementV1} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import {ERC1820RegistryCompiled} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
+import {ISuperfluid, ISuperToken, ISuperApp} from "ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {IConstantFlowAgreementV1} from "ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
+import {ERC1820RegistryCompiled} from "ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
 
-import {TestToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol";
-import {SuperfluidFrameworkDeployer, TestGovernance, Superfluid, ConstantFlowAgreementV1, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
-
+import {TestToken} from "ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol";
+import {SuperfluidFrameworkDeployer, Superfluid, IDAv1Library, SuperTokenFactory} from "ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
+import {TestGovernance, ConstantFlowAgreementV1, InstantDistributionAgreementV1} from "ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeploymentSteps.sol";
 
 contract MoneyRouterTest is Test {
-
     MoneyRouter public moneyRouter;
 
     ISuperfluid public host;
@@ -40,6 +39,7 @@ contract MoneyRouterTest is Test {
         vm.etch(ERC1820RegistryCompiled.at, ERC1820RegistryCompiled.bin);
 
         SuperfluidFrameworkDeployer sfd = new SuperfluidFrameworkDeployer();
+        sfd.deployTestFramework();
         sf = sfd.getFramework();
         account1 = vm.addr(1);
         account2 = vm.addr(2);

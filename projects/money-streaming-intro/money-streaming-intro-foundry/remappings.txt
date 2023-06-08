@@ -1,3 +1,5 @@
+@openzeppelin/=lib/openzeppelin-contracts/
 ds-test/=lib/forge-std/lib/ds-test/src/
+ethereum-contracts/=lib/ethereum-contracts/
 forge-std/=lib/forge-std/src/
-@openzeppelin/=lib/openzeppelin-contracts/contracts
+openzeppelin-contracts/=lib/openzeppelin-contracts/
