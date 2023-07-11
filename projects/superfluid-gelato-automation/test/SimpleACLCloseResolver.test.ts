@@ -73,7 +73,7 @@ describe("SimpleACLCloseResolver", () => {
             protocolReleaseVersion: "test",
         });
 
-        const tokenDeployment = await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
+        const tokenDeployment = await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
             "Fake DAI Token",
             "fDAI",
             18,

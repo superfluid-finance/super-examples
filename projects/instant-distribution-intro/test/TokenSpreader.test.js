@@ -43,7 +43,7 @@ before(async function () {
     //// DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
 
     // Deploy a fake erc20 test token
-    await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
+    await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
         "Fake DAI Token",
         "fDAI",
         18,

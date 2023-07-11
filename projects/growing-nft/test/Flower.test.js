@@ -41,7 +41,7 @@ before(async function () {
     })
 
     // DEPLOYING DAI and DAI wrapper super token
-    tokenDeployment = await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
+    tokenDeployment = await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
         "Fake DAI Token",
         "fDAI",
         18,

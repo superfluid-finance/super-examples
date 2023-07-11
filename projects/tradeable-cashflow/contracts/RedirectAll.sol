@@ -5,7 +5,7 @@ import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-
 
 import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
-import {SuperAppBaseCFA} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol";
+import {SuperAppBaseFlow} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseFlow.sol";
 
 /// @dev Thrown when the receiver is the zero adress.
 error InvalidReceiver();
@@ -15,7 +15,7 @@ error ReceiverIsSuperApp();
 
 /// @title Stream Redirection Contract
 /// @notice This contract is a registered super app, meaning it receives
-contract RedirectAll is SuperAppBaseCFA {
+contract RedirectAll is SuperAppBaseFlow {
     // SuperToken library setup
     using SuperTokenV1Library for ISuperToken;
 
@@ -29,7 +29,7 @@ contract RedirectAll is SuperAppBaseCFA {
         ISuperToken acceptedToken,
         ISuperfluid _host,
         address receiver
-    ) SuperAppBaseCFA(
+    ) SuperAppBaseFlow(
       _host,
       true,
       true,
