@@ -37,14 +37,15 @@ before(async function () {
         protocolReleaseVersion: "test"
     })
 
-    // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
-    tokenDeployment = await sfDeployer.superTokenDeployer.deployWrapperSuperToken(
+    // // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
+    tokenDeployment = await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
         "Fake DAI Token",
         "fDAI",
         18,
         ethers.utils.parseEther("100000000").toString()
-    )
+    );
 
+    // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
     daix = await sf.loadSuperToken("fDAIx")
     dai = new ethers.Contract(
         daix.underlyingToken.address,

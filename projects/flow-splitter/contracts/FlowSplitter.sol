@@ -5,10 +5,10 @@ pragma solidity 0.8.18;
 // import "hardhat/console.sol";
 
 import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
-import { SuperAppBaseCFA } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol";
+import { SuperAppBaseFlow } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseFlow.sol";
 import { ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
-contract FlowSplitter is SuperAppBaseCFA {
+contract FlowSplitter is SuperAppBaseFlow {
 
     using SuperTokenV1Library for ISuperToken;
 
@@ -31,7 +31,7 @@ contract FlowSplitter is SuperAppBaseCFA {
         int96 _sideReceiverPortion,
         ISuperToken _acceptedSuperToken,
         ISuperfluid _host
-    ) SuperAppBaseCFA (
+    ) SuperAppBaseFlow (
         _host,
         true,
         true,

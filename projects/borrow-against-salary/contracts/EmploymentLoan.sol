@@ -5,11 +5,11 @@ import {ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/
 
 import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
-import {SuperAppBaseCFA} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol";
+import {SuperAppBaseFlow} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseFlow.sol";
 
 /// @title Employment Loan Contract
 /// @author Superfluid
-contract EmploymentLoan is SuperAppBaseCFA {
+contract EmploymentLoan is SuperAppBaseFlow {
 
     /// @notice Importing the SuperToken Library to make working with streams easy.
     using SuperTokenV1Library for ISuperToken;
@@ -63,7 +63,7 @@ contract EmploymentLoan is SuperAppBaseCFA {
         address _borrower, // borrower address
         ISuperToken _borrowToken, // super token to be used in borrowing
         ISuperfluid _host // address of SF host
-    ) SuperAppBaseCFA(
+    ) SuperAppBaseFlow(
         _host,
         true,
         true,

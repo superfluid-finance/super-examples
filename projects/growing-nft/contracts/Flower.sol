@@ -3,10 +3,10 @@ pragma solidity 0.8.19;
 
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
-import { SuperAppBaseCFA } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseCFA.sol";
+import { SuperAppBaseFlow } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseFlow.sol";
 import { ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
-contract Flower is ERC721, SuperAppBaseCFA {
+contract Flower is ERC721, SuperAppBaseFlow {
 
     error InvalidTransfer();
     error InvalidStages();
@@ -49,7 +49,7 @@ contract Flower is ERC721, SuperAppBaseCFA {
     ) ERC721(
         "Flower",
         "FLWR"  
-    ) SuperAppBaseCFA(
+    ) SuperAppBaseFlow(
         host,
         true,
         true,
