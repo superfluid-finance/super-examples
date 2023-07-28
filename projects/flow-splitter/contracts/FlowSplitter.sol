@@ -96,7 +96,7 @@ contract FlowSplitter is SuperAppBaseFlow {
     /// @dev Only the creator should be able to call update split.
     /// @param newSideReceiverPortion_ the new portion of inflows to be redirected to SIDE_RECEIVER
     function updateSplit(int96 newSideReceiverPortion_) external {
-        if (newSideReceiverPortion_ <= 0 || newSideReceiverPortion_ == 1000) revert INVALID_PORTION();
+        if (newSideReceiverPortion_ <= 0 || newSideReceiverPortion_ >= 1000) revert INVALID_PORTION();
         if (msg.sender != CREATOR) revert NOT_CREATOR();
 
         sideReceiverPortion = newSideReceiverPortion_;
