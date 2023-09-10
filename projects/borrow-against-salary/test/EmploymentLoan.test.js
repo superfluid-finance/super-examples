@@ -1,13 +1,14 @@
 const { Framework } = require("@superfluid-finance/sdk-core")
-const { ethers , network} = require("hardhat")
+const { ethers, network } = require("hardhat")
 const { assert } = require("chai")
 const LoanArtifact = require("../artifacts/contracts/EmploymentLoan.sol/EmploymentLoan.json")
-const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
+const {
+    deployTestFramework
+} = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework")
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
-
-let contractsFramework;
-let sfDeployer;
+let contractsFramework
+let sfDeployer
 let sf
 let dai
 let daix
@@ -22,11 +23,11 @@ const alotOfEth = ethers.utils.parseEther("100000")
 
 before(async function () {
     //get accounts from hardhat
-    [admin, borrower, lender, employer] = await ethers.getSigners()
-    
-    sfDeployer = await deployTestFramework();
+    ;[admin, borrower, lender, employer] = await ethers.getSigners()
+
+    sfDeployer = await deployTestFramework()
     // deploy the framework locally
-    contractsFramework = await sfDeployer.frameworkDeployer.getFramework();
+    contractsFramework = await sfDeployer.frameworkDeployer.getFramework()
 
     // initialize framework
     sf = await Framework.create({
@@ -34,18 +35,23 @@ before(async function () {
         provider: admin.provider,
         resolverAddress: contractsFramework.resolver, // (empty)
         protocolReleaseVersion: "test"
-    });
-    
-    // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
-    tokenDeployment = await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
-        "Fake DAI Token",
-        "fDAI",
-        18,
-        ethers.utils.parseEther("100000000000000000000000").toString()
-    );
+    })
 
-    daix = await sf.loadSuperToken("fDAIx");
-    dai = new ethers.Contract(daix.underlyingToken.address, TestToken.abi, admin);
+    // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
+    tokenDeployment =
+        await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
+            "Fake DAI Token",
+            "fDAI",
+            18,
+            ethers.utils.parseEther("100000000000000000000000").toString()
+        )
+
+    daix = await sf.loadSuperToken("fDAIx")
+    dai = new ethers.Contract(
+        daix.underlyingToken.address,
+        TestToken.abi,
+        admin
+    )
 
     const LoanFactory = await ethers.getContractFactory("LoanFactory", admin)
     loanFactory = await LoanFactory.deploy()
@@ -74,8 +80,8 @@ before(async function () {
 beforeEach(async function () {
     await dai.mint(admin.address, alotOfEth)
 
-    await dai.mint(employer.address, alotOfEth);
-    await dai.mint(employer.address, alotOfEth);
+    await dai.mint(employer.address, alotOfEth)
+    await dai.mint(employer.address, alotOfEth)
 
     await dai.mint(lender.address, alotOfEth)
 
@@ -87,11 +93,11 @@ beforeEach(async function () {
 
     await daix.upgrade(alotOfEth)
 
-    await daix.upgrade({amount: alotOfEth}).exec(employer);
+    await daix.upgrade({ amount: alotOfEth }).exec(employer)
 
-    await daix.upgrade({amount: alotOfEth}).exec(lender);
+    await daix.upgrade({ amount: alotOfEth }).exec(lender)
 
-    await daix.transfer({receiver: employmentLoan.address, amount: alotOfEth});
+    await daix.transfer({ receiver: employmentLoan.address, amount: alotOfEth })
 })
 
 describe("employment loan deployment", async function () {
@@ -214,10 +220,10 @@ describe("Loan is initialized properly", async function () {
         //before the lend function is called, both isClosed and loanOpen are false
 
         const loanOpen = await employmentLoan.loanOpen()
-        assert.equal(loanOpen, false);
+        assert.equal(loanOpen, false)
 
         const isClosed = await employmentLoan.isClosed()
-        assert.equal(isClosed, false);
+        assert.equal(isClosed, false)
     })
 
     it("4 Lend Function works correctly", async function () {
@@ -226,8 +232,11 @@ describe("Loan is initialized properly", async function () {
 
         const borrowAmount = await employmentLoan.borrowAmount()
 
-        const daixApproval = daix.approve({receiver: employmentLoan.address, amount: borrowAmount});
-        await daixApproval.exec(lender);
+        const daixApproval = daix.approve({
+            receiver: employmentLoan.address,
+            amount: borrowAmount
+        })
+        await daixApproval.exec(lender)
 
         const employerUpdateFlowOperation = daix.updateFlow({
             receiver: employmentLoan.address,
@@ -236,9 +245,15 @@ describe("Loan is initialized properly", async function () {
 
         await employerUpdateFlowOperation.exec(employer)
 
-        let borrowerBalBefore = await daix.balanceOf({account: borrower.address, providerOrSigner: admin});
+        let borrowerBalBefore = await daix.balanceOf({
+            account: borrower.address,
+            providerOrSigner: admin
+        })
 
-        let lenderBalBefore = await daix.balanceOf({account: lender.address, providerOrSigner: admin});
+        let lenderBalBefore = await daix.balanceOf({
+            account: lender.address,
+            providerOrSigner: admin
+        })
 
         let borrowerFlowRateBefore = await daix.getFlow({
             sender: employmentLoan.address,
@@ -246,15 +261,25 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: borrower
         })
 
-
         //SENDING A SMALL AMOUNT OF FUNDS INTO CONTRACT FOR BUFFER
-        await daix.transfer({receiver: employmentLoan.address, amount: ethers.utils.parseEther("100")}).exec(employer);
+        await daix
+            .transfer({
+                receiver: employmentLoan.address,
+                amount: ethers.utils.parseEther("100")
+            })
+            .exec(employer)
 
         await employmentLoan.connect(lender).lend()
 
-        let lenderBalAfter = await daix.balanceOf({account: lender.address, providerOrSigner: admin});
+        let lenderBalAfter = await daix.balanceOf({
+            account: lender.address,
+            providerOrSigner: admin
+        })
 
-        let borrowerBalAfter = await daix.balanceOf({account: borrower.address, providerOrSigner: admin});
+        let borrowerBalAfter = await daix.balanceOf({
+            account: borrower.address,
+            providerOrSigner: admin
+        })
 
         let borrowerFlowRateAfter = await daix.getFlow({
             sender: employmentLoan.address,
@@ -505,12 +530,19 @@ describe("Loan is initialized properly", async function () {
         const amountLeft = await employmentLoan
             .connect(borrower)
             .getTotalAmountRemaining()
-        const lenderBalBefore = await daix.balanceOf({account: lender.address, providerOrSigner: admin})
+        const lenderBalBefore = await daix.balanceOf({
+            account: lender.address,
+            providerOrSigner: admin
+        })
 
         //somewhat impractical, but we'll assume that the borrower is sent money from lender (they just need the money in general to pay off loan)
-        await daix.transfer({receiver: borrower.address, amount: amountLeft}).exec(lender);
+        await daix
+            .transfer({ receiver: borrower.address, amount: amountLeft })
+            .exec(lender)
 
-        await daix.approve({receiver: employmentLoan.address, amount: amountLeft}).exec(borrower);
+        await daix
+            .approve({ receiver: employmentLoan.address, amount: amountLeft })
+            .exec(borrower)
 
         await employmentLoan.connect(borrower).closeOpenLoan(amountLeft)
 
@@ -539,7 +571,7 @@ describe("Loan is initialized properly", async function () {
         //This is exactly why there is a need for another variable besides @loanOpen - to differentiate between loans before and after being paid off.
         //It's impossible to do that with just @loanOpen.
         const isClosed = await employmentLoan.isClosed()
-        assert.equal(isClosed, true);
+        assert.equal(isClosed, true)
 
         assert.equal(
             lenderFlowRateAfterCompletion.flowRate,
@@ -581,14 +613,16 @@ describe("Loan is initialized properly", async function () {
             admin
         )
 
-        await dai.connect(borrower).mint(borrower.address, alotOfEth);
+        await dai.connect(borrower).mint(borrower.address, alotOfEth)
         await dai.connect(borrower).approve(daix.address, alotOfEth)
-        await daix.upgrade({amount: alotOfEth}).exec(borrower);
-        
-        await daix.transfer({receiver: employmentLoan2.address, amount: alotOfEth}).exec(borrower);
+        await daix.upgrade({ amount: alotOfEth }).exec(borrower)
+
+        await daix
+            .transfer({ receiver: employmentLoan2.address, amount: alotOfEth })
+            .exec(borrower)
 
         //create flow
-            
+
         const createFlowOperation = daix.createFlow({
             receiver: employmentLoan2.address,
             flowRate: "3215019290123456"
@@ -598,7 +632,12 @@ describe("Loan is initialized properly", async function () {
 
         //lend
 
-        await daix.approve({receiver: employmentLoan2.address, amount: borrowAmount.toString()}).exec(lender);
+        await daix
+            .approve({
+                receiver: employmentLoan2.address,
+                amount: borrowAmount.toString()
+            })
+            .exec(lender)
 
         //SENDING A SMALL AMOUNT OF FUNDS INTO CONTRACT FOR BUFFER
         // await daix.transfer({receiver: employmentLoan.address, amount: ethers.utils.parseEther("100")}).exec(employer);
@@ -647,7 +686,7 @@ describe("Loan is initialized properly", async function () {
         assert.equal(loanStatus, false)
 
         const isClosed = await employmentLoan2.isClosed()
-        assert.equal(isClosed, true);
+        assert.equal(isClosed, true)
 
         assert.isBelow(
             Number(borrowerFlow.flowRate),
@@ -695,11 +734,12 @@ describe("Loan is initialized properly", async function () {
             admin
         )
 
-
         await dai.connect(borrower).mint(borrower.address, alotOfEth)
-        await dai.connect(borrower).approve(daix.address, alotOfEth);
-        await daix.upgrade({amount: alotOfEth}).exec(borrower);
-        await daix.transfer({receiver: employmentLoan3.address, amount: alotOfEth}).exec(borrower);
+        await dai.connect(borrower).approve(daix.address, alotOfEth)
+        await daix.upgrade({ amount: alotOfEth }).exec(borrower)
+        await daix
+            .transfer({ receiver: employmentLoan3.address, amount: alotOfEth })
+            .exec(borrower)
 
         //create flow
 
@@ -712,10 +752,20 @@ describe("Loan is initialized properly", async function () {
 
         //lend
 
-        await daix.approve({receiver: employmentLoan3.address, amount: borrowAmount.toString()}).exec(lender);
+        await daix
+            .approve({
+                receiver: employmentLoan3.address,
+                amount: borrowAmount.toString()
+            })
+            .exec(lender)
 
         //SENDING A SMALL AMOUNT OF FUNDS INTO CONTRACT FOR BUFFER
-        await daix.transfer({receiver: employmentLoan.address, amount: ethers.utils.parseEther("100")}).exec(employer);
+        await daix
+            .transfer({
+                receiver: employmentLoan.address,
+                amount: ethers.utils.parseEther("100")
+            })
+            .exec(employer)
 
         await employmentLoan3.connect(lender).lend()
 
@@ -758,31 +808,31 @@ describe("Loan is initialized properly", async function () {
             providerOrSigner: lender
         })
 
-        const loanStatus = await employmentLoan3.loanOpen();
-        assert.equal(loanStatus, false);
+        const loanStatus = await employmentLoan3.loanOpen()
+        assert.equal(loanStatus, false)
 
         const isClosed = await employmentLoan3.isClosed()
-        assert.equal(isClosed, true);
+        assert.equal(isClosed, true)
 
         assert.isBelow(
             Number(borrowerFlow.flowRate),
             Number(employerFlow.flowRate),
             "borrower flow rate should be less than total amount sent into loan by employer prior to the closing of the loan"
-        );
+        )
         assert.isAbove(
             Number(lenderFlow.flowRate),
             0,
             "lender should have positive flow rate prior to loan ending"
-        );;
+        )
         assert.equal(
             borrowerFlowAfter.flowRate,
             employerFlow.flowRate,
             "borrower flow after loan ends should be equal to full value of employer flow"
-        );
+        )
         assert.equal(
             lenderFlowAfter.flowRate,
             0,
             "lender flow rate should be zero after"
-        );
-    });
-});
+        )
+    })
+})

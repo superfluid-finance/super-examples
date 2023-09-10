@@ -9,18 +9,9 @@ import { ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/in
 import { ISuperfluidToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
 import { ISuperTokenFactory } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol";
 import { IInstantDistributionAgreementV1 } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol";
-import {
-    CFAv1Library,
-    ConstantFlowAgreementV1,
-    ERC20PresetMinterPauser,
-    Superfluid,
-    SuperToken,
-    SuperTokenFactory,
-    SuperfluidFrameworkDeployer
-} from "@superfluid-finance/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
+import { CFAv1Library, ConstantFlowAgreementV1, ERC20PresetMinterPauser, Superfluid, SuperToken, SuperTokenFactory, SuperfluidFrameworkDeployer } from "@superfluid-finance/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
 import { SimpleACLCloseResolver } from "../SimpleACLCloseResolver.sol";
 import { OpsMock } from "../mocks/OpsMock.sol";
-
 
 contract SimpleACLCloseResolverTest is Test {
     Vm private _vm = Vm(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D);
@@ -229,9 +220,10 @@ contract SimpleACLCloseResolverTest is Test {
         _simpleACLCloseResolver.updateEndTime(_endTime);
     }
 
-    function testCanUpdateFlowReceiver(address _flowReceiver, address _newOwner)
-        public
-    {
+    function testCanUpdateFlowReceiver(
+        address _flowReceiver,
+        address _newOwner
+    ) public {
         _vm.assume(
             _flowReceiver != _newOwner &&
                 _flowReceiver != address(0) &&
@@ -257,9 +249,10 @@ contract SimpleACLCloseResolverTest is Test {
         _simpleACLCloseResolver.updateEndTime(_endTime);
     }
 
-    function testCanUpdateFlowSender(address _flowSender, address _newOwner)
-        public
-    {
+    function testCanUpdateFlowSender(
+        address _flowSender,
+        address _newOwner
+    ) public {
         _vm.assume(
             _flowSender != _newOwner &&
                 _flowSender != address(0) &&

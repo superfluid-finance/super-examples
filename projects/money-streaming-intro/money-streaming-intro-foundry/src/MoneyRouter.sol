@@ -1,13 +1,9 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.14;
 
-import {
-    ISuperfluid, 
-    ISuperToken, 
-    ISuperApp
-} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperToken, ISuperApp} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
-import { SuperTokenV1Library } from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
+import {SuperTokenV1Library} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
 error Unauthorized();
 
@@ -103,11 +99,7 @@ contract MoneyRouter {
     /// @param token Token to stream.
     /// @param receiver Receiver of stream.
     /// @param flowRate Flow rate per second to stream.
-    function createFlowFromContract(
-        ISuperToken token,
-        address receiver,
-        int96 flowRate
-    ) external {
+    function createFlowFromContract(ISuperToken token, address receiver, int96 flowRate) external {
         if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
         token.createFlow(receiver, flowRate);
@@ -117,11 +109,7 @@ contract MoneyRouter {
     /// @param token Token to stream.
     /// @param receiver Receiver of stream.
     /// @param flowRate Flow rate per second to stream.
-    function updateFlowFromContract(
-        ISuperToken token,
-        address receiver,
-        int96 flowRate
-    ) external {
+    function updateFlowFromContract(ISuperToken token, address receiver, int96 flowRate) external {
         if (!accountList[msg.sender] && msg.sender != owner) revert Unauthorized();
 
         token.updateFlow(receiver, flowRate);

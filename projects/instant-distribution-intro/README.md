@@ -43,7 +43,6 @@ pragma solidity ^0.8.14;
 import { ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
 
 import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
-
 ```
 
 **Terms and Snippets**
@@ -88,7 +87,6 @@ constructor(ISuperToken _spreaderToken) {
     // Creates the IDA Index through which tokens will be distributed
     _spreaderToken.createIndex(INDEX_ID);
 }
-
 ```
 
 **Terms and Snippets**
@@ -121,7 +119,6 @@ function distribute() public {
 
     spreaderToken.distribute(INDEX_ID, actualDistributionAmount);
 }
-
 ```
 
 ## Unit-Modifying Functions
@@ -170,7 +167,6 @@ function loseShare(address subscriber) public {
 function deleteShares(address subscriber) public {
     spreaderToken.deleteSubscription(address(this), INDEX_ID, subscriber);
 }
-
 ```
 
 ---

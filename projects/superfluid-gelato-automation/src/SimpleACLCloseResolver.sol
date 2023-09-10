@@ -13,11 +13,10 @@ import { IResolver } from "./interfaces/IResolver.sol";
  * @dev This only works for a single token and one stream at a time.
  */
 contract SimpleACLCloseResolver is IResolver, Ownable {
-
     //STATE VARS
     /// @notice address of deployed CFA contract
     IConstantFlowAgreementV1 public cfa;
-    /// @notice super token to be used 
+    /// @notice super token to be used
     ISuperToken public superToken;
 
     /// @notice endTime - to be set as the timestamp that the gelato network should close the stream
@@ -36,12 +35,12 @@ contract SimpleACLCloseResolver is IResolver, Ownable {
     error InvalidFlowSender();
 
     /// @dev emitted when flow end time is updated
-    /// @param currentOwner - the current owner of this contract... by default this will also be the executor of the update 
-    /// @param endTime - the new endtime 
+    /// @param currentOwner - the current owner of this contract... by default this will also be the executor of the update
+    /// @param endTime - the new endtime
     event EndTimeUpdated(address indexed currentOwner, uint256 endTime);
 
     /// @dev emitted when receiver of flow is updated
-    /// @param currentOwner - the current owner of this contract... by default this will also be the executor of the update 
+    /// @param currentOwner - the current owner of this contract... by default this will also be the executor of the update
     /// @param flowReceiver - the new receiver of the flow
     event FlowReceiverUpdated(
         address indexed currentOwner,
@@ -49,11 +48,11 @@ contract SimpleACLCloseResolver is IResolver, Ownable {
     );
 
     /// @dev emitted when sender of flow is updated
-    /// @param currentOwner - the current owner of this contract... by default this will also be the executor of the update 
+    /// @param currentOwner - the current owner of this contract... by default this will also be the executor of the update
     /// @param flowSender - the new sender of the flow
     event FlowSenderUpdated(address indexed currentOwner, address flowSender);
 
-    ///Simple ACL Resolver contract 
+    ///Simple ACL Resolver contract
     /// @notice this contract is a Gelato resolver which is designed to be called by a gelato operator to automatically close a stream at a defined future date
     /// params here are initialized in the constructor
     constructor(
@@ -122,12 +121,7 @@ contract SimpleACLCloseResolver is IResolver, Ownable {
 
         bytes memory callData = abi.encodeCall(
             cfa.deleteFlowByOperator,
-            (
-                superToken,
-                flowSender,
-                flowReceiver,
-                new bytes(0)
-            )
+            (superToken, flowSender, flowReceiver, new bytes(0))
         );
 
         // NOTE: this can be modified to execute pretty much any function
@@ -135,11 +129,7 @@ contract SimpleACLCloseResolver is IResolver, Ownable {
         // e.g. other host contract functions, supertoken upgrades/downgrades
         execPayload = abi.encodeCall(
             ISuperfluid(superToken.getHost()).callAgreement,
-            (
-                IConstantFlowAgreementV1(cfa),
-                callData,
-                "0x"
-            )
+            (IConstantFlowAgreementV1(cfa), callData, "0x")
         );
     }
 }

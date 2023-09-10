@@ -31,15 +31,19 @@ the `RedirectAll.sol` logic. In this implementation, the receiver of the stream
 is changed on-transfer through the Open Zeppelin ERC721 `_beforeTransfer` hook.
 
 ## Compile
- ```npx hardhat compile```
+
+`npx hardhat compile`
 
 ## Deploy
-```npx hardhat deploy```
 
-## Verify 
-```npx hardhat verify --constructor-args arguments.js  --network goerli CONTRACTADDRESS```
+`npx hardhat deploy`
+
+## Verify
+
+`npx hardhat verify --constructor-args arguments.js  --network goerli CONTRACTADDRESS`
 
 In order to verify the contract, you would require an etherscan key and passin the ctor arguments with the file arguments,js
 
 ## Create Flow
-```npx hardhat run scripts/createFlow.js```
+
+`npx hardhat run scripts/createFlow.js`

@@ -29,17 +29,10 @@ contract RedirectAll is SuperAppBaseFlow {
         ISuperToken acceptedToken,
         ISuperfluid _host,
         address receiver
-    ) SuperAppBaseFlow(
-      _host,
-      true,
-      true,
-      true  
-    ) {
-
+    ) SuperAppBaseFlow(_host, true, true, true) {
         _acceptedToken = acceptedToken;
         host = _host;
         _receiver = receiver;
-
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -68,17 +61,10 @@ contract RedirectAll is SuperAppBaseFlow {
     function currentReceiver()
         external
         view
-        returns (
-            uint256 startTime,
-            address receiver,
-            int96 flowRate
-        )
+        returns (uint256 startTime, address receiver, int96 flowRate)
     {
         if (receiver != address(0)) {
-            (startTime, flowRate, , ) = _acceptedToken.getFlowInfo(
-                address(this),
-                _receiver
-            );
+            (startTime, flowRate, , ) = _acceptedToken.getFlowInfo(address(this), _receiver);
 
             receiver = _receiver;
         }
@@ -91,11 +77,7 @@ contract RedirectAll is SuperAppBaseFlow {
         ISuperToken /*superToken*/,
         address /*sender*/,
         bytes calldata ctx
-    )
-        internal
-        override
-        returns (bytes memory)
-    {
+    ) internal override returns (bytes memory) {
         return _updateOutflow(ctx);
     }
 
@@ -105,11 +87,7 @@ contract RedirectAll is SuperAppBaseFlow {
         int96 /*previousFlowRate*/,
         uint256 /*lastUpdated*/,
         bytes calldata ctx
-    )
-        internal
-        override
-        returns (bytes memory)
-    {
+    ) internal override returns (bytes memory) {
         return _updateOutflow(ctx);
     }
 
@@ -120,11 +98,7 @@ contract RedirectAll is SuperAppBaseFlow {
         int96 /*previousFlowRate*/,
         uint256 /*lastUpdated*/,
         bytes calldata ctx
-    ) 
-        internal
-        override
-        returns (bytes memory newCtx) 
-    {
+    ) internal override returns (bytes memory newCtx) {
         return _updateOutflow(ctx);
     }
 
@@ -145,10 +119,7 @@ contract RedirectAll is SuperAppBaseFlow {
         if (outFlowRate > 0) {
             _acceptedToken.deleteFlow(address(this), _receiver);
 
-            _acceptedToken.createFlow(
-                newReceiver,
-                _acceptedToken.getNetFlowRate(address(this))
-            );
+            _acceptedToken.createFlow(newReceiver, _acceptedToken.getNetFlowRate(address(this)));
         }
 
         _receiver = newReceiver;

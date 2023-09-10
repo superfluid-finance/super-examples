@@ -24,7 +24,7 @@ async function main() {
 
     const employerFlowOperation = daix.deleteFlow({
         sender: employer.address,
-        receiver: loanAddress,
+        receiver: loanAddress
     })
 
     console.log("running delete flow script...")

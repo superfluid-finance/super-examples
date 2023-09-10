@@ -31,17 +31,9 @@ interface IAutomate {
 }
 
 interface ITaskTreasuryUpgradable {
-    function depositFunds(
-        address receiver,
-        address token,
-        uint256 amount
-    ) external payable;
+    function depositFunds(address receiver, address token, uint256 amount) external payable;
 
-    function withdrawFunds(
-        address payable receiver,
-        address token,
-        uint256 amount
-    ) external;
+    function withdrawFunds(address payable receiver, address token, uint256 amount) external;
 }
 
 interface IOpsProxyFactory {

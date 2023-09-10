@@ -9,7 +9,7 @@
         "test": "npx hardhat test",
         "build": "hardhat compile",
         "forge-test": "forge test",
-        "fork":"hardhat node --network hardhat",
+        "fork": "hardhat node --network hardhat",
         "hardhat-test": "hardhat test",
         "coverage": "hardhat coverage",
         "console": "hardhat console",
@@ -20,9 +20,8 @@
         "startStream": "hardhat run scripts/startStream.ts --network",
         "stopStream": "hardhat run scripts/stopStream.ts --network",
         "authorizeControl": "hardhat run scripts/authorizeControl.ts --network",
-        "createTaskStopStream":"hardhat run scripts/createTaskStopStream.ts --network",
-        "verify":"hardhat run scripts/verify.ts --network"
-   
+        "createTaskStopStream": "hardhat run scripts/createTaskStopStream.ts --network",
+        "verify": "hardhat run scripts/verify.ts --network"
     },
     "repository": {
         "type": "git",

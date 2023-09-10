@@ -24,7 +24,7 @@ async function main() {
 
     const employerFlowOperation = daix.createFlow({
         receiver: loanAddress,
-        flowRate: "3858024691358024", //10k per month
+        flowRate: "3858024691358024" //10k per month
     })
 
     console.log("running create flow script...")

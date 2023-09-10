@@ -2,11 +2,11 @@ require("@nomiclabs/hardhat-truffle5")
 require("@nomiclabs/hardhat-ethers")
 require("hardhat-deploy")
 
-require("@nomiclabs/hardhat-etherscan");
+require("@nomiclabs/hardhat-etherscan")
 
- require("dotenv").config();
- const GAS_LIMIT = 10000000;
-  // const defaultNetwork = 'goerli';
+require("dotenv").config()
+const GAS_LIMIT = 10000000
+// const defaultNetwork = 'goerli';
 
 module.exports = {
     solidity: {
@@ -19,7 +19,7 @@ module.exports = {
     },
     namedAccounts: {
         deployer: 0
-    },
+    }
     // networks: {
     // goerli: {
     //   url: `${process.env.GOERLI_RPC_URL}`,
@@ -29,7 +29,6 @@ module.exports = {
     //   confirmations: 6, // # of confs to wait between deployments. (default: 0)
     //   timeoutBlocks: 50, // # of blocks before a deployment times out  (minimum/default: 50)
     //   skipDryRun: false // Skip dry run before migrations? (default: false for public nets )
-      // },
+    // },
     // }
-    
 }

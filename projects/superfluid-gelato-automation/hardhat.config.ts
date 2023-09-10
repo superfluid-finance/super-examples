@@ -66,9 +66,8 @@ const config: HardhatUserConfig = {
         apiKey: process.env.ETHERSCAN_API_KEY || "",
     },
     gasReporter: {
-        enabled: (process.env.REPORT_GAS) ? true : false
-    }
+        enabled: process.env.REPORT_GAS ? true : false,
+    },
 };
 
 export default config;
-

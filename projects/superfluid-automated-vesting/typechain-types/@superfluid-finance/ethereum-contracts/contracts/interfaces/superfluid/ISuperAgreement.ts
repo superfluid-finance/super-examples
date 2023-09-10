@@ -2,156 +2,156 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
-  BaseContract,
-  BigNumber,
-  BigNumberish,
-  BytesLike,
-  CallOverrides,
-  PopulatedTransaction,
-  Signer,
-  utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+    BaseContract,
+    BigNumber,
+    BigNumberish,
+    BytesLike,
+    CallOverrides,
+    PopulatedTransaction,
+    Signer,
+    utils
+} from "ethers"
+import type { FunctionFragment, Result } from "@ethersproject/abi"
+import type { Listener, Provider } from "@ethersproject/providers"
 import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../../../../common";
+    TypedEventFilter,
+    TypedEvent,
+    TypedListener,
+    OnEvent,
+    PromiseOrValue
+} from "../../../../../common"
 
 export interface ISuperAgreementInterface extends utils.Interface {
-  functions: {
-    "agreementType()": FunctionFragment;
-    "realtimeBalanceOf(address,address,uint256)": FunctionFragment;
-  };
+    functions: {
+        "agreementType()": FunctionFragment
+        "realtimeBalanceOf(address,address,uint256)": FunctionFragment
+    }
 
-  getFunction(
-    nameOrSignatureOrTopic: "agreementType" | "realtimeBalanceOf"
-  ): FunctionFragment;
+    getFunction(
+        nameOrSignatureOrTopic: "agreementType" | "realtimeBalanceOf"
+    ): FunctionFragment
 
-  encodeFunctionData(
-    functionFragment: "agreementType",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "realtimeBalanceOf",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
+    encodeFunctionData(
+        functionFragment: "agreementType",
+        values?: undefined
+    ): string
+    encodeFunctionData(
+        functionFragment: "realtimeBalanceOf",
+        values: [
+            PromiseOrValue<string>,
+            PromiseOrValue<string>,
+            PromiseOrValue<BigNumberish>
+        ]
+    ): string
 
-  decodeFunctionResult(
-    functionFragment: "agreementType",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "realtimeBalanceOf",
-    data: BytesLike
-  ): Result;
+    decodeFunctionResult(
+        functionFragment: "agreementType",
+        data: BytesLike
+    ): Result
+    decodeFunctionResult(
+        functionFragment: "realtimeBalanceOf",
+        data: BytesLike
+    ): Result
 
-  events: {};
+    events: {}
 }
 
 export interface ISuperAgreement extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this
+    attach(addressOrName: string): this
+    deployed(): Promise<this>
 
-  interface: ISuperAgreementInterface;
+    interface: ISuperAgreementInterface
 
-  queryFilter<TEvent extends TypedEvent>(
-    event: TypedEventFilter<TEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TEvent>>;
+    queryFilter<TEvent extends TypedEvent>(
+        event: TypedEventFilter<TEvent>,
+        fromBlockOrBlockhash?: string | number | undefined,
+        toBlock?: string | number | undefined
+    ): Promise<Array<TEvent>>
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+    listeners<TEvent extends TypedEvent>(
+        eventFilter?: TypedEventFilter<TEvent>
+    ): Array<TypedListener<TEvent>>
+    listeners(eventName?: string): Array<Listener>
+    removeAllListeners<TEvent extends TypedEvent>(
+        eventFilter: TypedEventFilter<TEvent>
+    ): this
+    removeAllListeners(eventName?: string): this
+    off: OnEvent<this>
+    on: OnEvent<this>
+    once: OnEvent<this>
+    removeListener: OnEvent<this>
 
-  functions: {
-    agreementType(overrides?: CallOverrides): Promise<[string]>;
+    functions: {
+        agreementType(overrides?: CallOverrides): Promise<[string]>
 
-    realtimeBalanceOf(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        dynamicBalance: BigNumber;
-        deposit: BigNumber;
-        owedDeposit: BigNumber;
-      }
-    >;
-  };
-
-  agreementType(overrides?: CallOverrides): Promise<string>;
-
-  realtimeBalanceOf(
-    token: PromiseOrValue<string>,
-    account: PromiseOrValue<string>,
-    time: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber] & {
-      dynamicBalance: BigNumber;
-      deposit: BigNumber;
-      owedDeposit: BigNumber;
+        realtimeBalanceOf(
+            token: PromiseOrValue<string>,
+            account: PromiseOrValue<string>,
+            time: PromiseOrValue<BigNumberish>,
+            overrides?: CallOverrides
+        ): Promise<
+            [BigNumber, BigNumber, BigNumber] & {
+                dynamicBalance: BigNumber
+                deposit: BigNumber
+                owedDeposit: BigNumber
+            }
+        >
     }
-  >;
 
-  callStatic: {
-    agreementType(overrides?: CallOverrides): Promise<string>;
+    agreementType(overrides?: CallOverrides): Promise<string>
 
     realtimeBalanceOf(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+        token: PromiseOrValue<string>,
+        account: PromiseOrValue<string>,
+        time: PromiseOrValue<BigNumberish>,
+        overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        dynamicBalance: BigNumber;
-        deposit: BigNumber;
-        owedDeposit: BigNumber;
-      }
-    >;
-  };
+        [BigNumber, BigNumber, BigNumber] & {
+            dynamicBalance: BigNumber
+            deposit: BigNumber
+            owedDeposit: BigNumber
+        }
+    >
 
-  filters: {};
+    callStatic: {
+        agreementType(overrides?: CallOverrides): Promise<string>
 
-  estimateGas: {
-    agreementType(overrides?: CallOverrides): Promise<BigNumber>;
+        realtimeBalanceOf(
+            token: PromiseOrValue<string>,
+            account: PromiseOrValue<string>,
+            time: PromiseOrValue<BigNumberish>,
+            overrides?: CallOverrides
+        ): Promise<
+            [BigNumber, BigNumber, BigNumber] & {
+                dynamicBalance: BigNumber
+                deposit: BigNumber
+                owedDeposit: BigNumber
+            }
+        >
+    }
 
-    realtimeBalanceOf(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-  };
+    filters: {}
 
-  populateTransaction: {
-    agreementType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    estimateGas: {
+        agreementType(overrides?: CallOverrides): Promise<BigNumber>
 
-    realtimeBalanceOf(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-  };
+        realtimeBalanceOf(
+            token: PromiseOrValue<string>,
+            account: PromiseOrValue<string>,
+            time: PromiseOrValue<BigNumberish>,
+            overrides?: CallOverrides
+        ): Promise<BigNumber>
+    }
+
+    populateTransaction: {
+        agreementType(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+        realtimeBalanceOf(
+            token: PromiseOrValue<string>,
+            account: PromiseOrValue<string>,
+            time: PromiseOrValue<BigNumberish>,
+            overrides?: CallOverrides
+        ): Promise<PopulatedTransaction>
+    }
 }

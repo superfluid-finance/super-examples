@@ -6,10 +6,7 @@ pragma solidity 0.8.18;
 
 import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 import {SuperAppBaseFlow} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseFlow.sol";
-import {
-    ISuperfluid,
-    ISuperToken
-} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
 /// @title FlowSplitter
 /// @author Superfluid | Modified by @0xdavinchee
@@ -82,11 +79,10 @@ contract FlowSplitter is SuperAppBaseFlow {
     /// @return mainFlowRate the outflow rate to MAIN_RECEIVER
     /// @return sideFlowRate the outflow rate to SIDE_RECEIVER
     /// @return residualFlowRate the residual flow rate
-    function getMainAndSideReceiverFlowRates(int96 flowRate_, int96 sideReceiverPortion_)
-        external
-        pure
-        returns (int96 mainFlowRate, int96 sideFlowRate, int96 residualFlowRate)
-    {
+    function getMainAndSideReceiverFlowRates(
+        int96 flowRate_,
+        int96 sideReceiverPortion_
+    ) external pure returns (int96 mainFlowRate, int96 sideFlowRate, int96 residualFlowRate) {
         mainFlowRate = (flowRate_ * (1000 - sideReceiverPortion_)) / 1000;
         sideFlowRate = (flowRate_ * sideReceiverPortion_) / 1000;
         residualFlowRate = flowRate_ - (mainFlowRate + sideFlowRate);
@@ -96,21 +92,28 @@ contract FlowSplitter is SuperAppBaseFlow {
     /// @dev Only the creator should be able to call update split.
     /// @param newSideReceiverPortion_ the new portion of inflows to be redirected to SIDE_RECEIVER
     function updateSplit(int96 newSideReceiverPortion_) external {
-        if (newSideReceiverPortion_ <= 0 || newSideReceiverPortion_ >= 1000) revert INVALID_PORTION();
+        if (newSideReceiverPortion_ <= 0 || newSideReceiverPortion_ >= 1000)
+            revert INVALID_PORTION();
         if (msg.sender != CREATOR) revert NOT_CREATOR();
 
         sideReceiverPortion = newSideReceiverPortion_;
 
         // get current outflow rate
-        int96 totalOutflowRate = ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), MAIN_RECEIVER)
-            + ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), SIDE_RECEIVER);
+        int96 totalOutflowRate = ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), MAIN_RECEIVER) +
+            ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), SIDE_RECEIVER);
 
         int96 mainReceiverPortion = 1000 - newSideReceiverPortion_;
 
         // update outflows
         // @note there is a peculiar bug here where you can't change the outflow in any way
-        ACCEPTED_SUPER_TOKEN.updateFlow(MAIN_RECEIVER, (totalOutflowRate * mainReceiverPortion) / 1000);
-        ACCEPTED_SUPER_TOKEN.updateFlow(SIDE_RECEIVER, (totalOutflowRate * newSideReceiverPortion_) / 1000);
+        ACCEPTED_SUPER_TOKEN.updateFlow(
+            MAIN_RECEIVER,
+            (totalOutflowRate * mainReceiverPortion) / 1000
+        );
+        ACCEPTED_SUPER_TOKEN.updateFlow(
+            SIDE_RECEIVER,
+            (totalOutflowRate * newSideReceiverPortion_) / 1000
+        );
 
         emit SplitUpdated(mainReceiverPortion, newSideReceiverPortion_);
     }
@@ -118,11 +121,11 @@ contract FlowSplitter is SuperAppBaseFlow {
     // ---------------------------------------------------------------------------------------------
     // CALLBACK LOGIC
 
-    function onFlowCreated(ISuperToken superToken_, address sender_, bytes calldata ctx_)
-        internal
-        override
-        returns (bytes memory newCtx)
-    {
+    function onFlowCreated(
+        ISuperToken superToken_,
+        address sender_,
+        bytes calldata ctx_
+    ) internal override returns (bytes memory newCtx) {
         newCtx = ctx_;
 
         // get inflow rate from sender_
@@ -130,24 +133,33 @@ contract FlowSplitter is SuperAppBaseFlow {
 
         // if there's no outflow already, create outflows
         if (superToken_.getFlowRate(address(this), MAIN_RECEIVER) == 0) {
-            newCtx =
-                superToken_.createFlowWithCtx(MAIN_RECEIVER, (inflowRate * (1000 - sideReceiverPortion)) / 1000, newCtx);
+            newCtx = superToken_.createFlowWithCtx(
+                MAIN_RECEIVER,
+                (inflowRate * (1000 - sideReceiverPortion)) / 1000,
+                newCtx
+            );
 
-            newCtx = superToken_.createFlowWithCtx(SIDE_RECEIVER, (inflowRate * sideReceiverPortion) / 1000, newCtx);
+            newCtx = superToken_.createFlowWithCtx(
+                SIDE_RECEIVER,
+                (inflowRate * sideReceiverPortion) / 1000,
+                newCtx
+            );
         }
         // otherwise, there's already outflows which should be increased
         else {
             newCtx = superToken_.updateFlowWithCtx(
                 MAIN_RECEIVER,
-                ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), MAIN_RECEIVER)
-                    + (inflowRate * (1000 - sideReceiverPortion)) / 1000,
+                ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), MAIN_RECEIVER) +
+                    (inflowRate * (1000 - sideReceiverPortion)) /
+                    1000,
                 newCtx
             );
 
             newCtx = superToken_.updateFlowWithCtx(
                 SIDE_RECEIVER,
-                ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), SIDE_RECEIVER)
-                    + (inflowRate * sideReceiverPortion) / 1000,
+                ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), SIDE_RECEIVER) +
+                    (inflowRate * sideReceiverPortion) /
+                    1000,
                 newCtx
             );
         }
@@ -157,7 +169,7 @@ contract FlowSplitter is SuperAppBaseFlow {
         ISuperToken superToken_,
         address sender_,
         int96 previousFlowRate_,
-        uint256, /*lastUpdated*/
+        uint256 /*lastUpdated*/,
         bytes calldata ctx_
     ) internal override returns (bytes memory newCtx) {
         newCtx = ctx_;
@@ -168,33 +180,34 @@ contract FlowSplitter is SuperAppBaseFlow {
         // update outflows
         newCtx = superToken_.updateFlowWithCtx(
             MAIN_RECEIVER,
-            ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), MAIN_RECEIVER)
-                + (inflowChange * (1000 - sideReceiverPortion)) / 1000,
+            ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), MAIN_RECEIVER) +
+                (inflowChange * (1000 - sideReceiverPortion)) /
+                1000,
             newCtx
         );
 
         newCtx = superToken_.updateFlowWithCtx(
             SIDE_RECEIVER,
-            ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), SIDE_RECEIVER) + (inflowChange * sideReceiverPortion) / 1000,
+            ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), SIDE_RECEIVER) +
+                (inflowChange * sideReceiverPortion) /
+                1000,
             newCtx
         );
     }
 
     function onFlowDeleted(
         ISuperToken superToken_,
-        address, /*sender_*/
+        address /*sender_*/,
         address receiver_,
         int96 previousFlowRate_,
-        uint256, /*lastUpdated*/
+        uint256 /*lastUpdated*/,
         bytes calldata ctx_
     ) internal override returns (bytes memory newCtx) {
         newCtx = ctx_;
 
         // remaining inflow is equal to total outflow less the inflow that just got deleted
-        int96 remainingInflow = (
-            ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), MAIN_RECEIVER)
-                + ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), SIDE_RECEIVER)
-        ) - previousFlowRate_;
+        int96 remainingInflow = (ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), MAIN_RECEIVER) +
+            ACCEPTED_SUPER_TOKEN.getFlowRate(address(this), SIDE_RECEIVER)) - previousFlowRate_;
 
         // handle "rogue recipients" with sticky stream - see readme
         if (receiver_ == MAIN_RECEIVER || receiver_ == SIDE_RECEIVER) {
@@ -210,11 +223,16 @@ contract FlowSplitter is SuperAppBaseFlow {
         // otherwise, there's still inflow left and outflows must be updated
         else {
             newCtx = superToken_.updateFlowWithCtx(
-                MAIN_RECEIVER, (remainingInflow * (1000 - sideReceiverPortion)) / 1000, newCtx
+                MAIN_RECEIVER,
+                (remainingInflow * (1000 - sideReceiverPortion)) / 1000,
+                newCtx
             );
 
-            newCtx =
-                superToken_.updateFlowWithCtx(SIDE_RECEIVER, (remainingInflow * sideReceiverPortion) / 1000, newCtx);
+            newCtx = superToken_.updateFlowWithCtx(
+                SIDE_RECEIVER,
+                (remainingInflow * sideReceiverPortion) / 1000,
+                newCtx
+            );
         }
     }
 }

@@ -2,95 +2,99 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Signer, utils } from "ethers"
+import type { Provider } from "@ethersproject/providers"
 import type {
-  AutomateTaskCreator,
-  AutomateTaskCreatorInterface,
-} from "../../../src/gelato/AutomateTaskCreator";
+    AutomateTaskCreator,
+    AutomateTaskCreatorInterface
+} from "../../../src/gelato/AutomateTaskCreator"
 
 const _abi = [
-  {
-    inputs: [],
-    name: "automate",
-    outputs: [
-      {
-        internalType: "contract IAutomate",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "dedicatedMsgSender",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "fundsOwner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "taskTreasury",
-    outputs: [
-      {
-        internalType: "contract ITaskTreasuryUpgradable",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_token",
-        type: "address",
-      },
-    ],
-    name: "withdrawFunds",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-] as const;
+    {
+        inputs: [],
+        name: "automate",
+        outputs: [
+            {
+                internalType: "contract IAutomate",
+                name: "",
+                type: "address"
+            }
+        ],
+        stateMutability: "view",
+        type: "function"
+    },
+    {
+        inputs: [],
+        name: "dedicatedMsgSender",
+        outputs: [
+            {
+                internalType: "address",
+                name: "",
+                type: "address"
+            }
+        ],
+        stateMutability: "view",
+        type: "function"
+    },
+    {
+        inputs: [],
+        name: "fundsOwner",
+        outputs: [
+            {
+                internalType: "address",
+                name: "",
+                type: "address"
+            }
+        ],
+        stateMutability: "view",
+        type: "function"
+    },
+    {
+        inputs: [],
+        name: "taskTreasury",
+        outputs: [
+            {
+                internalType: "contract ITaskTreasuryUpgradable",
+                name: "",
+                type: "address"
+            }
+        ],
+        stateMutability: "view",
+        type: "function"
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_amount",
+                type: "uint256"
+            },
+            {
+                internalType: "address",
+                name: "_token",
+                type: "address"
+            }
+        ],
+        name: "withdrawFunds",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function"
+    }
+] as const
 
 export class AutomateTaskCreator__factory {
-  static readonly abi = _abi;
-  static createInterface(): AutomateTaskCreatorInterface {
-    return new utils.Interface(_abi) as AutomateTaskCreatorInterface;
-  }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): AutomateTaskCreator {
-    return new Contract(address, _abi, signerOrProvider) as AutomateTaskCreator;
-  }
+    static readonly abi = _abi
+    static createInterface(): AutomateTaskCreatorInterface {
+        return new utils.Interface(_abi) as AutomateTaskCreatorInterface
+    }
+    static connect(
+        address: string,
+        signerOrProvider: Signer | Provider
+    ): AutomateTaskCreator {
+        return new Contract(
+            address,
+            _abi,
+            signerOrProvider
+        ) as AutomateTaskCreator
+    }
 }

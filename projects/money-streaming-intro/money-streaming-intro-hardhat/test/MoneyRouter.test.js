@@ -1,7 +1,9 @@
 const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { ethers } = require("hardhat")
-const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
+const {
+    deployTestFramework
+} = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework")
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
 let sfDeployer
@@ -19,10 +21,9 @@ let account2
 const thousandEther = ethers.utils.parseEther("10000")
 
 before(async function () {
-    
     // get hardhat accounts
-    [owner, account1, account2] = await ethers.getSigners();
-    sfDeployer = await deployTestFramework();
+    ;[owner, account1, account2] = await ethers.getSigners()
+    sfDeployer = await deployTestFramework()
 
     // GETTING SUPERFLUID FRAMEWORK SET UP
 
@@ -38,12 +39,13 @@ before(async function () {
     })
 
     // // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
-    tokenDeployment = await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
-        "Fake DAI Token",
-        "fDAI",
-        18,
-        ethers.utils.parseEther("100000000").toString()
-    );
+    tokenDeployment =
+        await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
+            "Fake DAI Token",
+            "fDAI",
+            18,
+            ethers.utils.parseEther("100000000").toString()
+        )
 
     // DEPLOYING DAI and DAI wrapper super token (which will be our `spreaderToken`)
     daix = await sf.loadSuperToken("fDAIx")
@@ -66,9 +68,9 @@ before(async function () {
         .connect(account2)
         .approve(daix.address, ethers.constants.MaxInt256)
     // Upgrading all DAI to DAIx
-    const ownerUpgrade = daix.upgrade({amount: thousandEther});
-    const account1Upgrade = daix.upgrade({amount: thousandEther});
-    const account2Upgrade = daix.upgrade({amount: thousandEther});
+    const ownerUpgrade = daix.upgrade({ amount: thousandEther })
+    const account1Upgrade = daix.upgrade({ amount: thousandEther })
+    const account2Upgrade = daix.upgrade({ amount: thousandEther })
 
     await ownerUpgrade.exec(owner)
     await account1Upgrade.exec(account1)
@@ -76,11 +78,9 @@ before(async function () {
 
     let MoneyRouter = await ethers.getContractFactory("MoneyRouter", owner)
 
-    moneyRouter = await MoneyRouter.deploy(
-        owner.address
-    )
+    moneyRouter = await MoneyRouter.deploy(owner.address)
     await moneyRouter.deployed()
-});
+})
 
 describe("Money Router", function () {
     it("Access Control #1 - Should deploy properly with the correct owner", async function () {
@@ -97,32 +97,38 @@ describe("Money Router", function () {
         expect(await moneyRouter.accountList(account1.address)).to.equal(false)
     })
     it("Access Control #4 - Should allow for change in ownership", async function () {
-        await moneyRouter.changeOwner(account1.address);
+        await moneyRouter.changeOwner(account1.address)
 
-        expect(await moneyRouter.owner(), account1.address);
-    });
+        expect(await moneyRouter.owner(), account1.address)
+    })
     it("Contract Receives Funds #1 - lump sum is transferred to contract", async function () {
         //transfer ownership back to real owner...
-        await moneyRouter.connect(account1).changeOwner(owner.address);
+        await moneyRouter.connect(account1).changeOwner(owner.address)
 
-        await daix.approve({receiver: moneyRouter.address, amount: ethers.utils.parseEther("100")}).exec(owner);
+        await daix
+            .approve({
+                receiver: moneyRouter.address,
+                amount: ethers.utils.parseEther("100")
+            })
+            .exec(owner)
 
         await moneyRouter.sendLumpSumToContract(
             daix.address,
             ethers.utils.parseEther("100")
         )
 
-        let contractDAIxBalance = await daix.balanceOf({account: moneyRouter.address, providerOrSigner: owner});
-        expect(contractDAIxBalance, ethers.utils.parseEther("100"));
+        let contractDAIxBalance = await daix.balanceOf({
+            account: moneyRouter.address,
+            providerOrSigner: owner
+        })
+        expect(contractDAIxBalance, ethers.utils.parseEther("100"))
     })
     it("Contract Receives Funds #2 - a flow is created into the contract", async function () {
-        let authorizeContractOperation = daix.updateFlowOperatorPermissions(
-            {
-                flowOperator: moneyRouter.address,
-                permissions: "7", //full control
-                flowRateAllowance: "1000000000000000" // ~2500 per month
-            }
-        )
+        let authorizeContractOperation = daix.updateFlowOperatorPermissions({
+            flowOperator: moneyRouter.address,
+            permissions: "7", //full control
+            flowRateAllowance: "1000000000000000" // ~2500 per month
+        })
         await authorizeContractOperation.exec(owner)
 
         await moneyRouter.createFlowIntoContract(
@@ -136,7 +142,7 @@ describe("Money Router", function () {
             providerOrSigner: owner
         })
 
-        expect(ownerContractFlowRate.flowRate).to.equal("100000000000000");
+        expect(ownerContractFlowRate.flowRate).to.equal("100000000000000")
     })
     it("Contract Recieves Funds #3 - a flow into the contract is updated", async function () {
         await moneyRouter.updateFlowIntoContract(
@@ -164,16 +170,24 @@ describe("Money Router", function () {
         expect(ownerContractFlowRate.flowRate).to.equal("0")
     })
     it("Contract sends funds #1 - withdrawing a lump sum from the contract", async function () {
-        let contractStartingBalance = await daix.balanceOf({account: moneyRouter.address, providerOrSigner: owner});
+        let contractStartingBalance = await daix.balanceOf({
+            account: moneyRouter.address,
+            providerOrSigner: owner
+        })
 
         await moneyRouter.withdrawFunds(
             daix.address,
             ethers.utils.parseEther("10")
         )
 
-        let contractFinishingBalance = await daix.balanceOf({account: moneyRouter.address, providerOrSigner: owner});
+        let contractFinishingBalance = await daix.balanceOf({
+            account: moneyRouter.address,
+            providerOrSigner: owner
+        })
 
-        expect(contractStartingBalance - ethers.utils.parseEther("10")).to.equal(Number(contractFinishingBalance))
+        expect(
+            contractStartingBalance - ethers.utils.parseEther("10")
+        ).to.equal(Number(contractFinishingBalance))
     })
 
     it("Contract sends funds #2 - creating a flow from the contract", async function () {
@@ -189,7 +203,7 @@ describe("Money Router", function () {
             providerOrSigner: owner
         })
 
-        expect(receiverContractFlowRate.flowRate).to.equal("100000000000000");
+        expect(receiverContractFlowRate.flowRate).to.equal("100000000000000")
     })
     it("Contract sends funds #3 - updating a flow from the contract", async function () {
         await moneyRouter.updateFlowFromContract(
@@ -204,7 +218,7 @@ describe("Money Router", function () {
             providerOrSigner: owner
         })
 
-        expect(receiverContractFlowRate.flowRate).to.equal("200000000000000");
+        expect(receiverContractFlowRate.flowRate).to.equal("200000000000000")
     })
     it("Contract sends funds #4 - deleting a flow from the contract", async function () {
         await moneyRouter.deleteFlowFromContract(daix.address, account1.address) //about 500 per month
@@ -213,8 +227,8 @@ describe("Money Router", function () {
             sender: moneyRouter.address,
             receiver: account1.address,
             providerOrSigner: owner
-        });
+        })
 
-        expect(receiverContractFlowRate.flowRate).to.equal("0");
-    });
+        expect(receiverContractFlowRate.flowRate).to.equal("0")
+    })
 })

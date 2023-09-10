@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.14;
 
-import {ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
+import {ISuperfluid, ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
 import {IInstantDistributionAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol";
 
 import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
@@ -50,11 +50,7 @@ contract TokenSpreader {
         );
 
         // Update to current amount + 1
-        spreaderToken.updateSubscriptionUnits(
-            INDEX_ID,
-            subscriber,
-            uint128(currentUnitsHeld + 1)
-        );
+        spreaderToken.updateSubscriptionUnits(INDEX_ID, subscriber, uint128(currentUnitsHeld + 1));
     }
 
     /// @notice lets an account lose a single distribution unit
@@ -68,11 +64,7 @@ contract TokenSpreader {
         );
 
         // Update to current amount - 1 (reverts if currentUnitsHeld - 1 < 0, so basically if currentUnitsHeld = 0)
-        spreaderToken.updateSubscriptionUnits(
-            INDEX_ID,
-            subscriber,
-            uint128(currentUnitsHeld - 1)
-        );
+        spreaderToken.updateSubscriptionUnits(INDEX_ID, subscriber, uint128(currentUnitsHeld - 1));
     }
 
     /// @notice allows an account to delete its entire subscription this contract

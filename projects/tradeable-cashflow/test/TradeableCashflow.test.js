@@ -1,10 +1,12 @@
 const { expect } = require("chai")
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { ethers } = require("hardhat")
-const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
+const {
+    deployTestFramework
+} = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework")
 const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
 
-let provider;
+let provider
 let accounts
 
 let sfDeployer
@@ -22,7 +24,7 @@ const thousandEther = ethers.utils.parseEther("10000")
 before(async function () {
     //get accounts from hardhat
     accounts = await ethers.getSigners()
-    provider = accounts[0].provider;
+    provider = accounts[0].provider
     sfDeployer = await deployTestFramework()
 
     // GETTING SUPERFLUID FRAMEWORK SET UP
@@ -39,13 +41,14 @@ before(async function () {
     })
 
     // DEPLOYING DAI and DAI wrapper super token
-    tokenDeployment = await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
-        "Fake DAI Token",
-        "fDAI",
-        18,
-        ethers.utils.parseEther("100000000").toString()
-    )
-    
+    tokenDeployment =
+        await sfDeployer.frameworkDeployer.deployWrapperSuperToken(
+            "Fake DAI Token",
+            "fDAI",
+            18,
+            ethers.utils.parseEther("100000000").toString()
+        )
+
     daix = await sf.loadSuperToken("fDAIx")
     dai = new ethers.Contract(
         daix.underlyingToken.address,
@@ -60,7 +63,7 @@ before(async function () {
     })
 
     //use the framework to get the super toen
-    daix = await sf.loadSuperToken("fDAIx");
+    daix = await sf.loadSuperToken("fDAIx")
     dai = new ethers.Contract(
         daix.underlyingToken.address,
         TestToken.abi,
@@ -86,16 +89,22 @@ beforeEach(async function () {
     await dai.connect(accounts[0]).mint(accounts[0].address, thousandEther)
     await dai.connect(accounts[1]).mint(accounts[1].address, thousandEther)
     await dai.connect(accounts[2]).mint(accounts[2].address, thousandEther)
-    
+
     // approving DAIx to spend DAI (Super Token object is not an etherscontract object and has different operation syntax)
-    await dai.connect(accounts[0]).approve(daix.address, ethers.constants.MaxInt256)
-    await dai.connect(accounts[1]).approve(daix.address, ethers.constants.MaxInt256)
-    await dai.connect(accounts[2]).approve(daix.address, ethers.constants.MaxInt256)
+    await dai
+        .connect(accounts[0])
+        .approve(daix.address, ethers.constants.MaxInt256)
+    await dai
+        .connect(accounts[1])
+        .approve(daix.address, ethers.constants.MaxInt256)
+    await dai
+        .connect(accounts[2])
+        .approve(daix.address, ethers.constants.MaxInt256)
     // Upgrading all DAI to DAIx
     const ownerUpgrade = daix.upgrade({ amount: thousandEther })
     const account1Upgrade = daix.upgrade({ amount: thousandEther })
     const account2Upgrade = daix.upgrade({ amount: thousandEther })
-    
+
     await ownerUpgrade.exec(accounts[0])
     await account1Upgrade.exec(accounts[1])
     await account2Upgrade.exec(accounts[2])

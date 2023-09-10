@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import {ISuperfluid, ISuperToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
-import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
+import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 
 import {SuperAppBaseFlow} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseFlow.sol";
 
 /// @title Employment Loan Contract
 /// @author Superfluid
 contract EmploymentLoan is SuperAppBaseFlow {
-
     /// @notice Importing the SuperToken Library to make working with streams easy.
     using SuperTokenV1Library for ISuperToken;
     // ---------------------------------------------------------------------------------------------
@@ -43,7 +42,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
     /// @notice Timestamp of the loan start time.
     uint256 public loanStartTime;
 
-    /// @notice boolean flag to track whether the loan was closed. In contrary to @loanOpen, this variable changes state only once. 
+    /// @notice boolean flag to track whether the loan was closed. In contrary to @loanOpen, this variable changes state only once.
     bool public isClosed;
 
     // ---------------------------------------------------------------------------------------------
@@ -63,12 +62,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
         address _borrower, // borrower address
         ISuperToken _borrowToken, // super token to be used in borrowing
         ISuperfluid _host // address of SF host
-    ) SuperAppBaseFlow(
-        _host,
-        true,
-        true,
-        true
-    ) {
+    ) SuperAppBaseFlow(_host, true, true, true) {
         borrowAmount = _borrowAmount;
         interestRate = _interestRate;
         paybackMonths = _paybackMonths;
@@ -87,7 +81,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
             int96(
                 ((borrowAmount + ((borrowAmount * int256(interestRate)) / int256(100))) /
                     paybackMonths) / ((365 / 12) * 86400)
-                    //365/12 = average days in a month; 86400 = seconds in a day (24 hours); -> 365/12 * 86400 average seconds in a month
+                //365/12 = average days in a month; 86400 = seconds in a day (24 hours); -> 365/12 * 86400 average seconds in a month
             )
         );
     }
@@ -128,10 +122,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
         int96 outFlowRate = borrowToken.getFlowRate(address(this), borrower);
 
         //update flow to borrower (aka the employee)
-        borrowToken.updateFlow(
-            borrower,
-            ((netFlowRate - outFlowRate) * -1) - getPaymentFlowRate()
-        );
+        borrowToken.updateFlow(borrower, ((netFlowRate - outFlowRate) * -1) - getPaymentFlowRate());
 
         //create flow to lender
         borrowToken.createFlow(msg.sender, getPaymentFlowRate());
@@ -164,11 +155,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
         //if loan is still open, we need to make sure that the right amount of funds are sent to the
         // borrower & lender
         if (loanOpen == true) {
-            newCtx = borrowToken.createFlowWithCtx(
-                borrower,
-                inFlowRate - paymentFlowRate,
-                newCtx
-            );
+            newCtx = borrowToken.createFlowWithCtx(borrower, inFlowRate - paymentFlowRate, newCtx);
             newCtx = borrowToken.createFlowWithCtx(lender, paymentFlowRate, newCtx);
         } else {
             //if loanOpen is not true, we need to send the borrower the full inflow
@@ -240,10 +227,10 @@ contract EmploymentLoan is SuperAppBaseFlow {
     /// @dev ensures that streams sent out of the contract are also stopped
     /// @param ctx context passed by super app callback
     /// @param outFlowRateLender the flow rate being sent to lender from the contract
-    function _updateOutFlowDelete(bytes calldata ctx, int96 outFlowRateLender)
-        private
-        returns (bytes memory newCtx)
-    {
+    function _updateOutFlowDelete(
+        bytes calldata ctx,
+        int96 outFlowRateLender
+    ) private returns (bytes memory newCtx) {
         newCtx = ctx;
         // delete flow to lender in borrow token if they are currently receiving a flow
         if (outFlowRateLender > 0) {
@@ -338,11 +325,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
         ISuperToken /*superToken*/,
         address /*sender*/,
         bytes calldata ctx
-    )
-        internal
-        override
-        returns (bytes memory newCtx)
-    {
+    ) internal override returns (bytes memory newCtx) {
         newCtx = _updateOutflow(ctx);
     }
 
@@ -353,11 +336,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
         int96 /*previousFlowRate*/,
         uint256 /*lastUpdated*/,
         bytes calldata ctx
-    )
-        internal
-        override
-        returns (bytes memory newCtx)
-    {
+    ) internal override returns (bytes memory newCtx) {
         newCtx = _updateOutflow(ctx);
     }
 
@@ -369,11 +348,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
         int96 /*previousFlowRate*/,
         uint256 /*lastUpdated*/,
         bytes calldata ctx
-    ) 
-        internal
-        override 
-        returns (bytes memory newCtx)
-    {
+    ) internal override returns (bytes memory newCtx) {
         newCtx = _updateOutflow(ctx);
     }
 }
