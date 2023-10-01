@@ -73,6 +73,11 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "HOST_NEED_MORE_GAS",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "HOST_NON_UPGRADEABLE",
     type: "error",
   },

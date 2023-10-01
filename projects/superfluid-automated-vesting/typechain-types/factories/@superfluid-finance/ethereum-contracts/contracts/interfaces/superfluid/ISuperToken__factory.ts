@@ -72,12 +72,22 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "SUPER_TOKEN_NFT_PROXY_ADDRESS_CHANGED",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "SUPER_TOKEN_NOT_ERC777_TOKENS_RECIPIENT",
     type: "error",
   },
   {
     inputs: [],
     name: "SUPER_TOKEN_NO_UNDERLYING_TOKEN",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "SUPER_TOKEN_ONLY_GOV_OWNER",
     type: "error",
   },
   {
@@ -440,6 +450,32 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "contract IConstantInflowNFT",
+        name: "constantInflowNFT",
+        type: "address",
+      },
+    ],
+    name: "ConstantInflowNFTCreated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "contract IConstantOutflowNFT",
+        name: "constantOutflowNFT",
+        type: "address",
+      },
+    ],
+    name: "ConstantOutflowNFTCreated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: "address",
         name: "operator",
         type: "address",
@@ -596,6 +632,32 @@ const _abi = [
     ],
     name: "Transfer",
     type: "event",
+  },
+  {
+    inputs: [],
+    name: "CONSTANT_INFLOW_NFT",
+    outputs: [
+      {
+        internalType: "contract IConstantInflowNFT",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "CONSTANT_OUTFLOW_NFT",
+    outputs: [
+      {
+        internalType: "contract IConstantOutflowNFT",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [

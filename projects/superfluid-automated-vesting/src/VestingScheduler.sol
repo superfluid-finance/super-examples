@@ -8,39 +8,33 @@ import { SuperAppBase } from "@superfluid-finance/ethereum-contracts/contracts/a
 import {
     IConstantFlowAgreementV1
 } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import { CFAv1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol";
+import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 import { IVestingScheduler } from "./interface/IVestingScheduler.sol";
 
 contract VestingScheduler is IVestingScheduler, SuperAppBase {
 
-    using CFAv1Library for CFAv1Library.InitData;
-    CFAv1Library.InitData public cfaV1;
+    using SuperTokenV1Library for ISuperToken;
     mapping(bytes32 => VestingSchedule) public vestingSchedules; // id = keccak(supertoken, sender, receiver)
 
     uint32 public constant MIN_VESTING_DURATION = 7 days;
     uint32 public constant START_DATE_VALID_AFTER = 3 days;
     uint32 public constant END_DATE_VALID_BEFORE = 1 days;
 
-    constructor(ISuperfluid host, string memory registrationKey) {
-        cfaV1 = CFAv1Library.InitData(
-            host,
-            IConstantFlowAgreementV1(
-                address(
-                    host.getAgreementClass(
-                        keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1")
-                    )
-                )
-            )
-        );
+    ISuperfluid public host;
+
+    constructor(ISuperfluid _host, string memory registrationKey) {
+
+        host = _host;
+
         // Superfluid SuperApp registration. This is a dumb SuperApp, only for front-end tx batch calls.
         uint256 configWord = SuperAppDefinitions.APP_LEVEL_FINAL |
-        SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
-        SuperAppDefinitions.AFTER_AGREEMENT_CREATED_NOOP |
-        SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
-        SuperAppDefinitions.AFTER_AGREEMENT_UPDATED_NOOP |
-        SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP |
-        SuperAppDefinitions.AFTER_AGREEMENT_TERMINATED_NOOP;
-        host.registerAppWithKey(configWord, registrationKey);
+                            SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
+                            SuperAppDefinitions.AFTER_AGREEMENT_CREATED_NOOP |
+                            SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
+                            SuperAppDefinitions.AFTER_AGREEMENT_UPDATED_NOOP |
+                            SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP |
+                            SuperAppDefinitions.AFTER_AGREEMENT_TERMINATED_NOOP;
+        _host.registerAppWithKey(configWord, registrationKey);
     }
 
     /// @dev IVestingScheduler.createVestingSchedule implementation.
@@ -165,7 +159,7 @@ contract VestingScheduler is IVestingScheduler, SuperAppBase {
         }
 
         // Create a flow according to the vesting schedule configuration.
-        cfaV1.createFlowByOperator(sender, receiver, superToken, schedule.flowRate);
+        superToken.createFlowFrom(sender, receiver, schedule.flowRate);
 
         emit VestingCliffAndFlowExecuted(
             superToken,
@@ -196,7 +190,7 @@ contract VestingScheduler is IVestingScheduler, SuperAppBase {
         // If vesting is not running, we can't do anything, just emit failing event.
         if(_isFlowOngoing(superToken, sender, receiver)) {
             // delete first the stream and unlock deposit amount.
-            cfaV1.deleteFlowByOperator(sender, receiver, superToken);
+            superToken.deleteFlowFrom(sender, receiver);
 
             uint256 earlyEndCompensation = schedule.endDate > block.timestamp ?
                 (schedule.endDate - block.timestamp) * uint96(schedule.flowRate) : 0;
@@ -243,8 +237,8 @@ contract VestingScheduler is IVestingScheduler, SuperAppBase {
     /// @dev get sender of transaction from Superfluid Context or transaction itself.
     function _getSender(bytes memory ctx) internal view returns (address sender) {
         if (ctx.length != 0) {
-            if (msg.sender != address(cfaV1.host)) revert HostInvalid();
-            sender = cfaV1.host.decodeCtx(ctx).msgSender;
+            if (msg.sender != address(host)) revert HostInvalid();
+            sender = host.decodeCtx(ctx).msgSender;
         } else {
             sender = msg.sender;
         }
@@ -254,7 +248,7 @@ contract VestingScheduler is IVestingScheduler, SuperAppBase {
 
     /// @dev get flowRate of stream
     function _isFlowOngoing(ISuperToken superToken, address sender, address receiver) internal view returns (bool) {
-        (,int96 flowRate,,) = cfaV1.cfa.getFlow(superToken, sender, receiver);
+        (,int96 flowRate,,) = superToken.getFlowInfo(sender, receiver);
         return flowRate != 0;
     }
 }
