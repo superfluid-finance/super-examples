@@ -21,9 +21,21 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;
     getContractFactory(
+      name: "IERC721Metadata",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC721Metadata__factory>;
+    getContractFactory(
+      name: "IERC721",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC721__factory>;
+    getContractFactory(
       name: "IERC777",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC777__factory>;
+    getContractFactory(
+      name: "IERC165",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
       name: "SuperAppBase",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -32,6 +44,18 @@ declare module "hardhat/types/runtime" {
       name: "IConstantFlowAgreementV1",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IConstantFlowAgreementV1__factory>;
+    getContractFactory(
+      name: "IConstantInflowNFT",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IConstantInflowNFT__factory>;
+    getContractFactory(
+      name: "IConstantOutflowNFT",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IConstantOutflowNFT__factory>;
+    getContractFactory(
+      name: "IFlowNFTBase",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IFlowNFTBase__factory>;
     getContractFactory(
       name: "ISuperAgreement",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -112,10 +136,25 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20>;
     getContractAt(
+      name: "IERC721Metadata",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC721Metadata>;
+    getContractAt(
+      name: "IERC721",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC721>;
+    getContractAt(
       name: "IERC777",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC777>;
+    getContractAt(
+      name: "IERC165",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC165>;
     getContractAt(
       name: "SuperAppBase",
       address: string,
@@ -126,6 +165,21 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IConstantFlowAgreementV1>;
+    getContractAt(
+      name: "IConstantInflowNFT",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IConstantInflowNFT>;
+    getContractAt(
+      name: "IConstantOutflowNFT",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IConstantOutflowNFT>;
+    getContractAt(
+      name: "IFlowNFTBase",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IFlowNFTBase>;
     getContractAt(
       name: "ISuperAgreement",
       address: string,

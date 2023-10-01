@@ -17,39 +17,35 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-} from "../../common";
+  PromiseOrValue,
+} from "../../../../common";
 
-export interface AutomateReadyInterface extends utils.Interface {
+export interface IERC165Interface extends utils.Interface {
   functions: {
-    "automate()": FunctionFragment;
-    "dedicatedMsgSender()": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
   };
 
-  getFunction(
-    nameOrSignatureOrTopic: "automate" | "dedicatedMsgSender"
-  ): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: "supportsInterface"): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "automate", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "dedicatedMsgSender",
-    values?: undefined
+    functionFragment: "supportsInterface",
+    values: [PromiseOrValue<BytesLike>]
   ): string;
 
-  decodeFunctionResult(functionFragment: "automate", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "dedicatedMsgSender",
+    functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
 
   events: {};
 }
 
-export interface AutomateReady extends BaseContract {
+export interface IERC165 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AutomateReadyInterface;
+  interface: IERC165Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -71,33 +67,36 @@ export interface AutomateReady extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    automate(overrides?: CallOverrides): Promise<[string]>;
-
-    dedicatedMsgSender(overrides?: CallOverrides): Promise<[string]>;
+    supportsInterface(
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
   };
 
-  automate(overrides?: CallOverrides): Promise<string>;
-
-  dedicatedMsgSender(overrides?: CallOverrides): Promise<string>;
+  supportsInterface(
+    interfaceId: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   callStatic: {
-    automate(overrides?: CallOverrides): Promise<string>;
-
-    dedicatedMsgSender(overrides?: CallOverrides): Promise<string>;
+    supportsInterface(
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
   };
 
   filters: {};
 
   estimateGas: {
-    automate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    dedicatedMsgSender(overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    automate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    dedicatedMsgSender(
+    supportsInterface(
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

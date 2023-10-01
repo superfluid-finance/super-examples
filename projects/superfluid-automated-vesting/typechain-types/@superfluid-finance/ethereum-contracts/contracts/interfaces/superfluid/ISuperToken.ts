@@ -29,6 +29,8 @@ import type {
 
 export interface ISuperTokenInterface extends utils.Interface {
   functions: {
+    "CONSTANT_INFLOW_NFT()": FunctionFragment;
+    "CONSTANT_OUTFLOW_NFT()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "authorizeOperator(address)": FunctionFragment;
@@ -87,6 +89,8 @@ export interface ISuperTokenInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "CONSTANT_INFLOW_NFT"
+      | "CONSTANT_OUTFLOW_NFT"
       | "allowance"
       | "approve"
       | "authorizeOperator"
@@ -143,6 +147,14 @@ export interface ISuperTokenInterface extends utils.Interface {
       | "upgradeTo"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "CONSTANT_INFLOW_NFT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "CONSTANT_OUTFLOW_NFT",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
@@ -436,6 +448,14 @@ export interface ISuperTokenInterface extends utils.Interface {
     ]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "CONSTANT_INFLOW_NFT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "CONSTANT_OUTFLOW_NFT",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
@@ -617,6 +637,8 @@ export interface ISuperTokenInterface extends utils.Interface {
     "AuthorizedOperator(address,address)": EventFragment;
     "Bailout(address,uint256)": EventFragment;
     "Burned(address,address,uint256,bytes,bytes)": EventFragment;
+    "ConstantInflowNFTCreated(address)": EventFragment;
+    "ConstantOutflowNFTCreated(address)": EventFragment;
     "Minted(address,address,uint256,bytes,bytes)": EventFragment;
     "RevokedOperator(address,address)": EventFragment;
     "Sent(address,address,address,uint256,bytes,bytes)": EventFragment;
@@ -636,6 +658,8 @@ export interface ISuperTokenInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "AuthorizedOperator"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Bailout"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Burned"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConstantInflowNFTCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConstantOutflowNFTCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RevokedOperator"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Sent"): EventFragment;
@@ -791,6 +815,28 @@ export type BurnedEvent = TypedEvent<
 
 export type BurnedEventFilter = TypedEventFilter<BurnedEvent>;
 
+export interface ConstantInflowNFTCreatedEventObject {
+  constantInflowNFT: string;
+}
+export type ConstantInflowNFTCreatedEvent = TypedEvent<
+  [string],
+  ConstantInflowNFTCreatedEventObject
+>;
+
+export type ConstantInflowNFTCreatedEventFilter =
+  TypedEventFilter<ConstantInflowNFTCreatedEvent>;
+
+export interface ConstantOutflowNFTCreatedEventObject {
+  constantOutflowNFT: string;
+}
+export type ConstantOutflowNFTCreatedEvent = TypedEvent<
+  [string],
+  ConstantOutflowNFTCreatedEventObject
+>;
+
+export type ConstantOutflowNFTCreatedEventFilter =
+  TypedEventFilter<ConstantOutflowNFTCreatedEvent>;
+
 export interface MintedEventObject {
   operator: string;
   to: string;
@@ -892,6 +938,10 @@ export interface ISuperToken extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    CONSTANT_INFLOW_NFT(overrides?: CallOverrides): Promise<[string]>;
+
+    CONSTANT_OUTFLOW_NFT(overrides?: CallOverrides): Promise<[string]>;
+
     allowance(
       owner: PromiseOrValue<string>,
       spender: PromiseOrValue<string>,
@@ -1221,6 +1271,10 @@ export interface ISuperToken extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  CONSTANT_INFLOW_NFT(overrides?: CallOverrides): Promise<string>;
+
+  CONSTANT_OUTFLOW_NFT(overrides?: CallOverrides): Promise<string>;
+
   allowance(
     owner: PromiseOrValue<string>,
     spender: PromiseOrValue<string>,
@@ -1548,6 +1602,10 @@ export interface ISuperToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    CONSTANT_INFLOW_NFT(overrides?: CallOverrides): Promise<string>;
+
+    CONSTANT_OUTFLOW_NFT(overrides?: CallOverrides): Promise<string>;
+
     allowance(
       owner: PromiseOrValue<string>,
       spender: PromiseOrValue<string>,
@@ -2017,6 +2075,20 @@ export interface ISuperToken extends BaseContract {
       operatorData?: null
     ): BurnedEventFilter;
 
+    "ConstantInflowNFTCreated(address)"(
+      constantInflowNFT?: PromiseOrValue<string> | null
+    ): ConstantInflowNFTCreatedEventFilter;
+    ConstantInflowNFTCreated(
+      constantInflowNFT?: PromiseOrValue<string> | null
+    ): ConstantInflowNFTCreatedEventFilter;
+
+    "ConstantOutflowNFTCreated(address)"(
+      constantOutflowNFT?: PromiseOrValue<string> | null
+    ): ConstantOutflowNFTCreatedEventFilter;
+    ConstantOutflowNFTCreated(
+      constantOutflowNFT?: PromiseOrValue<string> | null
+    ): ConstantOutflowNFTCreatedEventFilter;
+
     "Minted(address,address,uint256,bytes,bytes)"(
       operator?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
@@ -2089,6 +2161,10 @@ export interface ISuperToken extends BaseContract {
   };
 
   estimateGas: {
+    CONSTANT_INFLOW_NFT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    CONSTANT_OUTFLOW_NFT(overrides?: CallOverrides): Promise<BigNumber>;
+
     allowance(
       owner: PromiseOrValue<string>,
       spender: PromiseOrValue<string>,
@@ -2404,6 +2480,14 @@ export interface ISuperToken extends BaseContract {
   };
 
   populateTransaction: {
+    CONSTANT_INFLOW_NFT(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    CONSTANT_OUTFLOW_NFT(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     allowance(
       owner: PromiseOrValue<string>,
       spender: PromiseOrValue<string>,
