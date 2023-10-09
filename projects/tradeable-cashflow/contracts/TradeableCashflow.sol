@@ -8,6 +8,9 @@ import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 /// @notice Inherits the ERC721 NFT interface from Open Zeppelin and the RedirectAll logic to
 /// redirect all incoming streams to the current NFT holder.
 contract TradeableCashflow is ERC721, RedirectAll {
+
+    event TradeableCashflowDeployed(address indexed contractAddress);
+
     constructor(
         address owner,
         string memory _name,
@@ -16,6 +19,7 @@ contract TradeableCashflow is ERC721, RedirectAll {
         ISuperToken acceptedToken
     ) ERC721(_name, _symbol) RedirectAll(acceptedToken, host, owner) {
         _mint(owner, 1);
+        emit TradeableCashflowDeployed(address(this));
     }
 
     // ---------------------------------------------------------------------------------------------
