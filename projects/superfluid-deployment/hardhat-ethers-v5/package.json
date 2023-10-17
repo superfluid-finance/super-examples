@@ -1,0 +1,39 @@
+{
+  "name": "hardhat-ethers-v5",
+  "version": "1.0.0",
+  "description": "An example hardhat + ethers v5 project which shows how to deploy the Superfluid Framework for local testing.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superfluid-finance/protocol-monorepo/examples.git"
+  },
+  "keywords": [
+    "hardhat",
+    "ethers",
+    "ethersv5",
+    "superfluid"
+  ],
+  "author": "Superfluid",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@superfluid-finance/ethereum-contracts": "^1.8.1",
+    "@typechain/ethers-v5": "^11.1.2",
+    "@typechain/hardhat": "^8.0.0",
+    "@types/chai": "^4.2.0",
+    "@types/mocha": ">=9.1.0",
+    "@types/node": ">=16.0.0",
+    "chai": "^4.2.0",
+    "ethers": "5.7.2",
+    "hardhat": "^2.17.3",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.8.0",
+    "ts-node": ">=8.0.0",
+    "typechain": "^8.1.0",
+    "typescript": ">=4.5.0"
+  }
+}

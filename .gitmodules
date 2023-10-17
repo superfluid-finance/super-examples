@@ -12,3 +12,12 @@
 	url = https://github.com/superfluid-finance/ethereum-contracts
 [submodule "/Users/sam_flamini/devPortfolio/tci-examples/super-examples/projects/money-streaming-intro/money-streaming-intro-foundry/lib/ethereum-contracts"]
 	branch = dev
+[submodule "projects/superfluid-deployment/foundry/lib/forge-std"]
+	path = projects/superfluid-deployment/foundry/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "projects/superfluid-deployment/foundry/lib/superfluid-protocol-monorepo"]
+	path = projects/superfluid-deployment/foundry/lib/superfluid-protocol-monorepo
+	url = https://github.com/superfluid-finance/protocol-monorepo
+[submodule "projects/superfluid-deployment/foundry/lib/openzeppelin-contracts"]
+	path = projects/superfluid-deployment/foundry/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
