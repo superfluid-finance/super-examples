@@ -250,7 +250,7 @@ At the top of our test file, we’ll include our imports and also set up several
 const { expect } = require("chai");
 
 const { Framework } = require("@superfluid-finance/sdk-core");
-const TestToken =  require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json");
+const TestToken =  require("@superfluid-finance/ethereum-contracts/build/hardhat/contracts/utils/TestToken.sol/TestToken.json");
 
 const { ethers } = require("hardhat");
 

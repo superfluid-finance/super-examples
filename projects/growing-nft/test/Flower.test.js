@@ -3,7 +3,7 @@ const { ethers } = require("hardhat")
 const { time } = require("@nomicfoundation/hardhat-network-helpers");
 const { Framework } = require("@superfluid-finance/sdk-core")
 const { deployTestFramework } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework");
-const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
+const TestToken = require("@superfluid-finance/ethereum-contracts/build/hardhat/contracts/utils/TestToken.sol/TestToken.json")
 
 let sfDeployer
 let contractsFramework

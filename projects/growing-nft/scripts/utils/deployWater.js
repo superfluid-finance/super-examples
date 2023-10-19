@@ -1,7 +1,7 @@
 // deploy a new WATER ERC20 token
 
 const hre = require("hardhat");
-const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
+const TestToken = require("@superfluid-finance/ethereum-contracts/build/hardhat/contracts/utils/TestToken.sol/TestToken.json")
 
 
 async function main() {

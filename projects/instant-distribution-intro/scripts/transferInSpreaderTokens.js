@@ -5,7 +5,7 @@ const TokenSpreaderJSON = require("../artifacts/contracts/TokenSpreader.sol/Toke
 const TokenSpreaderABI = TokenSpreaderJSON.abi
 const SuperTokenJSON = require("../artifacts/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol/ISuperToken.json")
 const SuperTokenABI = SuperTokenJSON.abi
-const TestTokenJSON = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
+const TestTokenJSON = require("@superfluid-finance/ethereum-contracts/build/hardhat/contracts/utils/TestToken.sol/TestToken.json")
 const TestTokenABI = TestTokenJSON.abi // fDAI is modded to include a public mint function that this ABI includes for us to use
 
 require("dotenv").config()

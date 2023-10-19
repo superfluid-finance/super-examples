@@ -75,7 +75,6 @@ contract EmploymentLoan is SuperAppBaseFlow {
         employer = _employer;
         borrower = _borrower;
         borrowToken = _borrowToken;
-        host = _host;
         loanOpen = false;
         isClosed = false;
     }
@@ -154,7 +153,7 @@ contract EmploymentLoan is SuperAppBaseFlow {
     ) private returns (bytes memory newCtx) {
         newCtx = ctx;
         //get the current sender of the flow
-        address sender = host.decodeCtx(ctx).msgSender;
+        address sender = _host.decodeCtx(ctx).msgSender;
         //this will revert and no outflow or inflow will be created if the sender of the flow is not
         // the emploer
         require(sender == employer, "sender of flow must be the employer");

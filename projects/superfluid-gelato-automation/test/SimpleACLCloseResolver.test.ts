@@ -1,7 +1,7 @@
 import chai, { expect } from "chai";
 import { ethers, network } from "hardhat";
 import { chaiEthers } from "chai-ethers";
-import TestTokenABI from "@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json";
+import TestTokenABI from "@superfluid-finance/ethereum-contracts/build/hardhat/contracts/utils/TestToken.sol/TestToken.json";
 import {
     Framework,
     SuperToken,

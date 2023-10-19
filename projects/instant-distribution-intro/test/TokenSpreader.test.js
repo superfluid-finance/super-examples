@@ -4,7 +4,7 @@ const { ethers } = require("hardhat")
 const {
     deployTestFramework
 } = require("@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework")
-const TestToken = require("@superfluid-finance/ethereum-contracts/build/contracts/TestToken.json")
+const TestToken = require("@superfluid-finance/ethereum-contracts/build/hardhat/contracts/utils/TestToken.sol/TestToken.json")
 
 let sf
 let spreader
