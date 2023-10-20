@@ -33,7 +33,8 @@ contract RedirectAll is SuperAppBaseFlow {
       _host,
       true,
       true,
-      true  
+      true,
+      ""
     ) {
 
         _acceptedToken = acceptedToken;

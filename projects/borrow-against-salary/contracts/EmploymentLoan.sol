@@ -67,7 +67,8 @@ contract EmploymentLoan is SuperAppBaseFlow {
         _host,
         true,
         true,
-        true
+        true,
+        ""
     ) {
         borrowAmount = _borrowAmount;
         interestRate = _interestRate;
