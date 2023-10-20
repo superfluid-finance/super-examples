@@ -5,6 +5,6 @@ This project is used to illustrate the different ways to deploy the Superfluid p
 We cover:
 
 - Foundry
-- Hardhat + Viem
 - Hardhat + Ethers V5
 - Hardhat + Ethers V6
+- Hardhat + Viem (WIP)

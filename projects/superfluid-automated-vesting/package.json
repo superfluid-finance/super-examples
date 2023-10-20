@@ -26,7 +26,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/superfluid-finance/protocol-monorepo/examples.git"
+        "url": "git+https://github.com/superfluid-finance/super-examples.git"
     },
     "author": "",
     "license": "MIT",

@@ -4,7 +4,7 @@ import testResolverArtifact from "@superfluid-finance/ethereum-contracts/build/h
 
 async function main() {
   const [Deployer] = await ethers.getSigners();
-  const {frameworkDeployer} = await deployTestFramework("", ethers.provider, Deployer);
+  const {frameworkDeployer} = await deployTestFramework(process.env.HARDHAT_TEST_ACCOUNT_PRIVATE_KEY, ethers.provider);
 
   const framework = await frameworkDeployer.getFramework();
 
@@ -19,7 +19,7 @@ async function main() {
           "Fake DAI",
           "fDAI",
           18,
-          ethers.utils.parseUnits("1000000000000")
+          ethers.parseUnits("1000000000000")
       );
 
   await frameworkDeployer
@@ -31,7 +31,7 @@ async function main() {
       .deployPureSuperToken(
           "Mr.Token",
           "MRx",
-          ethers.utils.parseUnits("1000000000000")
+          ethers.parseUnits("1000000000000")
       );
 
     const fDAIAddress = await resolver.get("tokens.test.fDAI");

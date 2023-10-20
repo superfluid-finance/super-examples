@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/0xdavinchee/Documents/dev/superfluid/super-examples/projects/superfluid-deployment/hardhat-ethers-v6/contracts/Lock.sol": {
-      "lastModificationDate": 1697534257654,
+      "lastModificationDate": 1697802628234,
       "contentHash": "ae66265769cc28ebdaa34881df95bc5e",
       "sourceName": "contracts/Lock.sol",
       "solcConfig": {
