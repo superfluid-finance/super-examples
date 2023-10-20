@@ -135,7 +135,7 @@ contract RedirectAll is SuperAppBaseFlow {
     function _changeReceiver(address newReceiver) internal {
         if (newReceiver == address(0)) revert InvalidReceiver();
 
-        if (host.isApp(ISuperApp(newReceiver))) revert ReceiverIsSuperApp();
+        if (HOST.isApp(ISuperApp(newReceiver))) revert ReceiverIsSuperApp();
 
         if (newReceiver == _receiver) return;
 
