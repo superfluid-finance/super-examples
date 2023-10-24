@@ -1,10 +1,12 @@
 import { ethers } from "hardhat";
-import { deployTestFramework } from "@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework";
+import { deployTestFrameworkWithEthersV5, printProtocolFrameworkAddresses } from "@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework";
 import testResolverArtifact from "@superfluid-finance/ethereum-contracts/build/hardhat/contracts/utils/TestResolver.sol/TestResolver.json";
 
 async function main() {
   const [Deployer] = await ethers.getSigners();
-  const {frameworkDeployer} = await deployTestFramework("", ethers.provider, Deployer);
+  const {frameworkDeployer} = await deployTestFrameworkWithEthersV5(Deployer);
+
+  console.log("Superfluid Protocol Deployed!");
 
   const framework = await frameworkDeployer.getFramework();
 
@@ -13,9 +15,11 @@ async function main() {
     framework.resolver
   );
 
+  printProtocolFrameworkAddresses(framework);
+
   await frameworkDeployer
       .connect(Deployer)
-      .deployWrapperSuperToken(
+      ["deployWrapperSuperToken(string,string,uint8,uint256)"](
           "Fake DAI",
           "fDAI",
           18,

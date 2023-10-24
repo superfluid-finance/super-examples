@@ -1,10 +1,12 @@
 import { ethers } from "hardhat";
-import { deployTestFramework } from "@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework";
+import { deployTestFrameworkWithEthersV6, printProtocolFrameworkAddresses } from "@superfluid-finance/ethereum-contracts/dev-scripts/deploy-test-framework";
 import testResolverArtifact from "@superfluid-finance/ethereum-contracts/build/hardhat/contracts/utils/TestResolver.sol/TestResolver.json";
 
 async function main() {
   const [Deployer] = await ethers.getSigners();
-  const {frameworkDeployer} = await deployTestFramework(process.env.HARDHAT_TEST_ACCOUNT_PRIVATE_KEY, ethers.provider);
+  const {frameworkDeployer} = await deployTestFrameworkWithEthersV6(process.env.HARDHAT_TEST_ACCOUNT_PRIVATE_KEY, ethers.provider);
+
+  console.log("Superfluid Protocol Deployed!");
 
   const framework = await frameworkDeployer.getFramework();
 
@@ -12,6 +14,8 @@ async function main() {
     testResolverArtifact.abi,
     framework.resolver
   );
+
+  printProtocolFrameworkAddresses(framework);
 
   await frameworkDeployer
       .connect(Deployer)
