@@ -24,7 +24,8 @@ contract Royalties is SuperAppBaseFlow {
     ISuperfluidPool pool;
     ISuperToken acceptedToken;
     address private owner;
-    int96 private ownerFlowRate;
+    address private highestBidder;
+    int96 private highestFlowRate;
     uint private lastUpdate;
     PoolConfig private poolConfig;
     IGeneralDistributionAgreementV1 private gda;
@@ -47,8 +48,9 @@ contract Royalties is SuperAppBaseFlow {
         pool=SuperTokenV1Library.createPool(acceptedToken, address(this), poolConfig );
         poolAddress=address(pool);
         owner=msg.sender;
-        ownerFlowRate=acceptedToken.getFlowRate(owner, address(this));
+        highestFlowRate=acceptedToken.getFlowRate(owner, address(this));
         lastUpdate=block.timestamp;
+        highestBidder=address(0);
 
     }
 
@@ -65,8 +67,29 @@ contract Royalties is SuperAppBaseFlow {
         bytes calldata ctx
     ) internal override returns (bytes memory) {
         int96 senderFlowRate= acceptedToken.getFlowRate(sender, address(this));
+        require(senderFlowRate>highestFlowRate, "Sender flowrate lower than current flowRate");
         bytes memory newCtx=ctx;
-        require(senderFlowRate>ownerFlowRate, "Sender flowrate lower than owner's");
+        newCtx=acceptedToken.deleteFlowWithCtx(owner,address(this), ctx);
+        uint128 halfShares=uint128(block.timestamp-lastUpdate)/2;
+        ISuperfluidPool(poolAddress).updateMemberUnits(owner,halfShares);
+        ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder,halfShares);
+        newCtx=gda.distributeFlow(acceptedToken, address(this),pool,senderFlowRate,newCtx);
+        highestBidder=sender;
+        highestFlowRate=senderFlowRate;
+        lastUpdate=block.timestamp;
+        return newCtx;
+    }
+
+    function onFlowUpdated( 
+        ISuperToken,
+        address sender,
+        int96 previousflowRate,
+        uint256 lastUpdated,
+        bytes calldata ctx
+    ) internal override returns (bytes memory) {
+        int96 senderFlowRate= acceptedToken.getFlowRate(sender, address(this));
+        bytes memory newCtx=ctx;
+        require(senderFlowRate>highestFlowRate, "Sender flowrate lower than current flowRate");
         newCtx=acceptedToken.deleteFlowWithCtx(owner,address(this), ctx);
         ISuperfluidPool(poolAddress).updateMemberUnits(owner,uint128(block.timestamp-lastUpdate));
         newCtx=gda.distributeFlow(acceptedToken, address(this),pool,senderFlowRate,newCtx);
@@ -74,18 +97,6 @@ contract Royalties is SuperAppBaseFlow {
         ownerFlowRate=senderFlowRate;
         lastUpdate=block.timestamp;
         return newCtx;
-    }
-
-    function onFlowUpdated( 
-        ISuperToken /*superToken*/,
-        address sender,
-        int96 /*previousflowRate*/,
-        uint256 /*lastUpdated*/,
-        bytes calldata /*ctx*/
-    ) internal override pure returns (bytes memory) {
-        // users can't update their flow. They need to stop playing and leave and rejoin the waiting room
-        revert("can't update sorry bye");
-        // return ctx
     }
 
     function onFlowDeleted(
