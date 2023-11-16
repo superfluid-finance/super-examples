@@ -31,6 +31,8 @@ contract AdSpotContract is SuperAppBaseFlow {
     PoolConfig private poolConfig;
     IGeneralDistributionAgreementV1 private gda;
 
+    event newHighestBidder(address highestBidder, int96 flowRate );
+
     /**
      * @dev Constructor to initialize the contract with necessary Superfluid interfaces and parameters.
      * @param _acceptedToken The SuperToken accepted for streaming payments.
@@ -115,12 +117,12 @@ contract AdSpotContract is SuperAppBaseFlow {
     ) internal override returns (bytes memory newCtx) {
         int96 senderFlowRate= acceptedToken.getFlowRate(sender, address(this));
         require(senderFlowRate>previousflowRate, "Sender flowRate is lower than the previous one");
-        require(senderFlowRate>highestFlowRate, "Sender flowrate lower than current flowRate");
+        require(senderFlowRate>highestFlowRate, "You already have a flowrate that is higher than this one");
         newCtx=ctx;
         uint128 halfShares=uint128(block.timestamp-lastUpdate)/2;
         ISuperfluidPool(poolAddress).updateMemberUnits(owner,halfShares);
         ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder,halfShares);
-        newCtx=gda.distributeFlow(acceptedToken,address(this),pool,senderFlowRate,newCtx);
+        newCtx=acceptedToken.distributeFlowWithCtx(pool,address(this),senderFlowRate,newCtx);
         highestBidder=sender;
         highestFlowRate=senderFlowRate;
         lastUpdate=block.timestamp;
