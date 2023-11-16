@@ -91,10 +91,12 @@ contract Royalties is SuperAppBaseFlow {
         require(senderFlowRate>previousflowRate, "Sender flowRate is lower than the previous one");
         require(senderFlowRate>highestFlowRate, "Sender flowrate lower than current flowRate");
         bytes memory newCtx=ctx;
-        ISuperfluidPool(poolAddress).updateMemberUnits(owner,uint128(block.timestamp-lastUpdate));
+        uint128 halfShares=uint128(block.timestamp-lastUpdate)/2;
+        ISuperfluidPool(poolAddress).updateMemberUnits(owner,halfShares);
+        ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder,halfShares);
         newCtx=gda.distributeFlow(acceptedToken, address(this),pool,senderFlowRate,newCtx);
-        owner=sender;
-        ownerFlowRate=senderFlowRate;
+        highestBidder=sender;
+        highestFlowRate=senderFlowRate;
         lastUpdate=block.timestamp;
         return newCtx;
     }
