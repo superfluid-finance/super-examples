@@ -71,8 +71,10 @@ contract Royalties is SuperAppBaseFlow {
         bytes memory newCtx=ctx;
         newCtx=acceptedToken.deleteFlowWithCtx(highestBidder,address(this), ctx);
         uint128 halfShares=uint128(block.timestamp-lastUpdate)/2;
-        ISuperfluidPool(poolAddress).updateMemberUnits(owner,halfShares);
-        ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder,halfShares);
+        pool.updateMemberUnits(owner,halfShares);
+        if (highestBidder!=address(0)){
+            ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder,halfShares);
+        }
         newCtx=gda.distributeFlow(acceptedToken, address(this),pool,senderFlowRate,newCtx);
         highestBidder=sender;
         highestFlowRate=senderFlowRate;
@@ -109,6 +111,11 @@ contract Royalties is SuperAppBaseFlow {
         uint256 /*lastUpdated*/,
         bytes calldata ctx
     ) internal override returns (bytes memory newCtx) {
+
+        require(sender==highestBidder, "You don't have an active stream");
+        bytes memory newCtx=ctx;
+
+        return newCtx;
 
     }
 
