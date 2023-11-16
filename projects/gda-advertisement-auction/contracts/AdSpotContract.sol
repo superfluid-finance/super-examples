@@ -26,7 +26,6 @@ contract AdSpotContract is SuperAppBaseFlow {
     int96 private highestFlowRate;
     uint private lastUpdate;
     PoolConfig private poolConfig;
-    IGeneralDistributionAgreementV1 private gda;
     address public nftAddress;
     uint256 public nftTokenId;
 
@@ -39,8 +38,7 @@ contract AdSpotContract is SuperAppBaseFlow {
      */
 
     constructor(
-        ISuperToken _acceptedToken,
-        IGeneralDistributionAgreementV1 _gda
+        ISuperToken _acceptedToken
     )
         SuperAppBaseFlow(
             ISuperfluid(ISuperToken(_acceptedToken).getHost()),
@@ -50,7 +48,6 @@ contract AdSpotContract is SuperAppBaseFlow {
             string("")
         )
     {
-        gda = _gda;
         acceptedToken = _acceptedToken;
         poolConfig.transferabilityForUnitsOwner = true;
         poolConfig.distributionFromAnyAddress = true;
@@ -126,30 +123,23 @@ contract AdSpotContract is SuperAppBaseFlow {
     }
 
     /**
-     * @dev Returns the address of the General Distribution Agreement.
-     */
-    function getGDA() public view returns (IGeneralDistributionAgreementV1) {
-        return gda;
-    }
-
-    /**
      * @dev Returns owner's shares.
      */
-    function getOwnerShares() public view returns (IGeneralDistributionAgreementV1) {
+    function getOwnerShares() public view returns (uint128) {
         return pool.getUnits(owner);
     }
 
     /**
      * @dev Returns shares of the highest bidder.
      */
-    function getBidderShares() public view returns (IGeneralDistributionAgreementV1) {
+    function getBidderShares() public view returns (uint128) {
         return pool.getUnits(highestBidder);
     }
 
     /**
      * @dev Returns the total shares.
      */
-    function getTotalShares() public view returns (IGeneralDistributionAgreementV1) {
+    function getTotalShares() public view returns (uint128) {
         return pool.getTotalUnits();
     }
 
@@ -246,7 +236,8 @@ contract AdSpotContract is SuperAppBaseFlow {
         pool.updateMemberUnits(highestBidder, halfShares);
         newCtx = acceptedToken.distributeFlowWithCtx(pool, address(this), 0, newCtx);
         highestBidder = address(0);
-
+        highestFlowRate = 0;
+        lastUpdate = block.timestamp;
         return newCtx;
     }
 }
