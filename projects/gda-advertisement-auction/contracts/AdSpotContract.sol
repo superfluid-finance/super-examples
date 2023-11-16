@@ -27,8 +27,8 @@ contract AdSpotContract is SuperAppBaseFlow {
     uint private lastUpdate;
     PoolConfig private poolConfig;
     IGeneralDistributionAgreementV1 private gda;
-    address public nftAddress; // Address of the NFT contract
-    uint256 public nftTokenId; // Token ID of the NFT
+    address public nftAddress;
+    uint256 public nftTokenId;
 
     event newHighestBidder(address highestBidder, int96 flowRate);
 
@@ -130,6 +130,27 @@ contract AdSpotContract is SuperAppBaseFlow {
      */
     function getGDA() public view returns (IGeneralDistributionAgreementV1) {
         return gda;
+    }
+
+    /**
+     * @dev Returns owner's shares.
+     */
+    function getOwnerShares() public view returns (IGeneralDistributionAgreementV1) {
+        return pool.getUnits(owner);
+    }
+
+    /**
+     * @dev Returns shares of the highest bidder.
+     */
+    function getBidderShares() public view returns (IGeneralDistributionAgreementV1) {
+        return pool.getUnits(highestBidder);
+    }
+
+    /**
+     * @dev Returns the total shares.
+     */
+    function getTotalShares() public view returns (IGeneralDistributionAgreementV1) {
+        return pool.getTotalUnits();
     }
 
     // ---------------------------------------------------------------------------------------------
