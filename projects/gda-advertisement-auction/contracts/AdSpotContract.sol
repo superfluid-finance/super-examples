@@ -32,7 +32,7 @@ contract AdSpotContract is SuperAppBaseFlow {
 
     event newHighestBidder(address highestBidder, int96 flowRate);
 
-    /**
+    /*
      * @dev Constructor to initialize the contract with necessary Superfluid interfaces and parameters.
      * @param _acceptedToken The SuperToken accepted for streaming payments.
      * @param _gda General Distribution Agreement interface for handling fund distributions.
@@ -66,7 +66,7 @@ contract AdSpotContract is SuperAppBaseFlow {
         return superToken == acceptedToken;
     }
 
-    /**
+    /*
      * @dev Allows the highest bidder to set an NFT to showcase.
      * @param _nftAddress The address of the NFT contract.
      * @param _tokenId The token ID of the NFT.
@@ -78,9 +78,10 @@ contract AdSpotContract is SuperAppBaseFlow {
         nftTokenId = _tokenId;
     }
 
+// ---------------------------------------------------------------------------------------------
+    // SUPER APP CALLBACKS
     // ---------------------------------------------------------------------------------------------
-    // GETTERS
-    // ---------------------------------------------------------------------------------------------
+
 
     /**
      * @dev Returns the address of the pool.
@@ -135,7 +136,7 @@ contract AdSpotContract is SuperAppBaseFlow {
     // SUPER APP CALLBACKS
     // ---------------------------------------------------------------------------------------------
 
-    /**
+    /*
      * @dev Callback function that gets executed when a new flow is created to this contract.
      *      It handles logic for updating the highest bidder and distributing shares.
      * @param sender The address of the sender creating the flow.
@@ -156,7 +157,7 @@ contract AdSpotContract is SuperAppBaseFlow {
         uint128 halfShares = uint128(block.timestamp - lastUpdate) / 2;
         pool.updateMemberUnits(owner, halfShares);
         if (highestBidder != address(0)) {
-            ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder, halfShares);
+            pool.updateMemberUnits(highestBidder, halfShares);
         }
         newCtx = acceptedToken.distributeFlowWithCtx(pool, address(this), senderFlowRate, newCtx);
         highestBidder = sender;
@@ -201,7 +202,7 @@ contract AdSpotContract is SuperAppBaseFlow {
         return newCtx;
     }
 
-    /**
+    /*
      * @dev Callback function that gets executed when a flow to this contract is deleted.
      *      Handles the removal of a bidder and adjustment of shares.
      * @param sender The address of the sender deleting the flow.
@@ -218,13 +219,12 @@ contract AdSpotContract is SuperAppBaseFlow {
         bytes calldata ctx
     ) internal override returns (bytes memory newCtx) {
         require(sender == highestBidder, "You don't have an active stream");
-        highestBidder = address(0);
+        
         uint128 halfShares = uint128(block.timestamp - lastUpdate) / 2;
         pool.updateMemberUnits(owner, halfShares);
-        if (highestBidder != address(0)) {
-            ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder, halfShares);
-        }
-        newCtx = gda.distributeFlow(acceptedToken, address(this), pool, 0, newCtx);
+        pool.updateMemberUnits(highestBidder, halfShares);
+        newCtx = acceptedToken.distributeFlowWithCtx(pool, address(this), 0, newCtx);
+        highestBidder = address(0);
 
         return newCtx;
     }
