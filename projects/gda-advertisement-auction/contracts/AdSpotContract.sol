@@ -69,7 +69,7 @@ contract Royalties is SuperAppBaseFlow {
         int96 senderFlowRate= acceptedToken.getFlowRate(sender, address(this));
         require(senderFlowRate>highestFlowRate, "Sender flowrate lower than current flowRate");
         bytes memory newCtx=ctx;
-        newCtx=acceptedToken.deleteFlowWithCtx(owner,address(this), ctx);
+        newCtx=acceptedToken.deleteFlowWithCtx(highestBidder,address(this), ctx);
         uint128 halfShares=uint128(block.timestamp-lastUpdate)/2;
         ISuperfluidPool(poolAddress).updateMemberUnits(owner,halfShares);
         ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder,halfShares);
@@ -88,9 +88,9 @@ contract Royalties is SuperAppBaseFlow {
         bytes calldata ctx
     ) internal override returns (bytes memory) {
         int96 senderFlowRate= acceptedToken.getFlowRate(sender, address(this));
-        bytes memory newCtx=ctx;
+        require(senderFlowRate>previousflowRate, "Sender flowRate is lower than the previous one");
         require(senderFlowRate>highestFlowRate, "Sender flowrate lower than current flowRate");
-        newCtx=acceptedToken.deleteFlowWithCtx(owner,address(this), ctx);
+        bytes memory newCtx=ctx;
         ISuperfluidPool(poolAddress).updateMemberUnits(owner,uint128(block.timestamp-lastUpdate));
         newCtx=gda.distributeFlow(acceptedToken, address(this),pool,senderFlowRate,newCtx);
         owner=sender;
