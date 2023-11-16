@@ -1,3 +1,4 @@
+
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.8.2 <0.9.0;
@@ -15,7 +16,7 @@ import {SuperAppBaseFlow} from "./contracts/apps/SuperAppBaseFlow.sol";
 import {IGeneralDistributionAgreementV1,ISuperfluidPool,PoolConfig} from "./contracts/interfaces/agreements/gdav1/IGeneralDistributionAgreementV1.sol";
 
  
-contract Royalties is SuperAppBaseFlow {
+contract AdSpotContract is SuperAppBaseFlow {
 
     using SuperTokenV1Library for ISuperToken;
 
@@ -30,6 +31,11 @@ contract Royalties is SuperAppBaseFlow {
     PoolConfig private poolConfig;
     IGeneralDistributionAgreementV1 private gda;
 
+    /**
+     * @dev Constructor to initialize the contract with necessary Superfluid interfaces and parameters.
+     * @param _acceptedToken The SuperToken accepted for streaming payments.
+     * @param _gda General Distribution Agreement interface for handling fund distributions.
+     */
 
     constructor(
         ISuperToken _acceptedToken,
@@ -61,6 +67,14 @@ contract Royalties is SuperAppBaseFlow {
     // ---------------------------------------------------------------------------------------------
     // SUPER APP CALLBACKS
     // ---------------------------------------------------------------------------------------------
+
+    /**
+     * @dev Callback function that gets executed when a new flow is created to this contract.
+     *      It handles logic for updating the highest bidder and distributing shares.
+     * @param sender The address of the sender creating the flow.
+     * @param ctx The context of the current flow transaction.
+     * @return bytes Returns the new transaction context.
+     */
     function onFlowCreated(
         ISuperToken /*superToken*/,
         address sender,
@@ -82,6 +96,15 @@ contract Royalties is SuperAppBaseFlow {
         return newCtx;
     }
 
+    /**
+     * @dev Callback function that gets executed when an existing flow to this contract is updated.
+     *      It updates the highest bidder and adjusts share distribution accordingly.
+     * @param sender The address of the sender updating the flow.
+     * @param previousflowRate The previous flow rate before the update.
+     * @param lastUpdated The timestamp of the last update.
+     * @param ctx The context of the current flow transaction.
+     * @return bytes Returns the new transaction context.
+     */
     function onFlowUpdated( 
         ISuperToken,
         address sender,
@@ -103,6 +126,14 @@ contract Royalties is SuperAppBaseFlow {
         return newCtx;
     }
 
+    /**
+     * @dev Callback function that gets executed when a flow to this contract is deleted.
+     *      Handles the removal of a bidder and adjustment of shares.
+     * @param sender The address of the sender deleting the flow.
+     * @param ctx The context of the current flow transaction.
+     * @return bytes Returns the new transaction context.
+     */
+
     function onFlowDeleted(
         ISuperToken /*superToken*/,
         address sender,
@@ -113,6 +144,9 @@ contract Royalties is SuperAppBaseFlow {
     ) internal override returns (bytes memory newCtx) {
 
         require(sender==highestBidder, "You don't have an active stream");
+
+        /* UNFINISHED FUNCTION */
+        
         bytes memory newCtx=ctx;
 
         return newCtx;
