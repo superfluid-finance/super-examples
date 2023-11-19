@@ -75,8 +75,8 @@ contract AdSpotContract is SuperAppBaseFlow {
         nftTokenId = _tokenId;
     }
 
-// ---------------------------------------------------------------------------------------------
-    // SUPER APP CALLBACKS
+    // ---------------------------------------------------------------------------------------------
+    // Getters
     // ---------------------------------------------------------------------------------------------
 
 
@@ -166,9 +166,9 @@ contract AdSpotContract is SuperAppBaseFlow {
             newCtx = acceptedToken.deleteFlowWithCtx(highestBidder, address(this), ctx);
         }
         uint128 halfShares = uint128(block.timestamp - lastUpdate) / 2;
-        pool.updateMemberUnits(owner, halfShares);
+        pool.updateMemberUnits(owner, halfShares+pool.getUnits(owner));
         if (highestBidder != address(0)) {
-            pool.updateMemberUnits(highestBidder, halfShares);
+            pool.updateMemberUnits(highestBidder, halfShares+pool.getUnits(highestBidder));
         }
         newCtx = acceptedToken.distributeFlowWithCtx(pool, address(this), senderFlowRate, newCtx);
         highestBidder = sender;
@@ -196,7 +196,7 @@ contract AdSpotContract is SuperAppBaseFlow {
         int96 senderFlowRate = acceptedToken.getFlowRate(sender, address(this));
         require(
             senderFlowRate > previousflowRate,
-            "Sender flowRate is lower than the previous one"
+            "Sender flowRate is lower than the previous one, delete flowrate and start a new one lower"
         );
         require(
             senderFlowRate > highestFlowRate,
@@ -204,8 +204,8 @@ contract AdSpotContract is SuperAppBaseFlow {
         );
         newCtx = ctx;
         uint128 halfShares = uint128(block.timestamp - lastUpdate) / 2;
-        ISuperfluidPool(poolAddress).updateMemberUnits(owner, halfShares);
-        ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder, halfShares);
+        ISuperfluidPool(poolAddress).updateMemberUnits(owner, halfShares+pool.getUnits(owner));
+        ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder, halfShares+pool.getUnits(highestBidder));
         newCtx = acceptedToken.distributeFlowWithCtx(pool, address(this), senderFlowRate, newCtx);
         highestBidder = sender;
         highestFlowRate = senderFlowRate;
@@ -232,9 +232,10 @@ contract AdSpotContract is SuperAppBaseFlow {
         require(sender == highestBidder, "You don't have an active stream");
         
         uint128 halfShares = uint128(block.timestamp - lastUpdate) / 2;
-        pool.updateMemberUnits(owner, halfShares);
-        pool.updateMemberUnits(highestBidder, halfShares);
-        newCtx = acceptedToken.distributeFlowWithCtx(pool, address(this), 0, newCtx);
+        pool.updateMemberUnits(owner, halfShares+pool.getUnits(owner));
+        pool.updateMemberUnits(highestBidder, halfShares+pool.getUnits(highestBidder));
+
+        newCtx = acceptedToken.distributeFlowWithCtx(pool, address(this), 0, ctx);
         highestBidder = address(0);
         highestFlowRate = 0;
         lastUpdate = block.timestamp;
