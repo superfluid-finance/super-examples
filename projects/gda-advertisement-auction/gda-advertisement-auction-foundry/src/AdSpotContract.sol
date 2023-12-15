@@ -34,7 +34,6 @@ contract AdSpotContract is SuperAppBaseFlow {
     /*
      * @dev Constructor to initialize the contract with necessary Superfluid interfaces and parameters.
      * @param _acceptedToken The SuperToken accepted for streaming payments.
-     * @param _gda General Distribution Agreement interface for handling fund distributions.
      */
 
     constructor(
