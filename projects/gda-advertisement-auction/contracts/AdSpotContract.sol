@@ -82,14 +82,6 @@ contract AdSpotContract is SuperAppBaseFlow {
     // ---------------------------------------------------------------------------------------------
 
     /**
-     * @dev Returns the last update timestamp.
-     */
-    function getLastUpdate() public view returns (uint) {
-        return lastUpdate;
-    }
-
-
-    /**
      * @dev Returns the address of the pool.
      */
     function getPoolAddress() public view returns (address) {
@@ -196,10 +188,9 @@ contract AdSpotContract is SuperAppBaseFlow {
         if (highestBidder != address(0)) {
             newCtx = acceptedToken.deleteFlowWithCtx(highestBidder, address(this), ctx);
             uint128 halfShares = uint128(block.timestamp - lastUpdate) / 2;
-            if(pool.getUnits(owner)==1){
-                pool.updateMemberUnits(owner, halfShares + pool.getUnits(owner)-1);
-            }
-            else{
+            if (pool.getUnits(owner) == 1) {
+                pool.updateMemberUnits(owner, halfShares + pool.getUnits(owner) - 1);
+            } else {
                 pool.updateMemberUnits(owner, halfShares + pool.getUnits(owner));
             }
             pool.updateMemberUnits(highestBidder, halfShares + pool.getUnits(highestBidder));
@@ -240,7 +231,10 @@ contract AdSpotContract is SuperAppBaseFlow {
         newCtx = ctx;
         uint128 halfShares = uint128(block.timestamp - lastUpdate) / 2;
         ISuperfluidPool(poolAddress).updateMemberUnits(owner, halfShares + pool.getUnits(owner));
-        ISuperfluidPool(poolAddress).updateMemberUnits(highestBidder,halfShares + pool.getUnits(highestBidder));
+        ISuperfluidPool(poolAddress).updateMemberUnits(
+            highestBidder,
+            halfShares + pool.getUnits(highestBidder)
+        );
         newCtx = acceptedToken.distributeFlowWithCtx(address(this), pool, senderFlowRate, newCtx);
         highestBidder = sender;
         highestFlowRate = senderFlowRate;
