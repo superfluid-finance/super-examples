@@ -24,3 +24,9 @@
 [submodule "projects/gda-advertisement-auction/gda-advertisement-auction-foundry/lib/superfluid-protocol-monorepo"]
 	path = projects/gda-advertisement-auction/gda-advertisement-auction-foundry/lib/superfluid-protocol-monorepo
 	url = https://github.com/superfluid-finance/protocol-monorepo
+[submodule "projects/gda-advertisement-auction/foundry-tests/lib/superfluid-protocol-monorepo"]
+	path = projects/gda-advertisement-auction/foundry-tests/lib/superfluid-protocol-monorepo
+	url = https://github.com/superfluid-finance/protocol-monorepo
+[submodule "projects/gda-advertisement-auction/foundry-tests/lib/openzeppelin-contracts"]
+	path = projects/gda-advertisement-auction/foundry-tests/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
