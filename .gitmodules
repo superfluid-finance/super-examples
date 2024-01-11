@@ -30,9 +30,4 @@
 [submodule "projects/gda-advertisement-auction/foundry-tests/lib/openzeppelin-contracts"]
 	path = projects/gda-advertisement-auction/foundry-tests/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
-[submodule "projects/money-streaming-intro/money-streaming-intro-foundry/lib/superfluid-protocol-monorepo"]
-	path = projects/money-streaming-intro/money-streaming-intro-foundry/lib/superfluid-protocol-monorepo
-	url = https://github.com/superfluid-finance/protocol-monorepo
-[submodule "projects/money-streaming-intro/money-streaming-intro-foundry/lib/openzeppelin-contracts"]
-	path = projects/money-streaming-intro/money-streaming-intro-foundry/lib/openzeppelin-contracts
-	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+
