@@ -58,6 +58,7 @@ jobs:
             - name: Install, Build, and Test
               run: |
                   cd "projects/${{ matrix.project }}"
-                  forge install
+                  forge install superfluid-protocol-monorepo=https://github.com/superfluid-finance/protocol-monorepo@dev --no-commit
+                  forge install https://github.com/OpenZeppelin/openzeppelin-contracts@v4.9.3 --no-commit
                   forge build
                   forge test
