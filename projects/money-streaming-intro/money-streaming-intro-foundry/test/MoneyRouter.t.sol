@@ -6,13 +6,13 @@ import "forge-std/console.sol";
 import "ds-test/test.sol";
 
 import "../src/MoneyRouter.sol";
-import {ISuperfluid, ISuperToken, ISuperApp } from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import {IConstantFlowAgreementV1} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import {ERC1820RegistryCompiled} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
+import {ISuperfluid, ISuperToken, ISuperApp } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
+import {ERC1820RegistryCompiled} from "@superfluid-finance/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
 
-import {TestToken} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/TestToken.sol";
-import {SuperfluidFrameworkDeployer, TestGovernance, Superfluid, ConstantFlowAgreementV1, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "../lib/ethereum-contracts/packages/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
-
+import {TestToken} from "@superfluid-finance/ethereum-contracts/contracts/utils/TestToken.sol";
+import { TestGovernance, Superfluid, ConstantFlowAgreementV1, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "@superfluid-finance/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeploymentSteps.sol";
+import { SuperfluidFrameworkDeployer } from "@superfluid-finance/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
 
 contract MoneyRouterTest is Test {
 
@@ -40,12 +40,13 @@ contract MoneyRouterTest is Test {
         vm.etch(ERC1820RegistryCompiled.at, ERC1820RegistryCompiled.bin);
 
         SuperfluidFrameworkDeployer sfd = new SuperfluidFrameworkDeployer();
+        sfd.deployTestFramework();
         sf = sfd.getFramework();
         account1 = vm.addr(1);
         account2 = vm.addr(2);
         host = sf.host;
         cfa = sf.cfa;
-        (, daix) = sfd.deployWrapperSuperToken("fake dai token", "DAI", 18, 1000000000000000000000);
+        (dai , daix) = sfd.deployWrapperSuperToken("DAI", "DAI", 18, 100000000000000000000000000000, account1);
 
         vm.startPrank(account1);
         dai = TestToken(daix.getUnderlyingToken());

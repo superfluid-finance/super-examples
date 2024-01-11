@@ -4,3 +4,10 @@ out = 'out'
 libs = ['lib']
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
+
+remappings = [
+    "@openzeppelin/=lib/openzeppelin-contracts/",
+    "@superfluid-finance/=lib/superfluid-protocol-monorepo/packages",
+    "ds-test/=lib/forge-std/lib/ds-test/src/",
+    "forge-std/=lib/forge-std/src/"
+]
