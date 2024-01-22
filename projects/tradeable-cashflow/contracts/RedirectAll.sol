@@ -25,6 +25,9 @@ contract RedirectAll is SuperAppBaseFlow {
     /// @notice This is the current receiver that all streams will be redirected to.
     address public _receiver;
 
+    /// @dev The host contract, which is the Superfluid contract that registered this contract
+    ISuperfluid public host;
+
     constructor(
         ISuperToken acceptedToken,
         ISuperfluid _host,
@@ -33,7 +36,8 @@ contract RedirectAll is SuperAppBaseFlow {
       _host,
       true,
       true,
-      true  
+      true,
+      string("")  
     ) {
 
         _acceptedToken = acceptedToken;
