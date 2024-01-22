@@ -1,15 +1,11 @@
 // SPDX-License-Identifier: AGPLv3
 pragma solidity ^0.8.0;
 
-import {
-    ISuperToken, ISuperfluid
-} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
-import {
-    IConstantFlowAgreementV1
-} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
+import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
+import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 
 interface IVestingScheduler {
-
     error TimeWindowInvalid();
     error AccountInvalid();
     error ZeroAddress();
@@ -109,7 +105,7 @@ interface IVestingScheduler {
         address receiver,
         uint32 endDate,
         bytes memory ctx
-    ) external returns(bytes memory newCtx);
+    ) external returns (bytes memory newCtx);
 
     /**
      * @dev Event emitted on deletion of a vesting schedule
@@ -180,7 +176,7 @@ interface IVestingScheduler {
         ISuperToken superToken,
         address sender,
         address receiver
-    ) external returns(bool success);
+    ) external returns (bool success);
 
     /**
      * @dev Emitted when the end of a scheduled vesting is executed
@@ -211,7 +207,7 @@ interface IVestingScheduler {
         ISuperToken superToken,
         address sender,
         address receiver
-    ) external returns(bool success);
+    ) external returns (bool success);
 
     /**
      * @dev Gets data currently stored for a vesting schedule
