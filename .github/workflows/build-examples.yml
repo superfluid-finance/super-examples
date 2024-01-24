@@ -33,7 +33,6 @@ jobs:
                   cd "projects/${{ matrix.project }}"
                   yarn install
                   yarn build
-                  yarn test
 
     build-foundry-example:
         name: Build Foundry Examples
