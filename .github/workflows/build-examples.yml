@@ -17,7 +17,7 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["money-streaming-intro-foundry"]
+                project: ["money-streaming-intro-foundry", "gda-advertisement-auction"]
                 install: ["clean-install"]
         steps:
             - uses: actions/checkout@v3

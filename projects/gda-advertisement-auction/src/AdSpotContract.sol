@@ -8,13 +8,13 @@ pragma solidity >=0.8.2 <0.9.0;
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
 
-import {ISuperfluid, ISuperToken, ISuperApp, SuperAppDefinitions} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import {ISuperfluidPool} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/gdav1/ISuperfluidPool.sol";
-import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
-import {SuperAppBaseFlow} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBaseFlow.sol";
-import {IGeneralDistributionAgreementV1, ISuperfluidPool, PoolConfig} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/gdav1/IGeneralDistributionAgreementV1.sol";
+import { ISuperfluid, ISuperToken, ISuperApp, SuperAppDefinitions } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import { ISuperfluidPool } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/gdav1/ISuperfluidPool.sol";
+import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
+import { CFASuperAppBase } from "@superfluid-finance/ethereum-contracts/contracts/apps/CFASuperAppBase.sol";
+import { IGeneralDistributionAgreementV1, ISuperfluidPool, PoolConfig } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/gdav1/IGeneralDistributionAgreementV1.sol";
 
-contract AdSpotContract is SuperAppBaseFlow {
+contract AdSpotContract is CFASuperAppBase {
     using SuperTokenV1Library for ISuperToken;
 
     uint256 private number;
@@ -36,17 +36,8 @@ contract AdSpotContract is SuperAppBaseFlow {
      * @dev Constructor to initialize the contract with necessary Superfluid interfaces and parameters.
      * @param _acceptedToken The SuperToken accepted for streaming payments.
      */
-
-    constructor(
-        ISuperToken _acceptedToken
-    )
-        SuperAppBaseFlow(
-            ISuperfluid(ISuperToken(_acceptedToken).getHost()),
-            true,
-            true,
-            true,
-            string("")
-        )
+    constructor(ISuperToken _acceptedToken)
+        CFASuperAppBase(ISuperfluid(_acceptedToken.getHost()))
     {
         acceptedToken = _acceptedToken;
         owner = msg.sender;
@@ -69,7 +60,6 @@ contract AdSpotContract is SuperAppBaseFlow {
      * @param _nftAddress The address of the NFT contract.
      * @param _tokenId The token ID of the NFT.
      */
-
     function setNftToShowcase(address _nftAddress, uint256 _tokenId) external {
         require(msg.sender == highestBidder, "Only the highest bidder can set the NFT");
         nftAddress = _nftAddress;
@@ -200,7 +190,6 @@ contract AdSpotContract is SuperAppBaseFlow {
         highestFlowRate = senderFlowRate;
         lastUpdate = block.timestamp;
         emit newHighestBidder(highestBidder, highestFlowRate);
-        return newCtx;
     }
 
     /*
@@ -216,7 +205,7 @@ contract AdSpotContract is SuperAppBaseFlow {
         ISuperToken,
         address sender,
         int96 previousflowRate,
-        uint256 lastUpdated,
+        uint256 /*lastUpdated*/,
         bytes calldata ctx
     ) internal override returns (bytes memory newCtx) {
         int96 senderFlowRate = acceptedToken.getFlowRate(sender, address(this));
@@ -240,7 +229,6 @@ contract AdSpotContract is SuperAppBaseFlow {
         highestFlowRate = senderFlowRate;
         lastUpdate = block.timestamp;
         emit newHighestBidder(highestBidder, highestFlowRate);
-        return newCtx;
     }
 
     /*
@@ -250,12 +238,11 @@ contract AdSpotContract is SuperAppBaseFlow {
      * @param ctx The context of the current flow transaction.
      * @return bytes Returns the new transaction context.
      */
-
     function onFlowDeleted(
         ISuperToken /*superToken*/,
         address sender,
         address /*receiver*/,
-        int96 previousFlowRate,
+        int96 /*previousFlowRate*/,
         uint256 /*lastUpdated*/,
         bytes calldata ctx
     ) internal override returns (bytes memory newCtx) {
@@ -270,6 +257,5 @@ contract AdSpotContract is SuperAppBaseFlow {
         highestFlowRate = 0;
         lastUpdate = block.timestamp;
         emit newHighestBidder(highestBidder, highestFlowRate);
-        return newCtx;
     }
 }

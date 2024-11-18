@@ -7,3 +7,12 @@
 [submodule "projects/money-streaming-intro-foundry/lib/forge-std"]
 	path = projects/money-streaming-intro-foundry/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "projects/gda-advertisement-auction/lib/forge-std"]
+	path = projects/gda-advertisement-auction/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "projects/gda-advertisement-auction/lib/superfluid-protocol-monorepo"]
+	path = projects/gda-advertisement-auction/lib/superfluid-protocol-monorepo
+	url = https://github.com/superfluid-finance/protocol-monorepo
+[submodule "projects/gda-advertisement-auction/lib/openzeppelin-contracts"]
+	path = projects/gda-advertisement-auction/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
