@@ -2,17 +2,13 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "forge-std/console.sol";
-import "ds-test/test.sol";
+
+import { ISuperfluid, ISuperToken, IConstantFlowAgreementV1, ISuperApp } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import { ERC1820RegistryCompiled } from "@superfluid-finance/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
+import { TestToken } from "@superfluid-finance/ethereum-contracts/contracts/utils/TestToken.sol";
+import { SuperfluidFrameworkDeployer } from "@superfluid-finance/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
 
 import "../src/MoneyRouter.sol";
-import {ISuperfluid, ISuperToken, ISuperApp } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import {ERC1820RegistryCompiled} from "@superfluid-finance/ethereum-contracts/contracts/libs/ERC1820RegistryCompiled.sol";
-
-import {TestToken} from "@superfluid-finance/ethereum-contracts/contracts/utils/TestToken.sol";
-import { TestGovernance, Superfluid, ConstantFlowAgreementV1, InstantDistributionAgreementV1, IDAv1Library, SuperTokenFactory} from "@superfluid-finance/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeploymentSteps.sol";
-import { SuperfluidFrameworkDeployer } from "@superfluid-finance/ethereum-contracts/contracts/utils/SuperfluidFrameworkDeployer.sol";
 
 contract MoneyRouterTest is Test {
 
@@ -24,15 +20,6 @@ contract MoneyRouterTest is Test {
     ISuperToken public daix;
     address public account1;
     address public account2;
-
-    struct Framework {
-        TestGovernance governance;
-        Superfluid host;
-        ConstantFlowAgreementV1 cfa;
-        InstantDistributionAgreementV1 ida;
-        IDAv1Library.InitData idaLib;
-        SuperTokenFactory superTokenFactory;
-    }
 
     SuperfluidFrameworkDeployer.Framework sf;
 
