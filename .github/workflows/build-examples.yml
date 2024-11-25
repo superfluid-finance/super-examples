@@ -10,31 +10,6 @@ on:
     workflow_dispatch:
 
 jobs:
-    build-example:
-        name: Build Example
-        runs-on: ubuntu-latest
-        env:
-            CI: false # might not need this. this refers to react ui related things.
-        strategy:
-            # build all examples independently
-            fail-fast: false
-            matrix:
-                project: ["tradeable-cashflow", "borrow-against-salary", "instant-distribution-intro","superfluid-gelato-automation",  "money-streaming-intro/money-streaming-intro-hardhat"]
-                install: ["clean-install"]
-                node-version: [16]
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - name: Install, Build, and Test
-              run: |
-                  cd "projects/${{ matrix.project }}"
-                  yarn install
-                  yarn build
-                  yarn test
-
     build-foundry-example:
         name: Build Foundry Examples
         runs-on: ubuntu-latest
@@ -42,15 +17,10 @@ jobs:
             # build all examples independently
             fail-fast: false
             matrix:
-                project: ["money-streaming-intro/money-streaming-intro-foundry"]
+                project: ["money-streaming-intro-foundry", "gda-advertisement-auction"]
                 install: ["clean-install"]
-                node-version: [16]
         steps:
             - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
             - name: Install Foundry
               uses: foundry-rs/foundry-toolchain@v1
               with:
@@ -58,7 +28,6 @@ jobs:
             - name: Install, Build, and Test
               run: |
                   cd "projects/${{ matrix.project }}"
-                  forge install superfluid-protocol-monorepo=https://github.com/superfluid-finance/protocol-monorepo@dev --no-commit
-                  forge install https://github.com/OpenZeppelin/openzeppelin-contracts@v4.9.3 --no-commit
+                  forge install
                   forge build
                   forge test

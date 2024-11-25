@@ -13,8 +13,7 @@ Each example has their own dependencies. This is to reduce complexity when using
 one or a small number of examples from this repository.
 
 To get started with any exmaple project, navigate to the appropriate example
-directory and view the "Installation" section of its README file. Most projects
-use `npm`, but others may use `forge` or another tool.
+directory and view the "Installation" section of its README file.
 
 ## New Example Requests
 
@@ -28,8 +27,5 @@ example, open an issue and select the "New Example" template.
 The following is a list of example projects in this repository. Follow the link
 on each to see their local README file.
 
--   [Borrow Against Salary](./projects/borrow-against-salary/README.md)
--   [Instant Distribution Intro](./projects/instant-distribution-intro/README.md)
--   [Money Streaming Intro](./projects/money-streaming-intro)
--   [Tradeable Cashflow NFT](./projects/tradeable-cashflow/README.md)
--   [Gelato ACL Automation](./projects/superfluid-gelato-automation/)
+-   [Money Streaming Intro](./projects/money-streaming-intro-foundry/README.md)
+-   [GDA Advertisement Auction](./projects/gda-advertisement-auction/README.md)
